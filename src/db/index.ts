@@ -12,9 +12,14 @@ let sql: ReturnType<typeof postgres> | null = null;
 
 export function getDbClient(): ReturnType<typeof postgres> {
   if (!sql) {
-    const connectionString =
-      process.env.DATABASE_URL ||
-      "postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os";
+    const connectionString = process.env.DATABASE_URL;
+
+    if (!connectionString) {
+      throw new Error(
+        "DATABASE_URL environment variable is required. " +
+          "Please set it in your .env.local file or environment."
+      );
+    }
 
     // `prepare: false` is required when using postgres-js with Drizzle ORM,
     // since Drizzle manages its own prepared-statement caching.

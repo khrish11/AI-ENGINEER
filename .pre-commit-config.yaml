@@ -1,0 +1,47 @@
+# Pre-commit hooks for AI Engineer OS
+# Install with: pip install pre-commit && pre-commit install
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: detect-private-key
+      - id: check-merge-conflict
+
+  # Secret scanning with trufflehog (requires trufflehog to be installed)
+  # To enable: uncomment and run: pip install trufflehog
+  # - repo: local
+  #   hooks:
+  #     - id: trufflehog
+  #       name: TruffleHog Secret Scanner
+  #       entry: trufflehog git --since-commit HEAD --only-verified
+  #       language: system
+  #       pass_filenames: false
+  #       always_run: true
+
+  # Alternative: use simple pattern matching for obvious secrets
+  - repo: local
+    hooks:
+      - id: block-secrets
+        name: Block hardcoded secrets
+        entry: >-
+          bash -c '
+          if git diff --cached --name-only | xargs grep -l "postgresql://.*:.*@" 2>/dev/null; then
+            echo "ERROR: Hardcoded database connection string detected in staged files."
+            echo "Please use environment variables instead."
+            exit 1
+          fi
+          if git diff --cached --name-only | xargs grep -l "sk-.*\|pk-.*\|AKIA.*\|api_key.*=.*" 2>/dev/null; then
+            echo "ERROR: Potential API key or secret detected in staged files."
+            echo "Please use environment variables instead."
+            exit 1
+          fi
+          exit 0
+          '
+        language: system
+        pass_filenames: false
+        always_run: true

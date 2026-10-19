@@ -66,3 +66,11 @@ playwright/.cache/
 # Upstream repository cache
 upstream/
 
+# Security and secrets
+*.key
+*.pem
+*.secret
+secrets/
+credentials/
+.git-filter-replacements.txt
+

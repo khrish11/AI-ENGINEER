@@ -23,7 +23,8 @@ vi.mock("@/lib/auth/session", () => ({
 }));
 
 const hasReleaseDatabase = process.env.DATABASE_URL?.includes("55432") === true;
-const describeWithDatabase = hasReleaseDatabase ? describe : describe.skip;
+const hasLocalDatabase = process.env.DATABASE_URL?.includes("5432") === true;
+const describeWithDatabase = (hasReleaseDatabase || hasLocalDatabase) ? describe : describe.skip;
 
 describeWithDatabase("account deletion against PostgreSQL", () => {
   let dbModule: typeof import("@/db");
