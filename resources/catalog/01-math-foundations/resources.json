@@ -1,0 +1,150 @@
+[
+  {
+    "id": "essence-of-linear-algebra",
+    "type": "youtube_playlist",
+    "title": "Essence of Linear Algebra (3Blue1Brown)",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab",
+    "description": "Visual series building geometric intuition for vectors, matrices, and linear transformations.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["linear-algebra", "vectors", "matrices", "intuition"],
+    "youtube": { "playlist_id": "PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/01-linear-algebra-intuition", "role": "primary", "relevance_score": 98, "recommended": true, "order_index": 1 },
+      { "lesson": "01-math-foundations/02-vectors-matrices-operations", "role": "primary", "relevance_score": 90 },
+      { "lesson": "01-math-foundations/03-matrix-transformations", "role": "primary", "relevance_score": 90 }
+    ]
+  },
+  {
+    "id": "vectors-3b1b",
+    "type": "youtube_video",
+    "title": "Vectors | Chapter 1, Essence of linear algebra",
+    "canonical_url": "https://www.youtube.com/watch?v=fNk_zzaMoSs",
+    "description": "Introduces vectors from geometric, algebraic, and computer-science perspectives.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["linear-algebra", "vectors"],
+    "youtube": { "video_id": "fNk_zzaMoSs", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=fNk_zzaMoSs" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/02-vectors-matrices-operations", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "linear-transformations-3b1b",
+    "type": "youtube_video",
+    "title": "Linear transformations and matrices | Chapter 3, Essence of linear algebra",
+    "canonical_url": "https://www.youtube.com/watch?v=kYB8IZa5AuE",
+    "description": "Explains matrices as linear transformations of space.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["linear-algebra", "matrices", "transformations"],
+    "youtube": { "video_id": "kYB8IZa5AuE", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=kYB8IZa5AuE" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/03-matrix-transformations", "role": "primary", "relevance_score": 95, "recommended": true }
+    ]
+  },
+  {
+    "id": "essence-of-calculus",
+    "type": "youtube_playlist",
+    "title": "Essence of Calculus (3Blue1Brown)",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr",
+    "description": "Visual introduction to derivatives, integrals, and the fundamental theorem of calculus.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["calculus", "derivatives", "intuition"],
+    "youtube": { "playlist_id": "PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/04-calculus-for-ml", "role": "primary", "relevance_score": 95, "recommended": true, "order_index": 1 },
+      { "lesson": "01-math-foundations/05-chain-rule-and-autodiff", "role": "supplementary", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "statistics-fundamentals-statquest",
+    "type": "youtube_playlist",
+    "title": "Statistics Fundamentals (StatQuest)",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9",
+    "description": "Clear, example-driven explanations of probability and statistics concepts.",
+    "author": { "name": "StatQuest with Josh Starmer" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["statistics", "probability", "distributions"],
+    "youtube": { "playlist_id": "PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9", "channel_name": "StatQuest with Josh Starmer", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/06-probability-and-distributions", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "01-math-foundations/15-statistics-for-ml", "role": "primary", "relevance_score": 90 }
+    ]
+  },
+  {
+    "id": "numpy-docs",
+    "type": "official_documentation",
+    "title": "NumPy Documentation",
+    "canonical_url": "https://numpy.org/doc/stable/",
+    "description": "Official reference for NumPy arrays, broadcasting, and linear algebra routines.",
+    "author": { "name": "NumPy Developers", "organization": "NumPy" },
+    "difficulty": "intermediate",
+    "source_platform": "numpy.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["numpy", "arrays", "linear-algebra"],
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/12-tensor-operations", "role": "reference", "relevance_score": 80 },
+      { "lesson": "01-math-foundations/02-vectors-matrices-operations", "role": "practical", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "numpy-repo",
+    "type": "github_repo",
+    "title": "numpy/numpy",
+    "canonical_url": "https://github.com/numpy/numpy",
+    "description": "The NumPy source repository, the fundamental package for scientific computing in Python.",
+    "author": { "name": "NumPy", "organization": "NumPy" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["numpy", "source", "numerics"],
+    "github": { "owner": "numpy", "repository": "numpy", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/12-tensor-operations", "role": "reference", "relevance_score": 55 }
+    ]
+  },
+  {
+    "id": "pytorch-docs",
+    "type": "official_documentation",
+    "title": "PyTorch Documentation",
+    "canonical_url": "https://pytorch.org/docs/stable/",
+    "description": "Official PyTorch reference, including tensor operations and autograd.",
+    "author": { "name": "PyTorch", "organization": "PyTorch" },
+    "difficulty": "intermediate",
+    "source_platform": "pytorch.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["pytorch", "tensors", "autograd"],
+    "associated_lessons": [
+      { "lesson": "01-math-foundations/12-tensor-operations", "role": "reference", "relevance_score": 75 },
+      { "lesson": "01-math-foundations/05-chain-rule-and-autodiff", "role": "supplementary", "relevance_score": 65 }
+    ]
+  }
+]

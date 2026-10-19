@@ -1,0 +1,89 @@
+{
+  "id": "proj-repro-ai-env",
+  "slug": "reproducible-ai-dev-environment",
+  "title": "Reproducible AI Development Environment",
+  "description": "Build a reproducible local AI development environment from scratch: pinned Python tooling, Git workflow, Dockerized dependencies, automated tests, linting, and CI that runs the whole pipeline from a clean checkout in one command.",
+  "level": "beginner",
+  "source": "platform",
+  "estimatedHours": 3,
+  "phaseSlugs": ["00-setup-and-tooling"],
+  "associatedOccurrences": [
+    "00-setup-and-tooling/01-dev-environment",
+    "00-setup-and-tooling/02-git-and-collaboration",
+    "00-setup-and-tooling/07-docker-for-ai"
+  ],
+  "associatedCanonicalLessons": [],
+  "skills": ["python", "git", "docker", "linux", "jupyter"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Isolate project dependencies with a pinned environment file",
+    "Automate formatting, linting, and testing through a single entry point",
+    "Run identical setup in Docker and on the host",
+    "Prove reproducibility with a CI workflow that starts from a clean clone",
+    "Document the environment so a teammate can reproduce it in under 10 minutes"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Environment repository" },
+    { "id": "readme", "kind": "readme", "title": "Setup documentation", "description": "Setup steps verified from a clean clone." },
+    { "id": "ci", "kind": "test_results", "title": "CI run passing tests and lint" }
+  ],
+  "milestones": [
+    {
+      "id": "env-pin",
+      "title": "Pin the Python environment",
+      "objective": "Create a fully pinned environment (pyproject/requirements lock or conda lock) with the ML basics installed.",
+      "expectedOutput": "Environment resolves identically from lock file with no unpinned transitive deps.",
+      "requiredEvidence": ["e-repo", "e-readme"],
+      "estimatedMinutes": 45
+    },
+    {
+      "id": "docker-parity",
+      "title": "Match host and Docker environments",
+      "objective": "Containerize the environment so `make test` produces the same output inside and outside Docker.",
+      "expectedOutput": "Dockerfile + compose config; test output identical in both targets.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 45
+    },
+    {
+      "id": "ci-pipeline",
+      "title": "Add CI from clean clone",
+      "objective": "GitHub Actions workflow installs, lints, and tests from a fresh clone on every push.",
+      "expectedOutput": "Green CI run visible on the repository.",
+      "requiredEvidence": ["e-test-results"],
+      "estimatedMinutes": 45
+    },
+    {
+      "id": "handoff-readme",
+      "title": "Write the 10-minute handoff",
+      "objective": "Document setup so a reviewer reproduces the environment unaided within 10 minutes.",
+      "expectedOutput": "README with exact commands and troubleshooting notes.",
+      "requiredEvidence": ["e-readme"],
+      "required": true,
+      "estimatedMinutes": 45
+    }
+  ],
+  "suggestedStack": ["Python 3.11+", "uv or pip-tools", "Docker", "pytest", "ruff", "GitHub Actions"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": [
+      "Repository root = single source of truth: lock file, Makefile, Dockerfile, CI",
+      "Makefile targets: setup, lint, test, docker-test",
+      "CI mirrors the Makefile targets so local and hosted runs cannot drift"
+    ],
+    "constraints": [
+      "No manual dependency edits outside the lock file",
+      "No secrets committed; use .env.example as the template"
+    ],
+    "hints": [
+      "Time yourself reproducing from scratch; if it exceeds 10 minutes, keep automating"
+    ]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Public repository containing the environment and automation.", "required": true },
+    { "id": "e-readme", "kind": "documentation_url", "description": "README (in-repo) with verified setup steps.", "required": true },
+    { "id": "e-test-results", "kind": "test_result", "description": "Link to a passing CI run (Actions URL).", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "mlops"],
+  "hasStarterTemplate": true
+}

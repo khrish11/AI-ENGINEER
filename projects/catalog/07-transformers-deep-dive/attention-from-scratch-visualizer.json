@@ -1,0 +1,87 @@
+{
+  "id": "proj-attention-scratch",
+  "slug": "attention-from-scratch-visualizer",
+  "title": "Attention Implementation + Visualization",
+  "description": "Implement scaled dot-product and multi-head attention from scratch in PyTorch, verify them numerically against a reference, and build an attention-map visualizer over real text sequences that explains what the model attends to.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 14,
+  "phaseSlugs": ["07-transformers-deep-dive"],
+  "associatedOccurrences": [
+    "07-transformers-deep-dive/01-why-transformers",
+    "07-transformers-deep-dive/02-self-attention-from-scratch",
+    "07-transformers-deep-dive/03-multi-head-attention"
+  ],
+  "skills": ["attention", "transformers", "pytorch", "python", "information-theory"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement causal and non-causal attention from first principles",
+    "Verify numerical equivalence with PyTorch reference ops",
+    "Render interpretable attention maps over token sequences",
+    "Explain multi-head behaviour with concrete examples"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Equivalence + visualization report" }
+  ],
+  "milestones": [
+    {
+      "id": "sdpa",
+      "title": "Scaled dot-product attention",
+      "objective": "Implement Q/K/V attention with masking; verify against torch.nn.functional equivalents.",
+      "expectedOutput": "Tests pass to 1e-5 on seeded inputs.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "mha",
+      "title": "Multi-head attention",
+      "objective": "Implement heads, projections, and output combining; verify against the reference implementation.",
+      "expectedOutput": "Equivalence tests for grouped heads.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "masking",
+      "title": "Causal variants",
+      "objective": "Add causal masking and padding handling; test with variable-length sequences.",
+      "expectedOutput": "Correct masked outputs on ragged batches.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "viz",
+      "title": "Attention maps",
+      "objective": "Visualize attention matrices for at least three example sentences; annotate heads that track syntax or coreference.",
+      "expectedOutput": "Rendered maps with commentary in the report.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 150
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 30, "criteria": ["Reference equivalence", "Masking correctness", "No silent NaN handling"], "minimumExpectation": "Equivalence tests pass with stated tolerances", "excellentExpectation": "Ragged batch + long-sequence overflow tests" },
+      { "id": "testing", "category": "Testing", "weight": 20, "criteria": ["Seeded tests", "Edge shapes", "CI green"], "minimumExpectation": "Equivalence + masking tests", "excellentExpectation": "Property tests over random configurations" },
+      { "id": "viz", "category": "Visualization & interpretability", "weight": 25, "criteria": ["Readable maps", "Specific token-level commentary", "Honest caveats about attention-as-explanation"], "minimumExpectation": "Maps for three examples with captions", "excellentExpectation": "Analysis of head behaviour groups with limitations noted" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Math documented", "Reproducible commands"], "minimumExpectation": "README covers the math and usage", "excellentExpectation": "Step-by-step walkthrough of one forward pass" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed modules", "Clear tensor-shape contracts"], "minimumExpectation": "Consistent module structure", "excellentExpectation": "Shape assertions in public APIs" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["PyTorch", "Matplotlib or Plotly", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["attention/ (implementations)", "reference/ (torch built-ins)", "viz/ (maps)", "tests/"],
+    "constraints": ["No copying reference internals; re-derive formulas"],
+    "hints": ["Use attention-as-explanation with humility: note that attention weights are not proven causal explanations"]
+  },
+  "requiredEvidence": [
+    { "id": "e-tests", "kind": "test_result", "description": "Equivalence + masking test output/CI link.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Report with rendered attention maps.", "required": true },
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "research", "ml"],
+  "hasStarterTemplate": false
+}

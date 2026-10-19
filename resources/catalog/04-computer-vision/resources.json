@@ -1,0 +1,121 @@
+[
+  {
+    "id": "resnet-paper",
+    "type": "research_paper",
+    "title": "Deep Residual Learning for Image Recognition",
+    "canonical_url": "https://arxiv.org/abs/1512.03385",
+    "description": "The ResNet paper introducing residual connections for training very deep networks.",
+    "author": { "name": "Kaiming He et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["resnet", "cnn", "architecture"],
+    "paper": {
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"],
+      "publication_year": 2015,
+      "arxiv_id": "1512.03385",
+      "paper_url": "https://arxiv.org/abs/1512.03385",
+      "pdf_url": "https://arxiv.org/pdf/1512.03385"
+    },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/03-cnns-lenet-to-resnet", "role": "reference", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "ultralytics-docs",
+    "type": "official_documentation",
+    "title": "Ultralytics YOLO Documentation",
+    "canonical_url": "https://docs.ultralytics.com/",
+    "description": "Official documentation for YOLO object detection, segmentation, and tracking.",
+    "author": { "name": "Ultralytics", "organization": "Ultralytics" },
+    "difficulty": "intermediate",
+    "source_platform": "docs.ultralytics.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["yolo", "object-detection", "tracking"],
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/06-object-detection-yolo", "role": "primary", "relevance_score": 92, "recommended": true, "order_index": 1 },
+      { "lesson": "04-computer-vision/27-multi-object-tracking", "role": "practical", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "ultralytics-repo",
+    "type": "github_repo",
+    "title": "ultralytics/ultralytics",
+    "canonical_url": "https://github.com/ultralytics/ultralytics",
+    "description": "YOLO models and training/inference framework.",
+    "author": { "name": "Ultralytics", "organization": "Ultralytics" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["yolo", "detection", "source"],
+    "github": { "owner": "ultralytics", "repository": "ultralytics", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/06-object-detection-yolo", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "04-computer-vision/15-real-time-edge", "role": "practical", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "segment-anything-repo",
+    "type": "github_repo",
+    "title": "facebookresearch/segment-anything",
+    "canonical_url": "https://github.com/facebookresearch/segment-anything",
+    "description": "Segment Anything Model (SAM) for promptable image segmentation.",
+    "author": { "name": "Meta AI", "organization": "Meta AI" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["segmentation", "sam", "foundation-model"],
+    "github": { "owner": "facebookresearch", "repository": "segment-anything", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/07-semantic-segmentation-unet", "role": "reference", "relevance_score": 65 },
+      { "lesson": "04-computer-vision/24-sam3-open-vocab-segmentation", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "clip-repo",
+    "type": "github_repo",
+    "title": "openai/CLIP",
+    "canonical_url": "https://github.com/openai/CLIP",
+    "description": "Contrastive Language-Image Pre-training (CLIP) model and code.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["clip", "contrastive", "vision-language"],
+    "github": { "owner": "openai", "repository": "CLIP", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/18-open-vocab-clip", "role": "primary", "relevance_score": 92, "recommended": true },
+      { "lesson": "08-generative-ai/14-evaluation-fid-clip-score", "role": "reference", "relevance_score": 60 },
+      { "lesson": "12-multimodal-ai/02-clip-contrastive-pretraining", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "onnx-repo",
+    "type": "github_repo",
+    "title": "onnx/onnx",
+    "canonical_url": "https://github.com/onnx/onnx",
+    "description": "Open Neural Network Exchange format for interoperable model deployment.",
+    "author": { "name": "ONNX", "organization": "ONNX" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["onnx", "deployment", "edge"],
+    "github": { "owner": "onnx", "repository": "onnx", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/15-real-time-edge", "role": "reference", "relevance_score": 60 }
+    ]
+  }
+]

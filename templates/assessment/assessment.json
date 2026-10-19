@@ -1,0 +1,8 @@
+{
+  "id": "checkpoint-example",
+  "kind": "phase_checkpoint",
+  "phaseSlug": "phase-slug",
+  "title": "Checkpoint title",
+  "description": "What this assessment measures.",
+  "questions": []
+}

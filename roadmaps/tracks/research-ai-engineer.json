@@ -1,0 +1,63 @@
+{
+  "id": "research",
+  "slug": "research-ai-engineer",
+  "name": "Research-Focused AI Engineer",
+  "tagline": "Read papers, reproduce results, and run rigorous experiments.",
+  "description": "A depth-first path for people who want to understand and reproduce research. Mathematics, classical ML, deep learning, transformers, LLM training, reinforcement learning, and alignment are all in scope. Product infrastructure and agent tooling are optional: your output is evidence, ablations, and reproducible experiments.",
+  "targetRoles": ["Research Engineer", "AI Research Scientist (engineering track)", "Applied Research Engineer"],
+  "coreSkills": ["python", "linear-algebra", "calculus", "probability", "statistics", "optimization", "backpropagation", "pytorch", "transformers", "pretraining", "rlhf", "alignment", "llm-evaluation"],
+  "phaseImportance": {
+    "00-setup-and-tooling": "important",
+    "01-math-foundations": "core",
+    "02-ml-fundamentals": "core",
+    "03-deep-learning-core": "core",
+    "04-computer-vision": "important",
+    "05-nlp-foundations-to-advanced": "core",
+    "06-speech-and-audio": "optional",
+    "07-transformers-deep-dive": "core",
+    "08-generative-ai": "important",
+    "09-reinforcement-learning": "important",
+    "10-llms-from-scratch": "core",
+    "11-llm-engineering": "optional",
+    "12-multimodal-ai": "important",
+    "13-tools-and-protocols": "optional",
+    "14-agent-engineering": "optional",
+    "15-autonomous-systems": "important",
+    "16-multi-agent-and-swarms": "optional",
+    "17-infrastructure-and-production": "optional",
+    "18-ethics-safety-alignment": "core",
+    "19-capstone-projects": "important"
+  },
+  "overrides": {
+    "01-math-foundations/15-statistics-for-ml": "core",
+    "01-math-foundations/08-optimization": "core",
+    "01-math-foundations/09-information-theory": "core",
+    "01-math-foundations/13-numerical-stability": "important",
+    "02-ml-fundamentals/09-model-evaluation": "core",
+    "03-deep-learning-core/03-backpropagation": "core",
+    "05-nlp-foundations-to-advanced/10-attention-mechanism": "core",
+    "07-transformers-deep-dive/13-scaling-laws": "core",
+    "10-llms-from-scratch/04-pre-training-mini-gpt": "core",
+    "10-llms-from-scratch/07-rlhf": "core",
+    "10-llms-from-scratch/10-evaluation": "core",
+    "18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment": "core",
+    "07-transformers-deep-dive/09-vision-transformers": "important",
+    "04-computer-vision/14-vision-transformers": "optional",
+    "19-capstone-projects/05-autonomous-research-agent": "core",
+    "19-capstone-projects/81-end-to-end-distributed-train": "important",
+    "19-capstone-projects/73-perplexity-calibration": "core"
+  },
+  "phaseRationale": {
+    "11-llm-engineering": "Application engineering is optional for a research path; the underlying model behaviour is covered in the training phases.",
+    "13-tools-and-protocols": "Agent protocol engineering is product work rather than research method.",
+    "14-agent-engineering": "Agent frameworks evolve quickly and are optional for reproducing research results.",
+    "16-multi-agent-and-swarms": "Multi-agent orchestration is not a prerequisite for research-grade experiments.",
+    "17-infrastructure-and-production": "Production SRE practice is optional; enough serving knowledge is covered by inference lessons.",
+    "06-speech-and-audio": "Audio research is a valid specialization but not part of the general research foundation."
+  },
+  "majorProjects": [
+    "Autonomous research agent (AI-Scientist class)",
+    "End-to-end distributed training and evaluation run",
+    "Reproduction of a transformer scaling result with ablations"
+  ]
+}

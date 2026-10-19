@@ -1,0 +1,355 @@
+[
+  {
+    "id": "openai-cookbook",
+    "type": "github_repo",
+    "title": "openai/openai-cookbook",
+    "canonical_url": "https://github.com/openai/openai-cookbook",
+    "description": "Examples and best practices for using the OpenAI API, including prompting and structured outputs.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["prompting", "openai", "cookbook"],
+    "github": { "owner": "openai", "repository": "openai-cookbook", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/01-prompt-engineering", "role": "primary", "relevance_score": 85, "recommended": true },
+      { "lesson": "11-llm-engineering/02-few-shot-cot", "role": "primary", "relevance_score": 82 },
+      { "lesson": "11-llm-engineering/03-structured-outputs", "role": "primary", "relevance_score": 85 },
+      { "lesson": "11-llm-engineering/09-function-calling", "role": "supplementary", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "anthropic-cookbook",
+    "type": "github_repo",
+    "title": "anthropics/anthropic-cookbook",
+    "canonical_url": "https://github.com/anthropics/anthropic-cookbook",
+    "description": "Notebooks and recipes for building with Claude, including prompting and tool use.",
+    "author": { "name": "Anthropic", "organization": "Anthropic" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["prompting", "anthropic", "claude"],
+    "github": { "owner": "anthropics", "repository": "anthropic-cookbook", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/01-prompt-engineering", "role": "primary", "relevance_score": 85 },
+      { "lesson": "11-llm-engineering/05-context-engineering", "role": "supplementary", "relevance_score": 78 },
+      { "lesson": "11-llm-engineering/03-structured-outputs", "role": "supplementary", "relevance_score": 76 }
+    ]
+  },
+  {
+    "id": "langchain-repo",
+    "type": "github_repo",
+    "title": "langchain-ai/langchain",
+    "canonical_url": "https://github.com/langchain-ai/langchain",
+    "description": "Framework for building applications powered by large language models.",
+    "author": { "name": "LangChain", "organization": "LangChain" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["langchain", "rag", "framework"],
+    "github": { "owner": "langchain-ai", "repository": "langchain", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/04-embeddings", "role": "reference", "relevance_score": 72 },
+      { "lesson": "11-llm-engineering/06-rag", "role": "practical", "relevance_score": 82 },
+      { "lesson": "11-llm-engineering/07-advanced-rag", "role": "practical", "relevance_score": 80 },
+      { "lesson": "11-llm-engineering/17-agent-framework-tradeoffs", "role": "reference", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "langgraph-repo",
+    "type": "github_repo",
+    "title": "langchain-ai/langgraph",
+    "canonical_url": "https://github.com/langchain-ai/langgraph",
+    "description": "Build stateful, multi-actor applications with LLMs as graphs.",
+    "author": { "name": "LangChain", "organization": "LangChain" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["langgraph", "state-machines", "agents"],
+    "github": { "owner": "langchain-ai", "repository": "langgraph", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/16-langgraph-state-machines", "role": "primary", "relevance_score": 92, "recommended": true },
+      { "lesson": "14-agent-engineering/13-langgraph-stateful-graphs", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern", "role": "practical", "relevance_score": 80 },
+      { "lesson": "19-capstone-projects/10-multi-agent-software-team", "role": "practical", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "llama-index-repo",
+    "type": "github_repo",
+    "title": "run-llama/llama_index",
+    "canonical_url": "https://github.com/run-llama/llama_index",
+    "description": "A data framework for building LLM applications over your own data.",
+    "author": { "name": "LlamaIndex", "organization": "LlamaIndex" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["rag", "retrieval", "framework"],
+    "github": { "owner": "run-llama", "repository": "llama_index", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/06-rag", "role": "practical", "relevance_score": 84 },
+      { "lesson": "11-llm-engineering/07-advanced-rag", "role": "practical", "relevance_score": 82 },
+      { "lesson": "19-capstone-projects/02-rag-over-codebase", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "faiss-repo",
+    "type": "github_repo",
+    "title": "facebookresearch/faiss",
+    "canonical_url": "https://github.com/facebookresearch/faiss",
+    "description": "A library for efficient similarity search and clustering of dense vectors.",
+    "author": { "name": "Meta AI", "organization": "Meta" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vector-search", "similarity", "ann"],
+    "github": { "owner": "facebookresearch", "repository": "faiss", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/04-embeddings", "role": "reference", "relevance_score": 80 },
+      { "lesson": "11-llm-engineering/06-rag", "role": "reference", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "pgvector-repo",
+    "type": "github_repo",
+    "title": "pgvector/pgvector",
+    "canonical_url": "https://github.com/pgvector/pgvector",
+    "description": "Open-source vector similarity search for Postgres.",
+    "author": { "name": "pgvector", "organization": "pgvector" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["postgres", "vector-search", "embeddings"],
+    "github": { "owner": "pgvector", "repository": "pgvector", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/04-embeddings", "role": "primary", "relevance_score": 85 },
+      { "lesson": "11-llm-engineering/06-rag", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "19-capstone-projects/08-production-rag-chatbot", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "qdrant-repo",
+    "type": "github_repo",
+    "title": "qdrant/qdrant",
+    "canonical_url": "https://github.com/qdrant/qdrant",
+    "description": "High-performance vector similarity search engine and vector database.",
+    "author": { "name": "Qdrant", "organization": "Qdrant" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vector-database", "search", "rag"],
+    "github": { "owner": "qdrant", "repository": "qdrant", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/07-advanced-rag", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "weaviate-repo",
+    "type": "github_repo",
+    "title": "weaviate/weaviate",
+    "canonical_url": "https://github.com/weaviate/weaviate",
+    "description": "Open-source vector database that stores objects and vectors for hybrid search.",
+    "author": { "name": "Weaviate", "organization": "Weaviate" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vector-database", "hybrid-search", "rag"],
+    "github": { "owner": "weaviate", "repository": "weaviate", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/07-advanced-rag", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "lora-paper",
+    "type": "research_paper",
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2106.09685",
+    "description": "Introduces low-rank adaptation for efficient finetuning of large language models.",
+    "author": { "name": "Edward J. Hu et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["lora", "fine-tuning", "peft"],
+    "paper": {
+      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "authors": ["Edward J. Hu", "Yelong Shen", "Phillip Wallis", "et al."],
+      "publication_year": 2021,
+      "arxiv_id": "2106.09685",
+      "paper_url": "https://arxiv.org/abs/2106.09685"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/06-instruction-tuning-sft", "role": "reference", "relevance_score": 82 },
+      { "lesson": "11-llm-engineering/08-fine-tuning-lora", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "rag-paper",
+    "type": "research_paper",
+    "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "canonical_url": "https://arxiv.org/abs/2005.11401",
+    "description": "Introduces retrieval-augmented generation (RAG).",
+    "author": { "name": "Patrick Lewis et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["rag", "retrieval", "paper"],
+    "paper": {
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": ["Patrick Lewis", "Ethan Perez", "Aleksandra Piktus", "et al."],
+      "publication_year": 2020,
+      "arxiv_id": "2005.11401",
+      "paper_url": "https://arxiv.org/abs/2005.11401"
+    },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/06-rag", "role": "reference", "relevance_score": 88, "recommended": true }
+    ]
+  },
+  {
+    "id": "dpr-paper",
+    "type": "research_paper",
+    "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+    "canonical_url": "https://arxiv.org/abs/2004.04906",
+    "description": "Introduces dense passage retrieval with dual encoders.",
+    "author": { "name": "Vladimir Karpukhin et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["dense-retrieval", "embeddings", "paper"],
+    "paper": {
+      "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+      "authors": ["Vladimir Karpukhin", "Barlas Oguz", "Sewon Min", "et al."],
+      "publication_year": 2020,
+      "arxiv_id": "2004.04906",
+      "paper_url": "https://arxiv.org/abs/2004.04906"
+    },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/04-embeddings", "role": "reference", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "chain-of-thought-paper",
+    "type": "research_paper",
+    "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2201.11903",
+    "description": "Introduces chain-of-thought prompting for eliciting step-by-step reasoning.",
+    "author": { "name": "Jason Wei et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["chain-of-thought", "prompting", "reasoning"],
+    "paper": {
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": ["Jason Wei", "Xuezhi Wang", "Dale Schuurmans", "et al."],
+      "publication_year": 2022,
+      "arxiv_id": "2201.11903",
+      "paper_url": "https://arxiv.org/abs/2201.11903"
+    },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/02-few-shot-cot", "role": "reference", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "promptfoo-repo",
+    "type": "github_repo",
+    "title": "promptfoo/promptfoo",
+    "canonical_url": "https://github.com/promptfoo/promptfoo",
+    "description": "Test and evaluate LLM prompts, agents, and RAGs with red teaming and guardrails.",
+    "author": { "name": "Promptfoo", "organization": "Promptfoo" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["evaluation", "red-teaming", "guardrails"],
+    "github": { "owner": "promptfoo", "repository": "promptfoo", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/10-evaluation", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "11-llm-engineering/12-guardrails", "role": "practical", "relevance_score": 82 },
+      { "lesson": "18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks", "role": "practical", "relevance_score": 75 },
+      { "lesson": "18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit", "role": "practical", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "openai-evals-repo",
+    "type": "github_repo",
+    "title": "openai/evals",
+    "canonical_url": "https://github.com/openai/evals",
+    "description": "A framework for evaluating LLMs and an open registry of benchmarks.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["evaluation", "benchmarks", "evals"],
+    "github": { "owner": "openai", "repository": "evals", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/10-evaluation", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "mcp-python-sdk",
+    "type": "github_repo",
+    "title": "modelcontextprotocol/python-sdk",
+    "canonical_url": "https://github.com/modelcontextprotocol/python-sdk",
+    "description": "The official Python SDK for the Model Context Protocol (MCP).",
+    "author": { "name": "Model Context Protocol", "organization": "Anthropic" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["mcp", "tools", "protocol"],
+    "github": { "owner": "modelcontextprotocol", "repository": "python-sdk", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/14-model-context-protocol", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "13-tools-and-protocols/07-building-an-mcp-server", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "13-tools-and-protocols/08-building-an-mcp-client", "role": "primary", "relevance_score": 88 }
+    ]
+  },
+  {
+    "id": "mcp-servers-repo",
+    "type": "github_repo",
+    "title": "modelcontextprotocol/servers",
+    "canonical_url": "https://github.com/modelcontextprotocol/servers",
+    "description": "A collection of reference implementations for MCP servers.",
+    "author": { "name": "Model Context Protocol", "organization": "Anthropic" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["mcp", "servers", "reference"],
+    "github": { "owner": "modelcontextprotocol", "repository": "servers", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/14-model-context-protocol", "role": "practical", "relevance_score": 85 },
+      { "lesson": "13-tools-and-protocols/07-building-an-mcp-server", "role": "practical", "relevance_score": 85 }
+    ]
+  }
+]

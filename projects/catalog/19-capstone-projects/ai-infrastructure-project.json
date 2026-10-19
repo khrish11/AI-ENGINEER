@@ -1,0 +1,89 @@
+{
+  "id": "proj-capstone-ai-infra",
+  "slug": "ai-infrastructure-project",
+  "title": "Capstone: AI Infrastructure & Serving Platform",
+  "description": "Ship an AI serving platform: model/LLM serving with batching → monitoring → progressive rollout → failure handling. Includes load-tested autoscaling configuration, typed contracts, fault-injection evidence, and an on-call-grade runbook.",
+  "level": "capstone",
+  "source": "platform",
+  "estimatedHours": 60,
+  "phaseSlugs": ["19-capstone-projects", "17-infrastructure-and-production"],
+  "associatedOccurrences": [
+    "17-infrastructure-and-production/02-inference-platform-economics",
+    "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes",
+    "19-capstone-projects/01-terminal-native-coding-agent"
+  ],
+  "skills": ["serving", "inference-optimization", "observability", "reliability", "security", "docker", "python"],
+  "prerequisites": ["proj-production-service"],
+  "learningObjectives": [
+    "Serve a model with batching and typed contracts under load",
+    "Configure and document autoscaling with evidence from load tests",
+    "Implement progressive rollout with automated rollback triggers",
+    "Demonstrate failure handling via fault injection"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository (service + manifests)" },
+    { "id": "trace", "kind": "evaluation_results", "title": "Load test + fault injection evidence" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API + runbook" },
+    { "id": "reflection", "kind": "reflection", "title": "Reflection" }
+  ],
+  "milestones": [
+    {
+      "id": "serving",
+      "title": "Batching serving layer",
+      "objective": "Serve a model or LLM adapter with dynamic batching; document queueing latency effects.",
+      "expectedOutput": "Load test showing p50/p95 across batch sizes.",
+      "requiredEvidence": ["e-load"],
+      "estimatedMinutes": 480
+    },
+    {
+      "id": "autoscale",
+      "title": "Autoscaling configuration",
+      "objective": "Provide compose/K8s manifests with scaling policy driven by measured saturation metrics.",
+      "expectedOutput": "Manifest + document explaining trigger metrics.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "rollout",
+      "title": "Progressive rollout + rollback triggers",
+      "objective": "Staged rollout with automated rollback on error-rate/latency SLO breach, verified by fault injection.",
+      "expectedOutput": "Rollback demo evidence from an injected failure.",
+      "requiredEvidence": ["e-load", "e-docs"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "faults",
+      "title": "Fault-injection suite",
+      "objective": "Inject dependency failures (model 500, timeout, queue saturation); verify graceful degradation and alerting.",
+      "expectedOutput": "Fault matrix with observed behavior per failure.",
+      "requiredEvidence": ["e-load"],
+      "estimatedMinutes": 300
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "perf", "category": "Performance engineering", "weight": 25, "criteria": ["Load methodology documented", "Batching trade-offs shown", "SLO definitions"], "minimumExpectation": "Reproducible load test with p50/p95", "excellentExpectation": "Cost-per-request analysis" },
+      { "id": "reliability", "category": "Reliability", "weight": 25, "criteria": ["Rollback automation", "Fault matrix complete", "Alerts actionable"], "minimumExpectation": "Two injected faults handled per policy", "excellentExpectation": "Full fault matrix incl. saturation" },
+      { "id": "deploy", "category": "Deployment & autoscaling", "weight": 20, "criteria": ["Manifests reproducible", "Trigger metrics justified", "Least privilege"], "minimumExpectation": "Scaling demonstrated at least locally", "excellentExpectation": "Cluster-load evidence or equivalent simulation" },
+      { "id": "security", "category": "Security", "weight": 15, "criteria": ["No secrets in repo", "Rate limiting + authn design", "Exposed attack surface audited"], "minimumExpectation": "Security section + rate limiting", "excellentExpectation": "Threat model with mitigations tested" },
+      { "id": "docs", "category": "Runbook & docs", "weight": 15, "criteria": ["On-call runbook", "Architecture diagram", "Reflection"], "minimumExpectation": "Runbook for three failure modes", "excellentExpectation": "Capacity-planning guidance" }
+    ],
+    "completionThreshold": 70,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["FastAPI", "Docker/K8s", "OpenTelemetry/Prometheus", "Locust or k6", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["client → authn/ratelimit → queue/batcher → model adapter → trace export", "rollout controller + rollback triggers"],
+    "constraints": ["Load tests must run in CI-sized time boxes", "No cost-heavy GPU requirements; simulate or scale down honestly"],
+    "hints": ["A 'model slower by 10x' chaos experiment is the single most revealing test you can run"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with manifests.", "required": true },
+    { "id": "e-load", "kind": "evaluation_result", "description": "Load test + fault evidence.", "required": true },
+    { "id": "e-docs", "kind": "documentation_url", "description": "API + runbook.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["mlops", "general-ai", "llm-app", "agent"],
+  "hasStarterTemplate": false
+}

@@ -1,0 +1,21 @@
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/settings/portfolio/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/curriculum/phase-lesson-list.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/navigation/search-modal.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/navigation/sidebar.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/navigation/top-bar.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/portfolio/portfolio-settings-client.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/button.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/styles/globals.css', LF will be replaced by CRLF the next time Git touches it
+ package-lock.json                                  | 1331 +++++++++++++++++++-
+ package.json                                       |    2 +
+ src/app/settings/portfolio/page.tsx                |   15 +-
+ src/components/curriculum/phase-lesson-list.tsx    |    2 +-
+ src/components/navigation/search-modal.tsx         |    2 +-
+ src/components/navigation/sidebar.tsx              |    5 +-
+ src/components/navigation/top-bar.tsx              |   10 +-
+ .../portfolio/portfolio-settings-client.tsx        |    6 +-
+ src/components/ui/button.tsx                       |    4 +-
+ src/styles/globals.css                             |   28 +-
+ 10 files changed, 1372 insertions(+), 33 deletions(-)

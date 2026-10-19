@@ -1,0 +1,119 @@
+[
+  {
+    "id": "stanford-cs224n",
+    "type": "course",
+    "title": "Stanford CS224N: Natural Language Processing with Deep Learning",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ",
+    "description": "Stanford's graduate NLP course covering word vectors, RNNs, attention, and transformers.",
+    "author": { "name": "Stanford Online", "organization": "Stanford" },
+    "difficulty": "advanced",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["nlp", "word-embeddings", "attention"],
+    "youtube": { "playlist_id": "PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ", "channel_name": "Stanford Online", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/03-word-embeddings-word2vec", "role": "supplementary", "relevance_score": 70 },
+      { "lesson": "05-nlp-foundations-to-advanced/09-sequence-to-sequence", "role": "supplementary", "relevance_score": 70 },
+      { "lesson": "05-nlp-foundations-to-advanced/10-attention-mechanism", "role": "primary", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "huggingface-transformers-docs",
+    "type": "official_documentation",
+    "title": "Hugging Face Transformers Documentation",
+    "canonical_url": "https://huggingface.co/docs/transformers/index",
+    "description": "Official documentation for the Transformers library, covering models, tokenizers, fine-tuning, and audio tasks.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "intermediate",
+    "source_platform": "huggingface.co",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["transformers", "nlp", "tokenizers", "audio"],
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/19-subword-tokenization", "role": "primary", "relevance_score": 85 },
+      { "lesson": "05-nlp-foundations-to-advanced/22-embedding-models-deep-dive", "role": "primary", "relevance_score": 85 },
+      { "lesson": "06-speech-and-audio/03-audio-classification", "role": "reference", "relevance_score": 75 },
+      { "lesson": "06-speech-and-audio/07-text-to-speech", "role": "reference", "relevance_score": 72 },
+      { "lesson": "06-speech-and-audio/10-audio-language-models", "role": "reference", "relevance_score": 75 },
+      { "lesson": "12-multimodal-ai/07-open-weight-vlm-recipes", "role": "reference", "relevance_score": 72 },
+      { "lesson": "12-multimodal-ai/19-audio-language-whisper-to-af3", "role": "reference", "relevance_score": 68 }
+    ]
+  },
+  {
+    "id": "langchain-docs",
+    "type": "official_documentation",
+    "title": "LangChain Documentation",
+    "canonical_url": "https://python.langchain.com/docs/",
+    "description": "Official LangChain documentation for building LLM applications, including retrieval and chunking.",
+    "author": { "name": "LangChain", "organization": "LangChain" },
+    "difficulty": "intermediate",
+    "source_platform": "python.langchain.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["langchain", "rag", "chunking"],
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/23-chunking-strategies-rag", "role": "primary", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "llama-index-docs",
+    "type": "official_documentation",
+    "title": "LlamaIndex Documentation",
+    "canonical_url": "https://docs.llamaindex.ai/en/stable/",
+    "description": "Official LlamaIndex documentation for data ingestion, indexing, and retrieval.",
+    "author": { "name": "LlamaIndex", "organization": "LlamaIndex" },
+    "difficulty": "intermediate",
+    "source_platform": "docs.llamaindex.ai",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llamaindex", "retrieval", "rag"],
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/23-chunking-strategies-rag", "role": "supplementary", "relevance_score": 72 },
+      { "lesson": "05-nlp-foundations-to-advanced/14-information-retrieval-search", "role": "reference", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "ragas-repo",
+    "type": "github_repo",
+    "title": "explodinggradients/ragas",
+    "canonical_url": "https://github.com/explodinggradients/ragas",
+    "description": "Evaluation framework for retrieval-augmented generation pipelines.",
+    "author": { "name": "Exploding Gradients" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["rag", "evaluation", "ragas"],
+    "github": { "owner": "explodinggradients", "repository": "ragas", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks", "role": "practical", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "eleutherai-lm-eval-harness",
+    "type": "github_repo",
+    "title": "EleutherAI/lm-evaluation-harness",
+    "canonical_url": "https://github.com/EleutherAI/lm-evaluation-harness",
+    "description": "Framework for few-shot evaluation of language models on standard benchmarks.",
+    "author": { "name": "EleutherAI", "organization": "EleutherAI" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["evaluation", "benchmarks", "llm"],
+    "github": { "owner": "EleutherAI", "repository": "lm-evaluation-harness", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks", "role": "practical", "relevance_score": 80 },
+      { "lesson": "05-nlp-foundations-to-advanced/28-long-context-evaluation", "role": "reference", "relevance_score": 60 },
+      { "lesson": "10-llms-from-scratch/10-evaluation", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "19-capstone-projects/49-lm-eval-harness", "role": "practical", "relevance_score": 80 }
+    ]
+  }
+]

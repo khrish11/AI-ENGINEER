@@ -1,0 +1,62 @@
+{
+  "id": "mlops",
+  "slug": "mlops-engineer",
+  "name": "MLOps / AI Infrastructure Engineer",
+  "tagline": "Serve, scale, observe, and pay for AI systems in production.",
+  "description": "An infrastructure-first path. You learn enough modelling to reason about latency, memory, and quality, then go deep on GPU serving engines, autoscaling, caching, routing, observability, security, compliance, and unit economics. Research and vision specializations are deliberately skipped.",
+  "targetRoles": ["MLOps Engineer", "AI Infrastructure Engineer", "Platform Engineer (AI)"],
+  "coreSkills": ["python", "linux", "docker", "cloud-gpu", "serving", "inference-optimization", "quantization", "observability", "reliability", "security", "finops", "compliance"],
+  "phaseImportance": {
+    "00-setup-and-tooling": "core",
+    "01-math-foundations": "important",
+    "02-ml-fundamentals": "important",
+    "03-deep-learning-core": "core",
+    "04-computer-vision": "skip",
+    "05-nlp-foundations-to-advanced": "optional",
+    "06-speech-and-audio": "optional",
+    "07-transformers-deep-dive": "important",
+    "08-generative-ai": "optional",
+    "09-reinforcement-learning": "skip",
+    "10-llms-from-scratch": "core",
+    "11-llm-engineering": "core",
+    "12-multimodal-ai": "skip",
+    "13-tools-and-protocols": "important",
+    "14-agent-engineering": "important",
+    "15-autonomous-systems": "optional",
+    "16-multi-agent-and-swarms": "optional",
+    "17-infrastructure-and-production": "core",
+    "18-ethics-safety-alignment": "important",
+    "19-capstone-projects": "important"
+  },
+  "overrides": {
+    "10-llms-from-scratch/05-scaling-distributed": "core",
+    "10-llms-from-scratch/11-quantization": "core",
+    "10-llms-from-scratch/12-inference-optimization": "core",
+    "17-infrastructure-and-production/04-vllm-serving-internals": "core",
+    "17-infrastructure-and-production/08-inference-metrics-goodput": "core",
+    "17-infrastructure-and-production/20-shadow-canary-progressive": "core",
+    "17-infrastructure-and-production/23-sre-for-ai": "core",
+    "17-infrastructure-and-production/27-finops-llms": "core",
+    "07-transformers-deep-dive/12-kv-cache-flash-attention": "core",
+    "07-transformers-deep-dive/09-vision-transformers": "optional",
+    "04-computer-vision/14-vision-transformers": "skip",
+      "19-capstone-projects/14-speculative-decoding-server": "core",
+  "19-capstone-projects/11-llm-observability-dashboard": "core",
+  "19-capstone-projects/13-mcp-server-with-registry": "important",
+  "11-llm-engineering/06-rag": "important"
+  },
+  "phaseRationale": {
+  "04-computer-vision": "Vision model development is not part of infrastructure work; multimodal serving is covered by inference lessons.",
+    "09-reinforcement-learning": "Policy optimization is not an infrastructure concern.",
+    "12-multimodal-ai": "Multimodal research depth is not needed to operate serving infrastructure.",
+    "05-nlp-foundations-to-advanced": "Classical NLP is optional context; serving work does not depend on it.",
+    "08-generative-ai": "Generative model internals are optional when your job is to serve and scale models.",
+    "15-autonomous-systems": "Autonomy research is optional; durable execution for agents is covered in the agent phases.",
+    "16-multi-agent-and-swarms": "Multi-agent orchestration is optional depth for platform work."
+  },
+  "majorProjects": [
+    "Speculative-decoding inference server",
+    "LLM observability and evaluation dashboard",
+    "Production GPU serving stack with canary rollout"
+  ]
+}

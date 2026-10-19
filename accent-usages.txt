@@ -1,0 +1,11 @@
+
+Path                                                                    LineNumber Line
+----                                                                    ---------- ----
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              535               className="flex-1 bg-cyan-500/40 rounded-t"
+E:\AI ENGINEER\src\components\curriculum\curriculum-explorer-client.tsx        288                         className="h-full rounded-full bg-accent-cyan transition-all"
+E:\AI ENGINEER\src\components\curriculum\phase-lesson-list.tsx                 304                         className="group/btn text-xs font-medium gap-1.5 hover:bg-accent-cyan hover:text-black transition-colors"
+E:\AI ENGINEER\src\components\navigation\search-modal.tsx                      237                           ? "bg-accent-cyan text-white"
+E:\AI ENGINEER\src\components\ui\button.tsx                                     40             "bg-cyan-700 text-white hover:bg-cyan-800 shadow-sm active:scale-[0.98]":
+E:\AI ENGINEER\src\components\ui\button.tsx                                     42             "bg-violet-700 text-white hover:bg-violet-800 shadow-sm active:scale-[0.98]":
+
+

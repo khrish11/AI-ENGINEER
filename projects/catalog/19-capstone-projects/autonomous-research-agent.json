@@ -1,0 +1,90 @@
+{
+  "id": "proj-capstone-research-agent",
+  "slug": "autonomous-research-agent",
+  "title": "Capstone: Autonomous Research Agent",
+  "description": "Ship a production-style autonomous research agent: planning → tools → memory → resumability → approval gates → tracing. The agent researches a topic across multiple sources, cites everything, respects budgets, pauses for approval on risky actions, and produces an auditable report.",
+  "level": "capstone",
+  "source": "platform",
+  "estimatedHours": 65,
+  "phaseSlugs": ["19-capstone-projects", "14-agent-engineering", "15-autonomous-systems"],
+  "associatedOccurrences": [
+    "19-capstone-projects/01-terminal-native-coding-agent",
+    "14-agent-engineering/01-the-agent-loop",
+    "15-autonomous-systems/01-long-horizon-agents"
+  ],
+  "skills": ["planning", "tool-calling", "agent-memory", "human-approval", "reliability", "observability", "agent-evaluation"],
+  "prerequisites": ["proj-approval-agent"],
+  "learningObjectives": [
+    "Combine planning, tool use, and durable memory in one system",
+    "Enforce budgets and approval gates on a long-running loop",
+    "Trace every step for post-hoc audit",
+    "Evaluate research quality with citation-grounded scoring, not vibes"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Agent repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Run report + audit trail" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Research-quality evaluation" },
+    { "id": "reflection", "kind": "reflection", "title": "Reflection on agent limitations" }
+  ],
+  "milestones": [
+    {
+      "id": "planner-core",
+      "title": "Planning + tool core",
+      "objective": "Implement plan-execute loop with ≥4 tools (search, fetch, note, cite) and typed tool results.",
+      "expectedOutput": "A research task completes with structured notes and citations.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 480
+    },
+    {
+      "id": "memory-resume",
+      "title": "Memory + resumability",
+      "objective": "Persist working memory; mid-run kill resumes without losing progress or duplicating work.",
+      "expectedOutput": "Crash/resume test passes.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "gates",
+      "title": "Approval gates + budgets",
+      "objective": "Gate risky actions (external posts, large fetches) behind approval; enforce time/cost budgets.",
+      "expectedOutput": "Budget table + approval audit log.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "quality-eval",
+      "title": "Research-quality evaluation",
+      "objective": "Define citation-grounded scoring (every claim must trace to a source); run ≥3 research tasks and grade.",
+      "expectedOutput": "Graded research reports with claim coverage stats.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 360
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 20, "criteria": ["Loop + tools work", "Resume correct", "Citations valid"], "minimumExpectation": "Research tasks complete with resumable state", "excellentExpectation": "Deterministic-replay property tests" },
+      { "id": "citations", "category": "Citation grounding", "weight": 25, "criteria": ["Every claim traceable", "Fake citations impossible", "Source quality acknowledged"], "minimumExpectation": "Claim-coverage score reported", "excellentExpectation": "Claim-level verification protocol" },
+      { "id": "operational", "category": "Operational control", "weight": 25, "criteria": ["Budgets enforced", "Approval gates enforced", "Traces auditable"], "minimumExpectation": "Budgets + gates demonstrably enforced", "excellentExpectation": "Adversarial tests for gate bypass" },
+      { "id": "evaluation", "category": "Evaluation honesty", "weight": 15, "criteria": ["Fixed task set", "Failures reported", "Limitations stated"], "minimumExpectation": "≥3 graded tasks", "excellentExpectation": "Inter-run comparison + drift notes" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture, threat model, costs", "Reflection present"], "minimumExpectation": "README + reflection", "excellentExpectation": "Design-alternatives analysis" }
+    ],
+    "completionThreshold": 70,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "MCP tools", "SQLite durable state", "OpenTelemetry", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["planner → executor loop → durable memory → tools → citation ledger → report"],
+    "constraints": ["All fetched content cached with provenance", "No approval bypasses", "Budgets abort, not truncate silently"],
+    "hints": ["Claim-coverage scoring ('what fraction of statements have live citations') is the honest quality metric here"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Resume + gate test output/CI.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Graded research reports.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Run report with budget + audit trail.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["agent", "general-ai", "research"],
+  "hasStarterTemplate": false
+}

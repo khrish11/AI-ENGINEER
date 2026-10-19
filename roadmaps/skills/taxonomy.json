@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "foundations",
+      "name": "Foundations",
+      "description": "Tooling and engineering basics every AI engineer uses daily."
+    },
+    {
+      "id": "math",
+      "name": "Mathematics",
+      "description": "The mathematical vocabulary behind models and evaluation."
+    },
+    {
+      "id": "ml",
+      "name": "Machine Learning",
+      "description": "Classical supervised and unsupervised learning."
+    },
+    {
+      "id": "deep-learning",
+      "name": "Deep Learning",
+      "description": "Neural networks, training dynamics, and frameworks."
+    },
+    {
+      "id": "llm",
+      "name": "LLMs",
+      "description": "Transformers, language-model training, and inference."
+    },
+    {
+      "id": "rag",
+      "name": "Retrieval",
+      "description": "Chunking, vector and hybrid search, reranking, and retrieval evaluation."
+    },
+    {
+      "id": "agents",
+      "name": "Agents",
+      "description": "Tool use, planning, memory, protocols, and orchestration."
+    },
+    {
+      "id": "production",
+      "name": "Production",
+      "description": "Serving, observability, security, and operational economics."
+    },
+    {
+      "id": "safety",
+      "name": "Safety & Alignment",
+      "description": "Alignment, red-teaming, privacy, and governance."
+    },
+    {
+      "id": "multimodal",
+      "name": "Multimodal & Audio",
+      "description": "Vision, speech, and cross-modal systems."
+    }
+  ],
+  "skills": [
+    { "id": "python", "name": "Python", "group": "foundations", "match": ["python", "polars", "pydantic"] },
+    { "id": "git", "name": "Git", "group": "foundations", "match": ["git", "collaboration"] },
+    { "id": "linux", "name": "Linux & Shell", "group": "foundations", "match": ["linux", "terminal", "shell", "bash"] },
+    { "id": "docker", "name": "Docker & Containers", "group": "foundations", "match": ["docker", "container", "kubernetes"] },
+    { "id": "sql", "name": "SQL & Data Handling", "group": "foundations", "match": ["sql", "data-management", "duckdb", "hdf5", "data pipeline", "data-pipelines"] },
+    { "id": "cloud-gpu", "name": "Cloud & GPU Setup", "group": "foundations", "match": ["gpu", "cloud", "cuda", "environment"] },
+    { "id": "apis", "name": "APIs & Keys", "group": "foundations", "match": ["apis-and-keys", "api key"] },
+    { "id": "jupyter", "name": "Notebooks", "group": "foundations", "match": ["jupyter", "notebook"] },
+
+    { "id": "linear-algebra", "name": "Linear Algebra", "group": "math", "match": ["linear-algebra", "matrix", "matrices", "eigen", "vectors"] },
+    { "id": "calculus", "name": "Calculus", "group": "math", "match": ["calculus", "gradient", "chain-rule", "hessian"] },
+    { "id": "probability", "name": "Probability", "group": "math", "match": ["probability", "bayes", "distributions", "stochastic"] },
+    { "id": "statistics", "name": "Statistics", "group": "math", "match": ["statistics", "statistical", "sampling"] },
+    { "id": "optimization", "name": "Optimization", "group": "math", "match": ["optimization", "convex", "optimi"] },
+    { "id": "information-theory", "name": "Information Theory", "group": "math", "match": ["information-theory", "entropy"] },
+    { "id": "dimensionality-reduction", "name": "Dimensionality Reduction", "group": "math", "match": ["dimensionality-reduction", "svd", "singular-value"] },
+    { "id": "graph-theory", "name": "Graph Theory", "group": "math", "match": ["graph-theory"] },
+
+    { "id": "regression", "name": "Regression", "group": "ml", "match": ["regression"] },
+    { "id": "classification", "name": "Classification", "group": "ml", "match": ["classification", "logistic", "naive-bayes", "svm", "support-vector", "knn", "k-nearest"] },
+    { "id": "feature-engineering", "name": "Feature Engineering", "group": "ml", "match": ["feature-engineering", "feature-selection", "feature-store"] },
+    { "id": "model-evaluation", "name": "Model Evaluation", "group": "ml", "match": ["model-evaluation", "evaluation", "benchmark", "metrics"] },
+    { "id": "ensembles", "name": "Trees & Ensembles", "group": "ml", "match": ["decision-trees", "ensemble", "random-forest"] },
+    { "id": "hyperparameter-tuning", "name": "Hyperparameter Tuning", "group": "ml", "match": ["hyperparameter"] },
+    { "id": "ml-pipelines", "name": "ML Pipelines", "group": "ml", "match": ["ml-pipelines", "pipeline", "training-serving"] },
+    { "id": "time-series", "name": "Time Series", "group": "ml", "match": ["time-series"] },
+    { "id": "anomaly-detection", "name": "Anomaly Detection", "group": "ml", "match": ["anomaly-detection"] },
+    { "id": "ml-system-design", "name": "ML System Design", "group": "ml", "match": ["ml-system-design", "model-monitoring", "drift"] },
+
+    { "id": "perceptron", "name": "Neural Network Basics", "group": "deep-learning", "match": ["perceptron", "multi-layer", "activation-function", "loss-function"] },
+    { "id": "backpropagation", "name": "Backpropagation", "group": "deep-learning", "match": ["backpropagation", "autodiff", "autograd"] },
+    { "id": "pytorch", "name": "PyTorch", "group": "deep-learning", "match": ["pytorch", "torch"] },
+    { "id": "jax", "name": "JAX", "group": "deep-learning", "match": ["jax"] },
+    { "id": "optimizers", "name": "Optimizers & Schedules", "group": "deep-learning", "match": ["optimizer", "learning-rate", "adam", "sgd"] },
+    { "id": "regularization", "name": "Regularization", "group": "deep-learning", "match": ["regularization", "weight-initialization", "numerical-stability"] },
+    { "id": "cnn", "name": "Convolutional Networks", "group": "deep-learning", "match": ["convolution", "cnn", "resnet", "lenet"] },
+    { "id": "rnn", "name": "Recurrent Networks", "group": "deep-learning", "match": ["rnn", "lstm", "recurrent"] },
+
+    { "id": "tokenization", "name": "Tokenization", "group": "llm", "match": ["tokenizer", "tokenization", "bpe", "wordpiece", "sentencepiece", "subword"] },
+    { "id": "attention", "name": "Attention", "group": "llm", "match": ["attention", "flash-attention", "kv-cache"] },
+    { "id": "transformers", "name": "Transformer Architecture", "group": "llm", "match": ["transformer", "bert", "gpt", "t5", "positional-encoding"] },
+    { "id": "pretraining", "name": "Pre-Training", "group": "llm", "match": ["pre-training", "pretraining", "scaling-law", "distributed-training", "fsdp", "deepspeed"] },
+    { "id": "fine-tuning", "name": "Fine-Tuning", "group": "llm", "match": ["fine-tuning", "lora", "instruction-tuning", "sft", "dpo"] },
+    { "id": "rlhf", "name": "RLHF", "group": "llm", "match": ["rlhf", "reward-model", "preference"] },
+    { "id": "quantization", "name": "Quantization", "group": "llm", "match": ["quantization", "awq", "gptq", "gguf", "fp8"] },
+    { "id": "inference-optimization", "name": "Inference Optimization", "group": "llm", "match": ["inference-optimization", "speculative-decoding", "vllm", "sglang", "serving", "batching"] },
+    { "id": "prompting", "name": "Prompting", "group": "llm", "match": ["prompt-engineering", "few-shot", "chain-of-thought", "context-engineering", "prompt-caching"] },
+    { "id": "embeddings", "name": "Embeddings", "group": "llm", "match": ["embedding", "vector-representation", "word2vec", "glove", "fasttext"] },
+    { "id": "structured-output", "name": "Structured Output", "group": "llm", "match": ["structured-output", "json-schema", "constrained-decoding"] },
+    { "id": "llm-evaluation", "name": "LLM Evaluation", "group": "llm", "match": ["llm-evaluation", "evaluation", "ragas", "deepeval", "evals"] },
+    { "id": "llm-application", "name": "LLM Applications", "group": "llm", "match": ["production-app", "llm-engineering", "chatbot", "question-answering"] },
+
+    { "id": "retrieval", "name": "Retrieval", "group": "rag", "match": ["information-retrieval", "retrieval", "search"] },
+    { "id": "chunking", "name": "Chunking", "group": "rag", "match": ["chunking", "chunk"] },
+    { "id": "vector-search", "name": "Vector Search", "group": "rag", "match": ["vector-database", "vector-search", "qdrant", "faiss", "similarity", "embedding"] },
+    { "id": "hybrid-search", "name": "Hybrid Search", "group": "rag", "match": ["hybrid-search", "bm25", "keyword-search"] },
+    { "id": "reranking", "name": "Reranking", "group": "rag", "match": ["rerank", "cross-encoder"] },
+    { "id": "rag", "name": "RAG", "group": "rag", "match": ["rag", "retrieval-augmented", "colpali", "document-qa"] },
+    { "id": "rag-evaluation", "name": "RAG Evaluation", "group": "rag", "match": ["rag-evaluation", "faithfulness", "ndcg", "mrr", "precision-recall"] },
+
+    { "id": "tool-calling", "name": "Tool Calling", "group": "agents", "match": ["tool", "function-calling", "tool-use", "dispatcher"] },
+    { "id": "planning", "name": "Planning", "group": "agents", "match": ["plan", "rewoo", "tree-of-thoughts", "reflexion", "self-refine", "htn"] },
+    { "id": "agent-memory", "name": "Agent Memory", "group": "agents", "match": ["memory", "memgpt", "mem0", "blackboard", "repo-memory"] },
+    { "id": "mcp", "name": "MCP", "group": "agents", "match": ["mcp", "model-context-protocol"] },
+    { "id": "agent-orchestration", "name": "Agent Orchestration", "group": "agents", "match": ["agent-loop", "orchestration", "langgraph", "autogen", "crew", "agents-sdk", "handoff", "workflow-pattern", "runtime"] },
+    { "id": "multi-agent", "name": "Multi-Agent Systems", "group": "agents", "match": ["multi-agent", "swarm", "society-of-mind", "consensus", "negotiation", "debate", "agent-team"] },
+    { "id": "computer-use", "name": "Computer Use", "group": "agents", "match": ["computer-use", "browser-agent", "webarena", "osworld"] },
+    { "id": "agent-evaluation", "name": "Agent Evaluation", "group": "agents", "match": ["agent-evaluation", "swebench", "gaia", "agentbench", "eval-driven"] },
+    { "id": "human-approval", "name": "Human Oversight", "group": "agents", "match": ["human-in-the-loop", "propose-then-commit", "permission-mode", "kill-switch", "checkpoint"] },
+
+    { "id": "serving", "name": "Model Serving", "group": "production", "match": ["serving", "vllm", "inference-engine", "gpu-autoscaling", "gateway", "deployment"] },
+    { "id": "observability", "name": "Observability", "group": "production", "match": ["observability", "opentelemetry", "otel", "tracing", "langfuse", "monitoring", "metrics"] },
+    { "id": "security", "name": "Security", "group": "production", "match": ["security", "secrets", "guardrail", "injection", "auth", "sandbox", "supply-chain"] },
+    { "id": "reliability", "name": "Reliability & SRE", "group": "production", "match": ["sre", "chaos", "reliability", "circuit-breaker", "durable-execution", "load-testing", "canary", "rollback"] },
+    { "id": "finops", "name": "Cost & FinOps", "group": "production", "match": ["cost", "finops", "economics", "caching", "routing", "budget"] },
+    { "id": "compliance", "name": "Compliance", "group": "production", "match": ["compliance", "soc-2", "hipaa", "gdpr", "eu-ai-act", "governance", "provenance"] },
+
+    { "id": "alignment", "name": "Alignment", "group": "safety", "match": ["alignment", "constitutional-ai", "reward-hacking", "sycophancy", "mesa-optimization", "sleeper-agent", "rlaif"] },
+    { "id": "red-teaming", "name": "Red Teaming", "group": "safety", "match": ["red-team", "jailbreak", "attack", "garak", "pyrit", "wmdp"] },
+    { "id": "prompt-injection", "name": "Prompt Injection Defense", "group": "safety", "match": ["prompt-injection", "indirect-prompt", "echoleak"] },
+    { "id": "fairness", "name": "Fairness & Bias", "group": "safety", "match": ["bias", "fairness", "representational-harm"] },
+    { "id": "privacy", "name": "Privacy", "group": "safety", "match": ["privacy", "differential-privacy"] },
+    { "id": "watermarking", "name": "Watermarking", "group": "safety", "match": ["watermark", "c2pa", "synthid"] },
+    { "id": "moderation", "name": "Moderation", "group": "safety", "match": ["moderation", "llama-guard", "classifier", "content-filtering"] },
+
+    { "id": "computer-vision", "name": "Computer Vision", "group": "multimodal", "match": ["vision", "image", "object-detection", "segmentation", "convolution", "cnn", "yolo", "clip", "nerf"] },
+    { "id": "diffusion", "name": "Diffusion Models", "group": "multimodal", "match": ["diffusion", "stable-diffusion", "ddpm", "flow-matching", "gans"] },
+    { "id": "vlm", "name": "Vision-Language Models", "group": "multimodal", "match": ["vision-language", "vlm", "llava", "blip", "flamingo", "multimodal", "qwen-vl", "internvl", "colpali"] },
+    { "id": "asr", "name": "Speech Recognition", "group": "multimodal", "match": ["speech-recognition", "asr", "whisper", "ctc"] },
+    { "id": "tts", "name": "Speech Synthesis", "group": "multimodal", "match": ["text-to-speech", "tts", "voice-cloning", "voice-conversion", "music-generation"] },
+    { "id": "audio-processing", "name": "Audio Processing", "group": "multimodal", "match": ["audio", "spectrogram", "mel", "voice-activity", "speaker"] },
+    { "id": "reinforcement-learning", "name": "Reinforcement Learning", "group": "ml", "match": ["reinforcement", "q-learning", "policy-gradient", "ppo", "dqn", "mdp", "actor-critic", "marl"] }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "proj-redteam-suite",
+  "slug": "safety-evaluation-redteam",
+  "title": "AI Safety Evaluation & Red-Team Test Suite",
+  "description": "Build a deterministic safety evaluation and red-team suite for an LLM or agent: a versioned attack corpus across multiple failure classes, automated probes with typed verdicts, bias/fairness checks, and an honest findings report including unfixed weaknesses.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 16,
+  "phaseSlugs": ["18-ethics-safety-alignment"],
+  "associatedOccurrences": [
+    "18-ethics-safety-alignment/01-instruction-following-alignment-signal",
+    "18-ethics-safety-alignment/02-reward-hacking-goodhart",
+    "18-ethics-safety-alignment/03-direct-preference-optimization-family"
+  ],
+  "skills": ["red-teaming", "alignment", "moderation", "security", "prompt-injection", "llm-evaluation"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Categorize failure classes (injection, refusal bypass, fairness, moderation gaps)",
+    "Build a versioned probe corpus with typed expected outcomes",
+    "Automate probes and score verdicts deterministically where possible",
+    "Report findings honestly, including unresolved weaknesses"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository with probe corpus" },
+    { "id": "report", "kind": "evaluation_results", "title": "Findings report" }
+  ],
+  "milestones": [
+    {
+      "id": "corpus",
+      "title": "Versioned probe corpus",
+      "objective": "Create ≥20 probes across ≥3 failure classes with expected-verdict annotations and severity ratings.",
+      "expectedOutput": "Corpus file with schema, versions, and rationale per probe.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "runner",
+      "title": "Probe runner + verdicts",
+      "objective": "Run probes against a target model/agent; produce typed verdicts with per-probe justification captured.",
+      "expectedOutput": "Runner emits a verdict report (JSON + human-readable).",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "injection",
+      "title": "Injection & jailbreak class",
+      "objective": "Cover prompt-injection and refusal-bypass probes with attacker-perspective analysis.",
+      "expectedOutput": "Class results with at least one documented bypass reasoning.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "findings",
+      "title": "Findings report",
+      "objective": "Aggregate verdicts: pass rate per class, worst probes, and ethical handling of any harmful content samples.",
+      "expectedOutput": "Findings report with limitation statements.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 120
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "corpus", "category": "Probe corpus quality", "weight": 25, "criteria": ["Class coverage", "Versioned + rationale", "No gratuitous harmful content"], "minimumExpectation": "≥20 probes, 3 classes, versioned", "excellentExpectation": "Peer-reviewable rationale and severity rubric" },
+      { "id": "runner", "category": "Runner correctness", "weight": 20, "criteria": ["Typed verdicts", "Deterministic scoring where possible", "Reproducible runs"], "minimumExpectation": "Runner output reproduceable from README", "excellentExpectation": "Manual-verdict guidance where automation is impossible, labeled as such" },
+      { "id": "analysis", "category": "Failure analysis", "weight": 25, "criteria": ["Bypass reasoning", "Class patterns identified", "Mitigation suggestions"], "minimumExpectation": "Analysis per class", "excellentExpectation": "Root-cause hypotheses tied to model behavior" },
+      { "id": "ethics", "category": "Ethical handling", "weight": 15, "criteria": ["Harmful examples handled responsibly", "Responsible-disclosure stance stated", "No instructions for abuse"], "minimumExpectation": "Ethics section present", "excellentExpectation": "Publishing guidelines for findings" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Threat model", "Repro commands", "Limitations"], "minimumExpectation": "README with threat model", "excellentExpectation": "Extensible corpus guide" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "pytest", "Provider/model SDK"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["corpus (versioned probes) → runner (target adapters) → verifier → report"],
+    "constraints": ["Never distribute working harmful payloads in the repo; store only high-level descriptions where needed", "Target must be your own or a permitted eval endpoint"],
+    "hints": ["Distinguish 'model is unsafe' from 'prompt was ambiguous' in verdicts; most naive red-team stats conflate the two"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with corpus + runner.", "required": true },
+    { "id": "e-report", "kind": "evaluation_result", "description": "Findings report with ethics + limitations.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Runner test output/CI link.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "research", "mlops"],
+  "hasStarterTemplate": false
+}

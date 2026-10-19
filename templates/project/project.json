@@ -1,0 +1,12 @@
+{
+  "id": "project-id",
+  "slug": "project-slug",
+  "title": "Project title",
+  "description": "A concise project brief.",
+  "source": "community",
+  "sourceUrl": "https://example.com/source",
+  "level": "intermediate",
+  "phaseSlugs": ["phase-slug"],
+  "skills": ["skill-id"],
+  "milestones": []
+}

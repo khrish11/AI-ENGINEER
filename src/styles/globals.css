@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AI Engineer OS — Design System CSS
+   CSS-first theme tokens for dark/light mode
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* Light Theme Tokens */
+    --background: 248 250 252;        /* #F8FAFC zinc/slate-50 */
+    --foreground: 15 23 42;           /* #0F172A slate-900 */
+    
+    --surface: 255 255 255;           /* #FFFFFF pure white */
+    --surface-foreground: 15 23 42;
+    
+    --card: 255 255 255;              /* #FFFFFF card background */
+    --card-foreground: 15 23 42;
+    
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+    
+    --muted: 241 245 249;             /* #F1F5F9 slate-100 */
+    --muted-foreground: 71 85 105;  /* #475569 slate-600 — 4.5:1 on light surfaces */
+    
+    --border: 226 232 240;            /* #E2E8F0 slate-200 */
+    --input: 226 232 240;
+    
+    --accent-cyan: 21 94 117;         /* #155E75 cyan-800 — 4.5:1 on light surfaces */
+    --accent-cyan-foreground: 255 255 255;
+    
+    --accent-violet: 109 40 217;      /* #6D28D9 violet-700 — 4.5:1 on light surfaces */
+    --accent-violet-foreground: 255 255 255;
+    
+    --status-success: 6 95 70;       /* #065F46 emerald-800 — 4.5:1 on light surfaces */
+    --status-warning: 146 64 14;     /* #92400E amber-800 — 4.5:1 on light surfaces */
+    --status-error: 185 28 28;       /* #B91C1C red-700 — 4.5:1 on light surfaces */
+    --status-info: 29 78 216;        /* #1D4ED8 blue-700 — 4.5:1 on light surfaces */
+    
+    --ring: 8 145 178;                /* cyan ring */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark Theme Tokens (Default) */
+    --background: 9 13 22;            /* #090D16 deep slate */
+    --foreground: 249 250 251;        /* #F9FAFB slate-50 */
+    
+    --surface: 17 24 39;              /* #111827 gray-900 / dark surface */
+    --surface-foreground: 249 250 251;
+    
+    --card: 24 33 47;                 /* #18212F subtle dark card */
+    --card-foreground: 249 250 251;
+    
+    --popover: 17 24 39;
+    --popover-foreground: 249 250 251;
+    
+    --muted: 30 41 59;                /* #1E293B slate-800 */
+    --muted-foreground: 156 163 175;  /* #9CA3AF gray-400 */
+    
+    --border: 31 41 55;               /* #1F2937 gray-800 */
+    --input: 31 41 55;
+    
+    --accent-cyan: 34 211 238;        /* #22D3EE cyan-400 */
+    --accent-cyan-foreground: 255 255 255;
+    
+    --accent-violet: 167 139 250;     /* #A78BFA violet-400 */
+    --accent-violet-foreground: 255 255 255;
+    
+    --status-success: 16 185 129;     /* #10B981 emerald-500 — 4.5:1+ on dark cards */
+    --status-warning: 245 158 11;     /* #F59E0B amber-500 — 4.5:1+ on dark cards */
+    --status-error: 248 113 113;      /* #F87171 red-400 — 4.5:1+ on dark cards */
+    --status-info: 96 165 250;        /* #60A5FA blue-400 — 4.5:1+ on dark cards */
+    
+    --ring: 6 182 212;                /* cyan ring */
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-accent-cyan/20 selection:text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Accessibility & Focus Rings */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent-cyan ring-offset-2 ring-offset-background;
+  }
+
+  /* Accessible Skip to Content Link */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan-700 focus:text-white focus:font-medium focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-cyan;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.2);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.4);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

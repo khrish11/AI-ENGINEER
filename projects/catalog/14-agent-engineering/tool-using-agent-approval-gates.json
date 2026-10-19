@@ -1,0 +1,87 @@
+{
+  "id": "proj-approval-agent",
+  "slug": "tool-using-agent-approval-gates",
+  "title": "Tool-Using Agent with Human Approval Gates",
+  "description": "Build a stateful ReAct-style agent that plans, calls real tools, and pauses for explicit human approval before any irreversible or a risk-classified action, with a persisted state machine, trace log, and resumable runs recorded honestly.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 30,
+  "phaseSlugs": ["14-agent-engineering"],
+  "associatedOccurrences": [
+    "14-agent-engineering/01-the-agent-loop",
+    "14-agent-engineering/02-rewoo-plan-and-execute",
+    "14-agent-engineering/03-reflexion-verbal-rl"
+  ],
+  "skills": ["planning", "tool-calling", "human-approval", "agent-memory", "agent-evaluation", "mcp"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement a deterministic agent state machine with explicit transitions",
+    "Classify actions by risk tier and gate the risky ones",
+    "Persist agent state for resumability after crashes",
+    "Evaluate the agent with replayable traces rather than vibes"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Trace-based evaluation report" }
+  ],
+  "milestones": [
+    {
+      "id": "state-machine",
+      "title": "Persisted state machine",
+      "objective": "Implement agent states (plan, act, await-approval, done) with journal; a killed process resumes exactly.",
+      "expectedOutput": "Kill-and-resume test passes on a real run.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "tooling",
+      "title": "Risk-tiered tool surface",
+      "objective": "With ≥3 tools with risk tiers; tier 2+ requires stored approval records before execution.",
+      "expectedOutput": "Unapproved risky actions blocked with typed errors.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "session",
+      "title": "Reflective loop",
+      "objective": "Add a self-reflection step that critiques failed plans and retries with revised reasoning.",
+      "expectedOutput": "Trace shows a failed attempt followed by a successful revision.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "eval",
+      "title": "Trace evaluation",
+      "objective": "Define success criteria for at least 5 tasks; run them and report pass rate plus gate compliance.",
+      "expectedOutput": "Task pass table from replayed traces.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 240
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["State machine + resume semantics work properly", "Tools integrate", "Traces complete"], "minimumExpectation": "Kill/resume test passes", "excellentExpectation": "Deterministic-replay property test" },
+      { "id": "gates", "category": "Approval gating", "weight": 25, "criteria": ["Risk tiers enforced", "Approval audited", "Bypass impossible without code changes"], "minimumExpectation": "Risky actions block until approved", "excellentExpectation": "Adversarial tests prove bypass resistance" },
+      { "id": "evaluation", "category": "Evaluation honesty", "weight": 20, "criteria": ["Fixed task set", "Pass criteria written before runs", "Failures analyzed"], "minimumExpectation": "≥5 tasks with recorded outcomes", "excellentExpectation": "Per-task cost/latency budget reported" },
+      { "id": "reliability", "category": "Reliability", "weight": 15, "criteria": ["Crash-safe state", "Idempotent tool retries", "Timeouts defined"], "minimumExpectation": "Resumable after abrupt termination", "excellentExpectation": "Fuzz tests with abrupt kills " },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture + risk taxonomy documented", "Reproduction commands"], "minimumExpectation": "README + risk taxonomy table", "excellentExpectation": "Walkthrough of a gated action end-to-end" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "MCP or function-calling SDK", "SQLite/Postgres for state", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["state store (journal) → planner → executor with gate check → reflection", "risk classification as config, not code"],
+    "constraints": ["Approval records immutable once made", "No secret-bearing tools", "Agents may not self-approve"],
+    "hints": ["Make 'await_approval' a real durable state, not a sleep loop — resumes after restarts are the test"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Resume + gating test output/CI link.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Task pass table from replays.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["agent", "llm-app", "general-ai"],
+  "hasStarterTemplate": false
+}

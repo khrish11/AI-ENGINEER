@@ -1,0 +1,18 @@
+name: Resource contribution
+description: Propose a verified learning resource.
+title: "[Resource]: "
+labels: ["resource", "needs-review"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Canonical URL
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Relevance and attribution
+      description: Explain the lesson mapping, source author, license, and why the resource is useful.
+    validations:
+      required: true

@@ -1,0 +1,90 @@
+{
+  "id": "proj-cv-classifier",
+  "slug": "image-classifier-inference-api",
+  "title": "Image Classifier + Inference API",
+  "description": "Train an image classifier from scratch on a public dataset, expose it as a FastAPI inference endpoint in Docker, and record per-class accuracy plus p50/p95 latency in an evaluation report a reviewer can re-run.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 14,
+  "phaseSlugs": ["04-computer-vision"],
+  "associatedOccurrences": [
+    "04-computer-vision/01-image-fundamentals",
+    "04-computer-vision/02-convolutions-from-scratch",
+    "04-computer-vision/03-cnns-lenet-to-resnet"
+  ],
+  "skills": ["computer-vision", "cnn", "pytorch", "serving", "docker", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Build a CNN training loop with augmentation and validation",
+    "Quantify per-class performance beyond top-line accuracy",
+    "Serve a model behind a typed HTTP API with input validation",
+    "Measure and report p50/p95 latency under a scripted load"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Per-class evaluation + latency report" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API contract (OpenAPI)" }
+  ],
+  "milestones": [
+    {
+      "id": "train",
+      "title": "Train CNN without pretraining",
+      "objective": "Train a small CNN from scratch on a public dataset (e.g. CIFAR-10 subset) with augmentation and a validation split.",
+      "expectedOutput": "Checkpoint plus a per-class accuracy table that beats a trivial baseline.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "api",
+      "title": "FastAPI inference endpoint",
+      "objective": "Serve predictions with request validation, error handling, and a health endpoint.",
+      "expectedOutput": "OpenAPI docs and passing API contract tests.",
+      "requiredEvidence": ["e-api"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "docker-load",
+      "title": "Container + load test",
+      "objective": "Containerize the service and measure p50/p95 latency with a scripted 100-request load run.",
+      "expectedOutput": "Latency table in the report and a reproducible load script.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "confusion",
+      "title": "Confusion analysis",
+      "objective": "Analyze the confusion matrix; name the top two failure pairs and hypothesize causes.",
+      "expectedOutput": "Confusion section in the evaluation report.",
+      "requiredEvidence": ["e-eval"],
+      "required": false,
+      "estimatedMinutes": 60
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "model", "category": "Model quality", "weight": 25, "criteria": ["Beats baseline honestly", "Per-class metrics", "Augmentation documented"], "minimumExpectation": "Trained-from-scratch model with a per-class table", "excellentExpectation": "Ablated training choices with justification" },
+      { "id": "api", "category": "API design", "weight": 20, "criteria": ["Typed requests/responses", "Validation errors handled", "Health endpoint"], "minimumExpectation": "Working endpoint and OpenAPI docs", "excellentExpectation": "Contract tests plus graceful degradation for bad input" },
+      { "id": "perf", "category": "Performance measurement", "weight": 15, "criteria": ["p50/p95 reported", "Load script reproducible", "Batching considered"], "minimumExpectation": "Documented latency run", "excellentExpectation": "Latency compared across batch sizes" },
+      { "id": "deploy", "category": "Deployment", "weight": 15, "criteria": ["Reproducible Docker build", "Externalized config", "Sane image size"], "minimumExpectation": "docker compose up serves the API", "excellentExpectation": "Multi-stage build with slim image and runbook" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Train and serve instructions", "Dataset license noted"], "minimumExpectation": "README reproduces training and serving", "excellentExpectation": "Step-by-step operational docs" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed modules", "Preprocessing and API tests"], "minimumExpectation": "Lint-clean with API tests", "excellentExpectation": "Deterministic preprocessing verified by tests" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["PyTorch", "FastAPI", "Docker", "pytest", "httpx"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["training/ (scripts)", "service/ (FastAPI app)", "tests/ (API contract tests with a tiny fixture model)"],
+    "constraints": ["No pretrained weights in the final model", "Deterministic response shape for empty and oversized inputs"],
+    "hints": ["Serve with a fixed model version hash so the evaluation report and API output line up"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with training and service code.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Per-class accuracy and latency report.", "required": true },
+    { "id": "e-api", "kind": "documentation_url", "description": "OpenAPI/contract documentation link or in-repo file.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "mlops"],
+  "hasStarterTemplate": false
+}

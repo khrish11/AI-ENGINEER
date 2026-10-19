@@ -1,0 +1,174 @@
+{
+  "generatedAt": "2026-10-18T06:41:58.254Z",
+  "totalProjects": 24,
+  "byLevel": {
+    "beginner": 2,
+    "intermediate": 11,
+    "advanced": 6,
+    "capstone": 5
+  },
+  "phases": {
+    "total": 20,
+    "covered": 20,
+    "uncovered": [],
+    "projectsByPhase": {
+      "00-setup-and-tooling": [
+        "proj-repro-ai-env"
+      ],
+      "01-math-foundations": [
+        "proj-gd-visualizer"
+      ],
+      "02-ml-fundamentals": [
+        "proj-supervised-system"
+      ],
+      "03-deep-learning-core": [
+        "proj-nn-scratch"
+      ],
+      "04-computer-vision": [
+        "proj-cv-classifier"
+      ],
+      "05-nlp-foundations-to-advanced": [
+        "proj-semantic-classifier"
+      ],
+      "06-speech-and-audio": [
+        "proj-audio-pipeline"
+      ],
+      "07-transformers-deep-dive": [
+        "proj-attention-scratch"
+      ],
+      "08-generative-ai": [
+        "proj-generative-experiment"
+      ],
+      "09-reinforcement-learning": [
+        "proj-gridworld-rl"
+      ],
+      "10-llms-from-scratch": [
+        "proj-mini-lm"
+      ],
+      "11-llm-engineering": [
+        "proj-rag-app",
+        "proj-capstone-eval-platform",
+        "proj-capstone-rag-platform"
+      ],
+      "12-multimodal-ai": [
+        "proj-doc-qa",
+        "proj-capstone-multimodal"
+      ],
+      "13-tools-and-protocols": [
+        "proj-mcp-server"
+      ],
+      "14-agent-engineering": [
+        "proj-approval-agent",
+        "proj-capstone-research-agent"
+      ],
+      "15-autonomous-systems": [
+        "proj-resumable-agent",
+        "proj-capstone-research-agent"
+      ],
+      "16-multi-agent-and-swarms": [
+        "proj-multi-agent"
+      ],
+      "17-infrastructure-and-production": [
+        "proj-production-service",
+        "proj-capstone-ai-infra",
+        "proj-capstone-multimodal",
+        "proj-capstone-rag-platform"
+      ],
+      "18-ethics-safety-alignment": [
+        "proj-redteam-suite",
+        "proj-capstone-eval-platform"
+      ],
+      "19-capstone-projects": [
+        "proj-capstone-eval-platform",
+        "proj-capstone-ai-infra",
+        "proj-capstone-research-agent",
+        "proj-capstone-multimodal",
+        "proj-capstone-rag-platform"
+      ]
+    }
+  },
+  "skills": {
+    "total": 60,
+    "bySkill": {
+      "agent-evaluation": 4,
+      "agent-memory": 3,
+      "agent-orchestration": 1,
+      "alignment": 1,
+      "asr": 1,
+      "attention": 2,
+      "audio-processing": 1,
+      "backpropagation": 1,
+      "calculus": 1,
+      "chunking": 1,
+      "classification": 2,
+      "cnn": 1,
+      "computer-vision": 3,
+      "diffusion": 1,
+      "docker": 4,
+      "embeddings": 4,
+      "feature-engineering": 1,
+      "finops": 1,
+      "git": 1,
+      "human-approval": 2,
+      "hybrid-search": 1,
+      "inference-optimization": 1,
+      "information-theory": 1,
+      "jupyter": 1,
+      "linear-algebra": 1,
+      "linux": 1,
+      "llm-evaluation": 2,
+      "mcp": 2,
+      "ml-pipelines": 3,
+      "model-evaluation": 7,
+      "moderation": 1,
+      "multi-agent": 1,
+      "observability": 7,
+      "optimization": 2,
+      "optimizers": 1,
+      "perceptron": 1,
+      "planning": 4,
+      "pretraining": 1,
+      "probability": 2,
+      "prompt-injection": 1,
+      "prompting": 2,
+      "python": 13,
+      "pytorch": 5,
+      "rag": 4,
+      "rag-evaluation": 3,
+      "red-teaming": 1,
+      "regression": 1,
+      "regularization": 1,
+      "reinforcement-learning": 1,
+      "reliability": 4,
+      "reranking": 1,
+      "retrieval": 1,
+      "security": 5,
+      "serving": 6,
+      "structured-output": 3,
+      "tokenization": 1,
+      "tool-calling": 3,
+      "transformers": 1,
+      "vector-search": 1,
+      "vlm": 2
+    }
+  },
+  "tracks": {
+    "total": 7,
+    "byTrack": {
+      "agent": 7,
+      "general-ai": 24,
+      "llm-app": 10,
+      "ml": 9,
+      "mlops": 9,
+      "rag": 5,
+      "research": 10
+    }
+  },
+  "capstones": [
+    "proj-capstone-eval-platform",
+    "proj-capstone-ai-infra",
+    "proj-capstone-research-agent",
+    "proj-capstone-multimodal",
+    "proj-capstone-rag-platform"
+  ]
+}

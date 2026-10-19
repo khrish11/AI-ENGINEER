@@ -1,0 +1,76 @@
+[
+  {
+    "id": "autogen-paper",
+    "type": "research_paper",
+    "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+    "canonical_url": "https://arxiv.org/abs/2308.08155",
+    "description": "Frames multi-agent LLM applications as flexible conversation patterns.",
+    "author": { "name": "Qingyun Wu et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["multi-agent", "conversation", "autogen"],
+    "paper": {
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": ["Qingyun Wu", "Gagan Bansal", "Jieyu Zhang", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2308.08155",
+      "paper_url": "https://arxiv.org/abs/2308.08155"
+    },
+    "associated_lessons": [
+      { "lesson": "16-multi-agent-and-swarms/03-communication-protocols", "role": "reference", "relevance_score": 82 },
+      { "lesson": "16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern", "role": "reference", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "multiagent-debate-paper",
+    "type": "research_paper",
+    "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+    "canonical_url": "https://arxiv.org/abs/2305.14325",
+    "description": "Multiple LLM instances debate their answers to improve factuality and reasoning.",
+    "author": { "name": "Yilun Du et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["debate", "multi-agent", "reasoning"],
+    "paper": {
+      "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+      "authors": ["Yilun Du", "Shuang Li", "Antonio Torralba", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2305.14325",
+      "paper_url": "https://arxiv.org/abs/2305.14325"
+    },
+    "associated_lessons": [
+      { "lesson": "16-multi-agent-and-swarms/07-society-of-mind-debate", "role": "reference", "relevance_score": 90, "recommended": true },
+      { "lesson": "16-multi-agent-and-swarms/15-voting-debate-topology", "role": "reference", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "generative-agents-paper",
+    "type": "research_paper",
+    "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+    "canonical_url": "https://arxiv.org/abs/2304.03442",
+    "description": "Simulates believable human behavior in an interactive sandbox of agents.",
+    "author": { "name": "Joon Sung Park et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["generative-agents", "simulation", "social"],
+    "paper": {
+      "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+      "authors": ["Joon Sung Park", "Joseph C. O'Brien", "Carrie J. Cai", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2304.03442",
+      "paper_url": "https://arxiv.org/abs/2304.03442"
+    },
+    "associated_lessons": [
+      { "lesson": "16-multi-agent-and-swarms/17-generative-agents-simulation", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  }
+]

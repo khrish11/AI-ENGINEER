@@ -1,0 +1,87 @@
+{
+  "id": "proj-semantic-classifier",
+  "slug": "semantic-text-retriever",
+  "title": "Semantic Text Classifier & Retriever",
+  "description": "Build a semantic text pipeline that classifies documents and retrieves the top-k passages for a query: TF-IDF and embedding baselines, a fixed evaluation set with labelled relevance judgments, and an honest comparison report.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 12,
+  "phaseSlugs": ["05-nlp-foundations-to-advanced"],
+  "associatedOccurrences": [
+    "05-nlp-foundations-to-advanced/01-text-processing",
+    "05-nlp-foundations-to-advanced/02-bag-of-words-tfidf",
+    "05-nlp-foundations-to-advanced/03-word-embeddings-word2vec"
+  ],
+  "skills": ["embeddings", "classification", "model-evaluation", "vector-search", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Tokenize and vectorize text with both sparse and dense representations",
+    "Build a small, fixed evaluation set with relevance judgments",
+    "Compare TF-IDF and embedding retrieval with precision@k and MRR",
+    "Explain qualitative differences between the retrievers with examples"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Retrieval comparison report" }
+  ],
+  "milestones": [
+    {
+      "id": "corpus",
+      "title": "Corpus + evaluation set",
+      "objective": "Assemble a public corpus and hand-label at least 20 query→relevant-passage judgments.",
+      "expectedOutput": "Judgment file committed with the queries it covers.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "retrievers",
+      "title": "Two retrievers",
+      "objective": "Implement TF-IDF retrieval and embedding (cosine) retrieval over the same chunking.",
+      "expectedOutput": "An index module returning ranked results for both methods.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "eval",
+      "title": "Measure with precision@k / MRR",
+      "objective": "Evaluate both retrievers on the fixed judgment set; record precision@k and MRR.",
+      "expectedOutput": "Metrics table + failure examples.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "analysis",
+      "title": "Qualitative comparison",
+      "objective": "Pick two queries where methods disagree; explain why with text evidence.",
+      "expectedOutput": "Short analysis section in the report.",
+      "requiredEvidence": ["e-eval"],
+      "required": false,
+      "estimatedMinutes": 60
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Chunking deterministic", "Index returns correct top-k", "Judgments loadable"], "minimumExpectation": "Both retrievers run end-to-end on the fixed corpus", "excellentExpectation": "Deterministic chunk IDs across runs plus edge-case chunks" },
+      { "id": "eval-method", "category": "Evaluation quality", "weight": 25, "criteria": ["Fixed judgment set", "precision@k + MRR computed correctly", "Failures analyzed"], "minimumExpectation": "At least 20 judgments with per-method metrics", "excellentExpectation": "Judgment protocol documented and disagreements hand-audited" },
+      { "id": "rigor", "category": "Fair comparison", "weight": 15, "criteria": ["Same chunker and queries for both", "No tuning on the judged set"], "minimumExpectation": "Identical protocol statement", "excellentExpectation": "Held-out sanity check or second judgment round" },
+      { "id": "docs", "category": "Documentation", "weight": 20, "criteria": ["Corpus and license named", "Metric formulas stated", "README reproduces numbers"], "minimumExpectation": "README reproduces the metrics table", "excellentExpectation": "Walkthrough of one query through both retrievers" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed modules", "Unit tests for vectorization and metrics"], "minimumExpectation": "Tests cover metrics math", "excellentExpectation": "Fixture-based index tests" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["scikit-learn TF-IDF", "sentence-transformers or OpenAI embeddings", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["corpus ingestion → chunker → two indexer backends → evaluator", "Queries and judgments live in versioned files"],
+    "constraints": ["Embedding calls cached to disk", "Same chunker for both retrieval methods"],
+    "hints": ["Keep judgments small but honest; hand-labelling teaches more than large scraped relevance sets"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with corpus, retrievers, and evaluator.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Metrics table with failure examples.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "rag", "research"],
+  "hasStarterTemplate": false
+}

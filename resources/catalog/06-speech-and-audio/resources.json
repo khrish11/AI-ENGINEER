@@ -1,0 +1,59 @@
+[
+  {
+    "id": "openai-whisper",
+    "type": "github_repo",
+    "title": "openai/whisper",
+    "canonical_url": "https://github.com/openai/whisper",
+    "description": "Robust speech recognition via large-scale weak supervision (Whisper).",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["whisper", "asr", "speech"],
+    "github": { "owner": "openai", "repository": "whisper", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "06-speech-and-audio/04-speech-recognition-asr", "role": "primary", "relevance_score": 92, "recommended": true, "order_index": 1 },
+      { "lesson": "06-speech-and-audio/05-whisper-architecture-finetuning", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "huggingface-peft",
+    "type": "github_repo",
+    "title": "huggingface/peft",
+    "canonical_url": "https://github.com/huggingface/peft",
+    "description": "Parameter-Efficient Fine-Tuning library (LoRA, prefix tuning, and more).",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["peft", "lora", "fine-tuning"],
+    "github": { "owner": "huggingface", "repository": "peft", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "06-speech-and-audio/05-whisper-architecture-finetuning", "role": "practical", "relevance_score": 70 },
+      { "lesson": "11-llm-engineering/08-fine-tuning-lora", "role": "practical", "relevance_score": 92, "recommended": true },
+      { "lesson": "19-capstone-projects/07-end-to-end-fine-tuning-pipeline", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "huggingface-accelerate",
+    "type": "github_repo",
+    "title": "huggingface/accelerate",
+    "canonical_url": "https://github.com/huggingface/accelerate",
+    "description": "Library for running PyTorch training across multiple devices with minimal code changes.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["accelerate", "training", "distributed"],
+    "github": { "owner": "huggingface", "repository": "accelerate", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "06-speech-and-audio/17-audio-evaluation-metrics", "role": "reference", "relevance_score": 40 }
+    ]
+  }
+]

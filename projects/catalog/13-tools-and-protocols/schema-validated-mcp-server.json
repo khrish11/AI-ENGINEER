@@ -1,0 +1,90 @@
+{
+  "id": "proj-mcp-server",
+  "slug": "schema-validated-mcp-server",
+  "title": "Schema-Validated MCP Tool Server",
+  "description": "Implement a Model Context Protocol (MCP) server exposing at least three real tools with strict input/output schemas, deterministic validation errors, streaming-safe calls, and a conformance test suite that a reviewer can run in one command.",
+  "level": "intermediate",
+  "source": "upstream",
+  "sourceUrl": "https://github.com/modelcontextprotocol",
+  "estimatedHours": 12,
+  "phaseSlugs": ["13-tools-and-protocols"],
+  "associatedOccurrences": [
+    "13-tools-and-protocols/01-the-tool-interface",
+    "13-tools-and-protocols/02-function-calling-deep-dive",
+    "13-tools-and-protocols/03-parallel-and-streaming-tool-calls"
+  ],
+  "skills": ["mcp", "tool-calling", "structured-output", "security", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Expose tools that validate inputs against strict schemas",
+    "Return deterministic, typed errors instead of stack traces",
+    "Handle concurrent and streaming tool calls correctly",
+    "Write a conformance suite an external agent can pass"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "Tool contract documentation" },
+    { "id": "tests", "kind": "test_results", "title": "Conformance test suite" }
+  ],
+  "milestones": [
+    {
+      "id": "tools",
+      "title": "Three real tools",
+      "objective": "Implement three tools (e.g. text stats, file search within a sandboxed root, unit conversion) with JSON-schema validation.",
+      "expectedOutput": "Tool manifest describing inputs/outputs/errors.",
+      "requiredEvidence": ["e-docs"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "errors",
+      "title": "Deterministic error contract",
+      "objective": "All validation failures return typed, documented error codes — never raw exceptions.",
+      "expectedOutput": "Error table documented and enforced by tests.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "streaming",
+      "title": "Parallel/streaming calls",
+      "objective": "Support concurrent tool invocations without cross-request state leakage.",
+      "expectedOutput": "Concurrency test with multiple simultaneous calls.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance suite",
+      "objective": "One command runs a suite any MCP client can be verified against (handshake, list, call, error paths).",
+      "expectedOutput": "Suite documented in README with expected output.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "schema", "category": "Schema strictness", "weight": 25, "criteria": ["All inputs validated", "Outputs conform", "No undefined error states"], "minimumExpectation": "Invalid inputs never crash the server", "excellentExpectation": "Schema evolution policy documented" },
+      { "id": "errors", "category": "Error contract", "weight": 20, "criteria": ["Typed codes", "Documented mapping", "Actionable messages"], "minimumExpectation": "Error table matches tests", "excellentExpectation": "Client-retry guidance per error class" },
+      { "id": "concurrency", "category": "Concurrency & streaming", "weight": 20, "criteria": ["No shared mutable state", "Ordering guarantees stated", "Cancellation handled"], "minimumExpectation": "Concurrent-call test passes", "excellentExpectation": "Cancellation/timeout tests included" },
+      { "id": "security", "category": "Security boundary", "weight": 10, "criteria": ["No filesystem write by default", "Path traversal blocked"], "minimumExpectation": "Sandboxed root enforced", "excellentExpectation": "Security section documenting the threat model" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Tool contracts", "One-command conformance"], "minimumExpectation": "README conformance box", "excellentExpectation": "End-to-end client walkthrough" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed modules", "Tests for every tool"], "minimumExpectation": "Per-tool unit tests", "excellentExpectation": "Property tests over schema fuzzing" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["Python (mcp bindings) or TypeScript SDK", "pytest / vitest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["tool registry with schema objects", "dispatcher enforcing validation", "conformance suite independent of client"],
+    "constraints": ["No secrets or credentials in tools", "Filesystem access limited to an explicit sandbox root"],
+    "hints": ["Write the conformance suite first as a spec, then make the tools pass it — this is how real protocol implementations behave"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-docs", "kind": "documentation_url", "description": "Tool contract documentation.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Conformance suite output/CI link.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["agent", "llm-app", "general-ai"],
+  "hasStarterTemplate": true
+}

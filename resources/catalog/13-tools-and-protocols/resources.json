@@ -1,0 +1,145 @@
+[
+  {
+    "id": "react-paper",
+    "type": "research_paper",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "canonical_url": "https://arxiv.org/abs/2210.03629",
+    "description": "Interleaves reasoning traces with tool actions for language agents.",
+    "author": { "name": "Shunyu Yao et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["react", "agents", "tool-use"],
+    "paper": {
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": ["Shunyu Yao", "Jeffrey Zhao", "Dian Yu", "et al."],
+      "publication_year": 2022,
+      "arxiv_id": "2210.03629",
+      "paper_url": "https://arxiv.org/abs/2210.03629"
+    },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/01-the-tool-interface", "role": "reference", "relevance_score": 85, "recommended": true },
+      { "lesson": "14-agent-engineering/01-the-agent-loop", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "openai-python-repo",
+    "type": "github_repo",
+    "title": "openai/openai-python",
+    "canonical_url": "https://github.com/openai/openai-python",
+    "description": "The official Python library for the OpenAI API, including function calling and streaming.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["openai", "python", "function-calling"],
+    "github": { "owner": "openai", "repository": "openai-python", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/02-function-calling-deep-dive", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "13-tools-and-protocols/03-parallel-and-streaming-tool-calls", "role": "practical", "relevance_score": 85 },
+      { "lesson": "11-llm-engineering/09-function-calling", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "openai-node-repo",
+    "type": "github_repo",
+    "title": "openai/openai-node",
+    "canonical_url": "https://github.com/openai/openai-node",
+    "description": "The official JavaScript/TypeScript library for the OpenAI API.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["openai", "typescript", "function-calling"],
+    "github": { "owner": "openai", "repository": "openai-node", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/02-function-calling-deep-dive", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "mcp-typescript-sdk",
+    "type": "github_repo",
+    "title": "modelcontextprotocol/typescript-sdk",
+    "canonical_url": "https://github.com/modelcontextprotocol/typescript-sdk",
+    "description": "The official TypeScript SDK for the Model Context Protocol (MCP).",
+    "author": { "name": "Model Context Protocol", "organization": "Anthropic" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["mcp", "typescript", "protocol"],
+    "github": { "owner": "modelcontextprotocol", "repository": "typescript-sdk", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/06-mcp-fundamentals", "role": "practical", "relevance_score": 85 },
+      { "lesson": "13-tools-and-protocols/07-building-an-mcp-server", "role": "practical", "relevance_score": 85 },
+      { "lesson": "13-tools-and-protocols/08-building-an-mcp-client", "role": "practical", "relevance_score": 85 },
+      { "lesson": "13-tools-and-protocols/09-mcp-transports", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "opentelemetry-python-repo",
+    "type": "github_repo",
+    "title": "open-telemetry/opentelemetry-python",
+    "canonical_url": "https://github.com/open-telemetry/opentelemetry-python",
+    "description": "The OpenTelemetry Python SDK for distributed tracing, metrics, and logging.",
+    "author": { "name": "OpenTelemetry", "organization": "OpenTelemetry" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["opentelemetry", "observability", "tracing"],
+    "github": { "owner": "open-telemetry", "repository": "opentelemetry-python", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/20-opentelemetry-genai", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "14-agent-engineering/23-otel-genai-conventions", "role": "practical", "relevance_score": 82 },
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "opentelemetry-docs",
+    "type": "official_documentation",
+    "title": "OpenTelemetry Documentation",
+    "canonical_url": "https://opentelemetry.io/docs/",
+    "description": "Official documentation for OpenTelemetry, the open standard for telemetry data.",
+    "author": { "name": "OpenTelemetry", "organization": "OpenTelemetry" },
+    "difficulty": "intermediate",
+    "source_platform": "opentelemetry.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["opentelemetry", "tracing", "metrics"],
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/20-opentelemetry-genai", "role": "reference", "relevance_score": 85 },
+      { "lesson": "14-agent-engineering/23-otel-genai-conventions", "role": "reference", "relevance_score": 82 },
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "openai-agents-python-repo",
+    "type": "github_repo",
+    "title": "openai/openai-agents-python",
+    "canonical_url": "https://github.com/openai/openai-agents-python",
+    "description": "A lightweight framework for building multi-agent workflows with the OpenAI Agents SDK.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["agents-sdk", "tools", "multi-agent"],
+    "github": { "owner": "openai", "repository": "openai-agents-python", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "13-tools-and-protocols/22-skills-and-agent-sdks", "role": "practical", "relevance_score": 85 },
+      { "lesson": "14-agent-engineering/16-openai-agents-sdk", "role": "primary", "relevance_score": 92, "recommended": true },
+      { "lesson": "15-autonomous-systems/09-coding-agent-landscape", "role": "reference", "relevance_score": 72 }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-10-18T16:04:34.798Z",
+  "source": "roadmaps/metadata/lesson-metadata.json",
+  "occurrences": 542,
+  "canonicalLessons": 542,
+  "duplicateCanonicalIdentities": [],
+  "missingCanonicalKeys": [],
+  "resolvedSplits": [
+    {
+      "originalCanonicalLessonKey": "07-transformers-deep-dive/09-vision-transformers",
+      "newCanonicalLessonKey": "04-computer-vision/14-vision-transformers",
+      "reason": "Distinct curriculum locations share content but represent separate lessons."
+    }
+  ]
+}

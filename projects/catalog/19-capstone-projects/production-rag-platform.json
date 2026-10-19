@@ -1,0 +1,93 @@
+{
+  "id": "proj-capstone-rag-platform",
+  "slug": "production-rag-platform",
+  "title": "Capstone: Production RAG Platform",
+  "description": "Ship a production-style RAG platform: ingestion → retrieval → evaluation → API → monitoring → deployment. Multiple document formats, hybrid retrieval with evaluation-gated reranking, regression-tested quality, traced serving with rollout controls, and an operations runbook.",
+  "level": "capstone",
+  "source": "platform",
+  "estimatedHours": 60,
+  "phaseSlugs": ["19-capstone-projects", "11-llm-engineering", "17-infrastructure-and-production"],
+  "associatedOccurrences": [
+    "19-capstone-projects/02-rag-over-codebase",
+    "11-llm-engineering/01-prompt-engineering",
+    "17-infrastructure-and-production/01-managed-llm-platforms"
+  ],
+  "skills": ["rag", "hybrid-search", "reranking", "rag-evaluation", "serving", "observability", "security", "finops"],
+  "prerequisites": ["proj-rag-app"],
+  "learningObjectives": [
+    "Integrate ingestion, hybrid retrieval, reranking, and generation into one deployable system",
+    "Gate retrieval-quality regressions with regression tests in CI",
+    "Serve with tracing, metrics, and staged rollout",
+    "Operate: runbook covering refresh, rollback, and drift detection"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Platform repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Retrieval + answer quality reports" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API + runbook documentation" },
+    { "id": "deploy", "kind": "deployment_url", "title": "Deployed demo (optional but recommended)" },
+    { "id": "reflection", "kind": "reflection", "title": "Architecture reflection" }
+  ],
+  "milestones": [
+    {
+      "id": "ingest-hybrid",
+      "title": "Ingestion + hybrid retrieval",
+      "objective": "Ingest ≥3 formats; implement hybrid retrieval (sparse + dense) with config-controlled fusion.",
+      "expectedOutput": "Deterministic index; config switches blend strategy.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 600
+    },
+    {
+      "id": "rerank",
+      "title": "Evaluation-gated reranking",
+      "objective": "Add a reranker behind a config flag; enable only if it improves the fixed-set metrics.",
+      "expectedOutput": "Before/after metric table proving the rerank decision.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "regression",
+      "title": "Quality regression suite",
+      "objective": "Turn the evaluation set into CI regression tests with thresholds; a failing run blocks merge.",
+      "expectedOutput": "CI workflow failing on quality regression.",
+      "requiredEvidence": ["e-eval", "e-repo"],
+      "required": false,
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "serve",
+      "title": "Serving + rollout + ops",
+      "objective": "Serve with traces/metrics, staged rollout flag, and runbook (index refresh, rollback).",
+      "expectedOutput": "Deployed or containerized service + runbook.",
+      "requiredEvidence": ["e-trace", "e-docs"],
+      "estimatedMinutes": 480
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "retrieval", "category": "Retrieval & reranking", "weight": 22, "criteria": ["Hybrid blend documented", "Rerank gated by metrics", "recall@k regression suite"], "minimumExpectation": "Hybrid beats single-method on the fixed set", "excellentExpectation": "Reranker enabled/disabled decision backed by ablations" },
+      { "id": "quality", "category": "Quality engineering", "weight": 20, "criteria": ["Regression tests in CI", "Thresholds justified", "Failure introspection"], "minimumExpectation": "CI quality gate exists", "excellentExpectation": "Per-query failure drill-down reports" },
+      { "id": "prod", "category": "Production posture", "weight": 28, "criteria": ["Traced serving", "Metrics/rollout", "Runbook"], "minimumExpectation": "Deployed service with traces", "excellentExpectation": "Operational runbook + rollback demo" },
+      { "id": "security", "category": "Security & privacy", "weight": 20, "criteria": ["No secrets in repo", "Injection-aware prompts", "Data handling documented"], "minimumExpectation": "Security section", "excellentExpectation": "Tested injection defenses" },
+      { "id": "docs", "category": "Documentation", "weight": 10, "criteria": ["Architecture diagrams", "Cost table", "Reflection"], "minimumExpectation": "README + diagram + reflection", "excellentExpectation": "Review-ready write-up with trade-offs" }
+    ],
+    "completionThreshold": 70,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "FastAPI", "OpenTelemetry/Prometheus", "Docker", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["ingest → index (sparse+dense) → retrieve → rerank (flagged) → generate → serve", "CI quality gate", "ops runbook"],
+    "constraints": ["Capstone must deploy or run fully via Docker", "Quality thresholds documented before runs"],
+    "hints": ["Scope control matters: the fixed evaluation set from Phase 11 is your foundation — extend it, don't restart"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Quality reports incl. rerank decision.", "required": true },
+    { "id": "e-trace", "kind": "evaluation_result", "description": "Trace/metrics evidence.", "required": true },
+    { "id": "e-docs", "kind": "documentation_url", "description": "API + runbook.", "required": true },
+    { "id": "e-deploy", "kind": "deployment_url", "description": "Deployed demo URL (optional).", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["rag", "llm-app", "mlops", "general-ai"],
+  "hasStarterTemplate": false
+}

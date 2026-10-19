@@ -1,0 +1,89 @@
+{
+  "id": "proj-mini-lm",
+  "slug": "tokenizer-mini-lm",
+  "title": "BPE Tokenizer + Miniature Language Model",
+  "description": "Implement a byte-level BPE tokenizer from scratch and train a tiny transformer/attention language model on it, reporting compression rate, perplexity, and sample generations against a fixed seeded protocol.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 25,
+  "phaseSlugs": ["10-llms-from-scratch"],
+  "associatedOccurrences": [
+    "10-llms-from-scratch/01-tokenizers",
+    "10-llms-from-scratch/02-building-a-tokenizer",
+    "10-llms-from-scratch/03-data-pipelines"
+  ],
+  "skills": ["tokenization", "attention", "pretraining", "pytorch", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement BPE merges with exact round-trip guarantees",
+    "Build the data pipeline: streaming, packing, shuffling with a fixed seed",
+    "Train a small attention LM to a target perplexity",
+    "Measure tokenization efficiency (bytes/token) and generation quality honestly"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Training + evaluation report" },
+    { "id": "samples", "kind": "evaluation_results", "title": "Generation samples + perplexity table" }
+  ],
+  "milestones": [
+    {
+      "id": "bpe",
+      "title": "Byte-level BPE tokenizer",
+      "objective": "Implement train/encode/decode with exact round-trip property tests.",
+      "expectedOutput": "Round-trip tests pass on arbitrary UTF-8 inputs.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "data",
+      "title": "Streaming data pipeline",
+      "objective": "Build deterministic packing/shuffling over a public text corpus with documented license.",
+      "expectedOutput": "Pipeline emits identical shards from the same seed.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "lm",
+      "title": "Miniature transformer LM",
+      "objective": "Train a small LM (e.g. 2-6 layer) to a documented target perplexity within a stated compute budget.",
+      "expectedOutput": "Loss curve + perplexity table.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 420
+    },
+    {
+      "id": "samples",
+      "title": "Generation + honest evaluation",
+      "objective": "Generate from fixed seeds/prompts; sample quality reviewed with stated failure modes.",
+      "expectedOutput": "Sample gallery + manual review notes.",
+      "requiredEvidence": ["e-samples"],
+      "estimatedMinutes": 180
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "tokenizer", "category": "Tokenizer implementation", "weight": 25, "criteria": ["Round-trip exactness", "Merge determinism", "Vocab file format documented"], "minimumExpectation": "Round-trip property tests pass", "excellentExpectation": "Encode speed + memory benchmarks included" },
+      { "id": "training", "category": "Training pipeline", "weight": 25, "criteria": ["Deterministic data pipeline", "Compute budget respected", "Checkpointing"], "minimumExpectation": "Loss curve from documented run", "excellentExpectation": "Perplexity compared across tokenizer variants (e.g. 8k vs 16k vocab)" },
+      { "id": "evaluation", "category": "Evaluation", "weight": 20, "criteria": ["Perplexity protocol documented", "Generation review with failure modes"], "minimumExpectation": "Perplexity + samples with review notes", "excellentExpectation": "Held-out evaluation split distinct from training data" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture + BPE explained", "Compute cost documented", "Exercises for readers"], "minimumExpectation": "README reproduces the run", "excellentExpectation": "Scaling notes for future training" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed modules", "Tests for tokenizer + data pipeline"], "minimumExpectation": "Tokenizer + pipeline tests", "excellentExpectation": "CI regression test on a tiny corpus" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["PyTorch", "NumPy", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["tokenizer/", "data/", "model/", "training/", "eval/"],
+    "constraints": ["State GPU-hours or CPU-hours explicitly", "Public-domain or permissively licensed corpus only"],
+    "hints": ["Compression rate (bytes per token) predicts perplexity more than vocab size; measure both"]
+  },
+  "requiredEvidence": [
+    { "id": "e-tests", "kind": "test_result", "description": "Round-trip + pipeline test output/CI link.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Training report with compute cost.", "required": true },
+    { "id": "e-samples", "kind": "evaluation_result", "description": "Generation samples + perplexity table.", "required": true },
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "research", "llm-app"],
+  "hasStarterTemplate": false
+}

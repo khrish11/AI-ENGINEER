@@ -1,0 +1,51 @@
+
+Path
+----
+E:\AI ENGINEER\src\app\analytics\page.tsx
+E:\AI ENGINEER\src\app\analytics\page.tsx
+E:\AI ENGINEER\src\app\analytics\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\[lessonSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\[lessonSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\[lessonSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\[phaseSlug]\page.tsx
+E:\AI ENGINEER\src\app\curriculum\page.tsx
+E:\AI ENGINEER\src\app\curriculum\page.tsx
+E:\AI ENGINEER\src\app\curriculum\page.tsx
+E:\AI ENGINEER\src\app\dashboard\page.tsx
+E:\AI ENGINEER\src\app\dashboard\page.tsx
+E:\AI ENGINEER\src\app\dashboard\page.tsx
+E:\AI ENGINEER\src\app\dashboard\page.tsx
+E:\AI ENGINEER\src\app\dashboard\page.tsx
+E:\AI ENGINEER\src\app\onboarding\page.tsx
+E:\AI ENGINEER\src\app\onboarding\page.tsx
+E:\AI ENGINEER\src\app\onboarding\page.tsx
+E:\AI ENGINEER\src\app\practice\page.tsx
+E:\AI ENGINEER\src\app\practice\page.tsx
+E:\AI ENGINEER\src\app\practice\page.tsx
+E:\AI ENGINEER\src\app\projects\[projectSlug]\page.tsx
+E:\AI ENGINEER\src\app\projects\[projectSlug]\page.tsx
+E:\AI ENGINEER\src\app\projects\[projectSlug]\page.tsx
+E:\AI ENGINEER\src\app\projects\page.tsx
+E:\AI ENGINEER\src\app\projects\page.tsx
+E:\AI ENGINEER\src\app\projects\page.tsx
+E:\AI ENGINEER\src\app\resources\page.tsx
+E:\AI ENGINEER\src\app\resources\page.tsx
+E:\AI ENGINEER\src\app\resources\page.tsx
+E:\AI ENGINEER\src\app\roadmap\paths\page.tsx
+E:\AI ENGINEER\src\app\roadmap\paths\page.tsx
+E:\AI ENGINEER\src\app\roadmap\paths\page.tsx
+E:\AI ENGINEER\src\app\roadmap\page.tsx
+E:\AI ENGINEER\src\app\roadmap\page.tsx
+E:\AI ENGINEER\src\app\roadmap\page.tsx
+E:\AI ENGINEER\src\app\saved\page.tsx
+E:\AI ENGINEER\src\app\saved\page.tsx
+E:\AI ENGINEER\src\app\saved\page.tsx
+E:\AI ENGINEER\src\app\saved\page.tsx
+E:\AI ENGINEER\src\app\saved\page.tsx
+E:\AI ENGINEER\src\app\settings\page.tsx
+E:\AI ENGINEER\src\app\settings\page.tsx
+E:\AI ENGINEER\src\app\settings\page.tsx
+
+

@@ -1,0 +1,381 @@
+[
+  {
+    "id": "vllm-repo",
+    "type": "github_repo",
+    "title": "vllm-project/vllm",
+    "canonical_url": "https://github.com/vllm-project/vllm",
+    "description": "A high-throughput, memory-efficient inference and serving engine for LLMs.",
+    "author": { "name": "vLLM", "organization": "vLLM" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vllm", "serving", "inference"],
+    "github": { "owner": "vllm-project", "repository": "vllm", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/12-inference-optimization", "role": "practical", "relevance_score": 85 },
+      { "lesson": "17-infrastructure-and-production/04-vllm-serving-internals", "role": "primary", "relevance_score": 95, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/18-vllm-production-stack-lmcache", "role": "primary", "relevance_score": 90 },
+      { "lesson": "17-infrastructure-and-production/28-self-hosted-serving-selection", "role": "practical", "relevance_score": 85 },
+      { "lesson": "19-capstone-projects/14-speculative-decoding-server", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "vllm-docs",
+    "type": "official_documentation",
+    "title": "vLLM Documentation",
+    "canonical_url": "https://docs.vllm.ai/en/latest/",
+    "description": "Official documentation for the vLLM inference and serving engine.",
+    "author": { "name": "vLLM", "organization": "vLLM" },
+    "difficulty": "advanced",
+    "source_platform": "docs.vllm.ai",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vllm", "serving", "documentation"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/04-vllm-serving-internals", "role": "reference", "relevance_score": 92 },
+      { "lesson": "17-infrastructure-and-production/18-vllm-production-stack-lmcache", "role": "reference", "relevance_score": 88 }
+    ]
+  },
+  {
+    "id": "sglang-repo",
+    "type": "github_repo",
+    "title": "sgl-project/sglang",
+    "canonical_url": "https://github.com/sgl-project/sglang",
+    "description": "A fast serving framework for large language and vision models with RadixAttention.",
+    "author": { "name": "SGLang", "organization": "SGLang" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["sglang", "serving", "radixattention"],
+    "github": { "owner": "sgl-project", "repository": "sglang", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/06-sglang-radixattention", "role": "primary", "relevance_score": 92, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/28-self-hosted-serving-selection", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "sglang-paper",
+    "type": "research_paper",
+    "title": "SGLang: Efficient Execution of Structured Language Model Programs",
+    "canonical_url": "https://arxiv.org/abs/2312.07104",
+    "description": "Introduces RadixAttention and structured generation for efficient LLM programs.",
+    "author": { "name": "Lianmin Zheng et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["sglang", "radixattention", "serving"],
+    "paper": {
+      "title": "SGLang: Efficient Execution of Structured Language Model Programs",
+      "authors": ["Lianmin Zheng", "Liangsheng Yin", "Zhiqiang Xie", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2312.07104",
+      "paper_url": "https://arxiv.org/abs/2312.07104"
+    },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/06-sglang-radixattention", "role": "reference", "relevance_score": 90 }
+    ]
+  },
+  {
+    "id": "ray-repo",
+    "type": "github_repo",
+    "title": "ray-project/ray",
+    "canonical_url": "https://github.com/ray-project/ray",
+    "description": "A distributed compute framework for scaling Python and ML workloads, including Ray Serve.",
+    "author": { "name": "Anyscale", "organization": "Anyscale" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["ray", "distributed", "serving"],
+    "github": { "owner": "ray-project", "repository": "ray", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/05-scaling-distributed", "role": "practical", "relevance_score": 78 },
+      { "lesson": "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes", "role": "practical", "relevance_score": 78 },
+      { "lesson": "17-infrastructure-and-production/28-self-hosted-serving-selection", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "ray-docs",
+    "type": "official_documentation",
+    "title": "Ray Documentation",
+    "canonical_url": "https://docs.ray.io/en/latest/",
+    "description": "Official documentation for Ray, Ray Serve, and distributed ML workloads.",
+    "author": { "name": "Anyscale", "organization": "Anyscale" },
+    "difficulty": "advanced",
+    "source_platform": "docs.ray.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["ray", "distributed", "documentation"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes", "role": "reference", "relevance_score": 75 },
+      { "lesson": "17-infrastructure-and-production/28-self-hosted-serving-selection", "role": "reference", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "kubernetes-repo",
+    "type": "github_repo",
+    "title": "kubernetes/kubernetes",
+    "canonical_url": "https://github.com/kubernetes/kubernetes",
+    "description": "Production-grade container orchestration used to run GPU and inference workloads.",
+    "author": { "name": "Kubernetes", "organization": "CNCF" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["kubernetes", "orchestration", "gpu"],
+    "github": { "owner": "kubernetes", "repository": "kubernetes", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes", "role": "practical", "relevance_score": 82 },
+      { "lesson": "17-infrastructure-and-production/23-sre-for-ai", "role": "reference", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "kubernetes-docs",
+    "type": "official_documentation",
+    "title": "Kubernetes Documentation",
+    "canonical_url": "https://kubernetes.io/docs/home/",
+    "description": "Official Kubernetes documentation covering workloads, autoscaling, and operations.",
+    "author": { "name": "Kubernetes", "organization": "CNCF" },
+    "difficulty": "advanced",
+    "source_platform": "kubernetes.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["kubernetes", "orchestration", "documentation"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes", "role": "reference", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "prometheus-repo",
+    "type": "github_repo",
+    "title": "prometheus/prometheus",
+    "canonical_url": "https://github.com/prometheus/prometheus",
+    "description": "The Prometheus monitoring system and time-series database for metrics.",
+    "author": { "name": "Prometheus", "organization": "CNCF" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["prometheus", "monitoring", "metrics"],
+    "github": { "owner": "prometheus", "repository": "prometheus", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/08-inference-metrics-goodput", "role": "practical", "relevance_score": 82, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "prometheus-docs",
+    "type": "official_documentation",
+    "title": "Prometheus Documentation",
+    "canonical_url": "https://prometheus.io/docs/introduction/overview/",
+    "description": "Official Prometheus documentation for metrics collection and alerting.",
+    "author": { "name": "Prometheus", "organization": "CNCF" },
+    "difficulty": "intermediate",
+    "source_platform": "prometheus.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["prometheus", "monitoring", "documentation"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/08-inference-metrics-goodput", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "grafana-repo",
+    "type": "github_repo",
+    "title": "grafana/grafana",
+    "canonical_url": "https://github.com/grafana/grafana",
+    "description": "The open observability platform for dashboards and visualization.",
+    "author": { "name": "Grafana Labs", "organization": "Grafana Labs" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["grafana", "dashboards", "observability"],
+    "github": { "owner": "grafana", "repository": "grafana", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "practical", "relevance_score": 82, "recommended": true },
+      { "lesson": "19-capstone-projects/11-llm-observability-dashboard", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "grafana-docs",
+    "type": "official_documentation",
+    "title": "Grafana Documentation",
+    "canonical_url": "https://grafana.com/docs/",
+    "description": "Official Grafana documentation for dashboards and observability.",
+    "author": { "name": "Grafana Labs", "organization": "Grafana Labs" },
+    "difficulty": "intermediate",
+    "source_platform": "grafana.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["grafana", "dashboards", "documentation"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "wandb-repo",
+    "type": "github_repo",
+    "title": "wandb/wandb",
+    "canonical_url": "https://github.com/wandb/wandb",
+    "description": "The Weights & Biases SDK for experiment tracking and model evaluation.",
+    "author": { "name": "Weights & Biases", "organization": "Weights & Biases" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["experiment-tracking", "mlops", "wandb"],
+    "github": { "owner": "wandb", "repository": "wandb", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "practical", "relevance_score": 78 },
+      { "lesson": "19-capstone-projects/07-end-to-end-fine-tuning-pipeline", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "wandb-docs",
+    "type": "official_documentation",
+    "title": "Weights & Biases Documentation",
+    "canonical_url": "https://docs.wandb.ai/",
+    "description": "Official documentation for Weights & Biases experiment tracking.",
+    "author": { "name": "Weights & Biases", "organization": "Weights & Biases" },
+    "difficulty": "intermediate",
+    "source_platform": "docs.wandb.ai",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["experiment-tracking", "mlops", "documentation"],
+    "associated_lessons": [
+      { "lesson": "19-capstone-projects/07-end-to-end-fine-tuning-pipeline", "role": "reference", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "litellm-repo",
+    "type": "github_repo",
+    "title": "BerriAI/litellm",
+    "canonical_url": "https://github.com/BerriAI/litellm",
+    "description": "A unified interface to 100+ LLM APIs with routing, fallbacks, and cost tracking.",
+    "author": { "name": "BerriAI", "organization": "BerriAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llm-gateway", "routing", "cost"],
+    "github": { "owner": "BerriAI", "repository": "litellm", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/16-model-routing", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/19-ai-gateways", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "19-capstone-projects/08-production-rag-chatbot", "role": "practical", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "fastapi-repo",
+    "type": "github_repo",
+    "title": "fastapi/fastapi",
+    "canonical_url": "https://github.com/fastapi/fastapi",
+    "description": "A modern, fast web framework for building APIs with Python type hints.",
+    "author": { "name": "Sebastián Ramírez" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["fastapi", "api", "python"],
+    "github": { "owner": "fastapi", "repository": "fastapi", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "11-llm-engineering/13-production-app", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/29-model-demo-interfaces", "role": "practical", "relevance_score": 78 },
+      { "lesson": "19-capstone-projects/08-production-rag-chatbot", "role": "practical", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "streamlit-repo",
+    "type": "github_repo",
+    "title": "streamlit/streamlit",
+    "canonical_url": "https://github.com/streamlit/streamlit",
+    "description": "A framework for turning Python data scripts into shareable web apps.",
+    "author": { "name": "Streamlit", "organization": "Snowflake" },
+    "difficulty": "beginner",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["streamlit", "ui", "demo"],
+    "github": { "owner": "streamlit", "repository": "streamlit", "default_branch": "develop" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/29-model-demo-interfaces", "role": "practical", "relevance_score": 82, "recommended": true },
+      { "lesson": "19-capstone-projects/17-personal-ai-tutor", "role": "practical", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "gradio-repo",
+    "type": "github_repo",
+    "title": "gradio-app/gradio",
+    "canonical_url": "https://github.com/gradio-app/gradio",
+    "description": "Build and share machine learning demos and web UIs in Python.",
+    "author": { "name": "Gradio", "organization": "Hugging Face" },
+    "difficulty": "beginner",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["gradio", "ui", "demo"],
+    "github": { "owner": "gradio-app", "repository": "gradio", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/29-model-demo-interfaces", "role": "practical", "relevance_score": 82 },
+      { "lesson": "19-capstone-projects/17-personal-ai-tutor", "role": "practical", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "postgres-docs",
+    "type": "official_documentation",
+    "title": "PostgreSQL Documentation",
+    "canonical_url": "https://www.postgresql.org/docs/current/",
+    "description": "Official PostgreSQL documentation, the database behind many production LLM apps.",
+    "author": { "name": "PostgreSQL Global Development Group" },
+    "difficulty": "intermediate",
+    "source_platform": "postgresql.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["postgres", "database", "production"],
+    "associated_lessons": [
+      { "lesson": "19-capstone-projects/08-production-rag-chatbot", "role": "reference", "relevance_score": 75 },
+      { "lesson": "17-infrastructure-and-production/23-sre-for-ai", "role": "reference", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "redis-docs",
+    "type": "official_documentation",
+    "title": "Redis Documentation",
+    "canonical_url": "https://redis.io/docs/latest/",
+    "description": "Official Redis documentation for caching, queues, and vector search.",
+    "author": { "name": "Redis", "organization": "Redis" },
+    "difficulty": "intermediate",
+    "source_platform": "redis.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["redis", "caching", "queue"],
+    "associated_lessons": [
+      { "lesson": "17-infrastructure-and-production/14-prompt-semantic-caching", "role": "reference", "relevance_score": 80 },
+      { "lesson": "11-llm-engineering/11-caching-cost", "role": "reference", "relevance_score": 78 }
+    ]
+  }
+]

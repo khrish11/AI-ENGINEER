@@ -1,0 +1,130 @@
+{
+  "id": "checkpoint-07-transformers",
+  "title": "Phase 07 — Transformers Checkpoint",
+  "kind": "phase_checkpoint",
+  "phaseSlug": "07-transformers-deep-dive",
+  "description": "Optional checkpoint after the transformers deep dive: attention math, masking, and multi-head behaviour.",
+  "passThreshold": 0.7,
+  "status": "active",
+  "questions": [
+    {
+      "id": "p07-sdpa-meaning",
+      "type": "single_choice",
+      "prompt": "In scaled dot-product attention, why divide by sqrt(d_k)?",
+      "options": [
+        "To normalize outputs to unit variance",
+        "To keep dot products from growing too large so softmax gradients stay stable",
+        "To make attention non-linear",
+        "To reduce memory usage"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Large d_k makes logits grow, pushing softmax into saturated regions with vanishing gradients; sqrt(d_k) keeps logits in a sane range.",
+      "lessonRefs": ["07-transformers-deep-dive/02-self-attention-from-scratch"],
+      "skills": ["attention", "transformers"],
+      "points": 1
+    },
+    {
+      "id": "p07-causal",
+      "type": "true_false",
+      "prompt": "A causal mask sets future-position attention scores to -infinity before the softmax.",
+      "correctBoolean": true,
+      "explanation": "Setting future logits to -inf makes their softmax weights zero, preventing information from the future leaking into earlier positions.",
+      "lessonRefs": ["07-transformers-deep-dive/02-self-attention-from-scratch"],
+      "skills": ["attention"],
+      "points": 1
+    },
+    {
+      "id": "p07-multihead",
+      "type": "single_choice",
+      "prompt": "Multi-head attention primarily lets the model:",
+      "options": [
+        "Attend to several representation subspaces in parallel",
+        "Reduce parameter count",
+        "Replace the feed-forward block",
+        "Avoid positional encodings"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Heads project into different subspaces so different relations (syntax, coreference, positions) can be attended simultaneously.",
+      "lessonRefs": ["07-transformers-deep-dive/03-multi-head-attention"],
+      "skills": ["attention", "transformers"],
+      "points": 1
+    },
+    {
+      "id": "p07-order",
+      "type": "ordering",
+      "prompt": "Order the operations inside one multi-head attention block:",
+      "options": [
+        "Project Q, K, V per head",
+        "Compute scaled dot-product scores per head",
+        "Apply mask + softmax per head",
+        "Concatenate heads and project back"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "explanation": "Projections first, then per-head scores, then masked softmax, then concat + output projection.",
+      "lessonRefs": ["07-transformers-deep-dive/03-multi-head-attention"],
+      "skills": ["attention", "pytorch"],
+      "points": 2
+    },
+    {
+      "id": "p07-pad-mask",
+      "type": "single_choice",
+      "prompt": "In a ragged batch, unmasked padding tokens cause the most damage to:",
+      "options": [
+        "None — padding is always ignored automatically",
+        "The attention distribution, by letting queries attend to meaningless positions",
+        "Only the loss scale",
+        "Only the optimizer"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Without masking, real tokens attend to pad positions, contaminating their representations; loss scaling is a separate issue.",
+      "lessonRefs": ["07-transformers-deep-dive/02-self-attention-from-scratch"],
+      "skills": ["attention", "transformers"],
+      "points": 1
+    },
+    {
+      "id": "p07-cost",
+      "type": "true_false",
+      "prompt": "Self-attention cost grows quadratically with sequence length.",
+      "correctBoolean": true,
+      "explanation": "Every token attends to every other token, giving O(L²) score computations for sequence length L.",
+      "lessonRefs": ["07-transformers-deep-dive/01-why-transformers"],
+      "skills": ["attention", "inference-optimization"],
+      "points": 1
+    },
+    {
+      "id": "p07-vision-attn",
+      "type": "multiple_choice",
+      "prompt": "Select all differences between vision (ViT-style) attention and text self-attention in the base formulation:",
+      "options": [
+        "Inputs are patch embeddings instead of token embeddings",
+        "Attention math stays the same",
+        "Position embeddings are unnecessary in ViT",
+        "Sequence length equals number of patches"
+      ],
+      "correctOptionIndices": [0, 1, 3],
+      "explanation": "ViT swaps token embeddings for patch embeddings and the sequence is patches, but the attention math is identical; position embeddments are still needed.",
+      "lessonRefs": ["12-multimodal-ai/01-vision-transformer-patch-tokens"],
+      "skills": ["attention", "transformers", "computer-vision"],
+      "points": 2
+    },
+    {
+      "id": "p07-short-heads",
+      "type": "short_answer",
+      "prompt": "Explain why one attention head is usually insufficient and what multi-heads add, citing a concrete linguistic example.",
+      "selfCheck": {
+        "criteria": [
+          "Explains single subspace limitation",
+          "Gives a concrete example (e.g. syntax vs coreference head)",
+          "Mentions concatenated output projection"
+        ],
+        "fullPoints": 2,
+        "partialPoints": 1,
+        "guidance": "Self-check against the explanation below; mark honestly."
+      },
+      "explanation": "One head attends through one subspace — e.g. syntactic looking-up. Different heads capture distinct relations (adjacency, coreference, rare-token tracking); their outputs are concatenated and re-projected into the residual stream.",
+      "lessonRefs": ["07-transformers-deep-dive/03-multi-head-attention"],
+      "skills": ["attention", "information-theory"],
+      "points": 2
+    }
+  ]
+}

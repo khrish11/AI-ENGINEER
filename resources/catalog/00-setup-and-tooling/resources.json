@@ -1,0 +1,181 @@
+[
+  {
+    "id": "python-official-tutorial",
+    "type": "official_documentation",
+    "title": "The Python Tutorial (Official)",
+    "canonical_url": "https://docs.python.org/3/tutorial/",
+    "description": "The official Python language tutorial covering syntax, data structures, modules, classes, and the standard library.",
+    "author": { "name": "Python Software Foundation", "organization": "Python Software Foundation" },
+    "difficulty": "beginner",
+    "source_platform": "docs.python.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["python", "language", "reference"],
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/06-python-environments", "role": "reference", "relevance_score": 80 },
+      { "lesson": "00-setup-and-tooling/13-python-for-ai-engineering", "role": "primary", "relevance_score": 95, "recommended": true, "order_index": 1 },
+      { "lesson": "00-setup-and-tooling/10-terminal-and-shell", "role": "supplementary", "relevance_score": 50 }
+    ]
+  },
+  {
+    "id": "docker-getting-started",
+    "type": "official_documentation",
+    "title": "Docker Get Started",
+    "canonical_url": "https://docs.docker.com/get-started/",
+    "description": "Official Docker introduction covering images, containers, and the development workflow.",
+    "author": { "name": "Docker Inc.", "organization": "Docker" },
+    "difficulty": "beginner",
+    "source_platform": "docs.docker.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["docker", "containers", "devops"],
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/07-docker-for-ai", "role": "primary", "relevance_score": 95, "recommended": true, "order_index": 1 }
+    ]
+  },
+  {
+    "id": "docker-tutorial-mosh",
+    "type": "youtube_video",
+    "title": "Docker Tutorial for Beginners",
+    "canonical_url": "https://www.youtube.com/watch?v=pTFZFxd4hOI",
+    "description": "Beginner-friendly walkthrough of Docker containers and images.",
+    "author": { "name": "Programming with Mosh" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["docker", "containers"],
+    "youtube": { "video_id": "pTFZFxd4hOI", "channel_name": "Programming with Mosh", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=pTFZFxd4hOI" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/07-docker-for-ai", "role": "supplementary", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "awesome-compose",
+    "type": "github_repo",
+    "title": "Docker Awesome Compose",
+    "canonical_url": "https://github.com/docker/awesome-compose",
+    "description": "Curated collection of Docker Compose samples for common application stacks.",
+    "author": { "name": "Docker", "organization": "Docker" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["docker", "compose", "examples"],
+    "github": { "owner": "docker", "repository": "awesome-compose", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/07-docker-for-ai", "role": "practical", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "git-github-crash-course",
+    "type": "youtube_video",
+    "title": "Git and GitHub for Beginners - Crash Course",
+    "canonical_url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+    "description": "Crash course covering Git fundamentals and GitHub collaboration.",
+    "author": { "name": "freeCodeCamp.org" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["git", "github", "version-control"],
+    "youtube": { "video_id": "RGOj5yH7evk", "channel_name": "freeCodeCamp.org", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=RGOj5yH7evk" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/02-git-and-collaboration", "role": "primary", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "fastapi-docs",
+    "type": "official_documentation",
+    "title": "FastAPI Documentation",
+    "canonical_url": "https://fastapi.tiangolo.com/",
+    "description": "Official FastAPI documentation for building typed Python APIs, widely used to serve models and agents.",
+    "author": { "name": "Sebastian Ramirez", "organization": "FastAPI" },
+    "difficulty": "intermediate",
+    "source_platform": "fastapi.tiangolo.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["fastapi", "api", "python", "serving"],
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/13-python-for-ai-engineering", "role": "reference", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "full-stack-fastapi-template",
+    "type": "project_starter",
+    "title": "Full Stack FastAPI Template",
+    "canonical_url": "https://github.com/tiangolo/full-stack-fastapi-template",
+    "description": "Official full-stack FastAPI project template with modern tooling.",
+    "author": { "name": "Sebastian Ramirez", "organization": "FastAPI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["fastapi", "template", "boilerplate"],
+    "github": { "owner": "tiangolo", "repository": "full-stack-fastapi-template", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/13-python-for-ai-engineering", "role": "practical", "relevance_score": 60 }
+    ]
+  },
+  {
+    "id": "python-data-science-video",
+    "type": "youtube_video",
+    "title": "Python for Data Science - Course for Beginners",
+    "canonical_url": "https://www.youtube.com/watch?v=LHBE6Q9XlzI",
+    "description": "Beginner course covering Python, Pandas, NumPy, and Matplotlib.",
+    "author": { "name": "freeCodeCamp.org" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["python", "numpy", "pandas", "matplotlib"],
+    "youtube": { "video_id": "LHBE6Q9XlzI", "channel_name": "freeCodeCamp.org", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=LHBE6Q9XlzI" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/13-python-for-ai-engineering", "role": "supplementary", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "sql-tutorial-video",
+    "type": "youtube_video",
+    "title": "SQL Tutorial - Full Database Course for Beginners",
+    "canonical_url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+    "description": "Full beginner course on SQL and relational databases.",
+    "author": { "name": "freeCodeCamp.org" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["sql", "database", "data"],
+    "youtube": { "video_id": "HXV3zeQKqGY", "channel_name": "freeCodeCamp.org", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=HXV3zeQKqGY" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/09-data-management", "role": "supplementary", "relevance_score": 60 }
+    ]
+  },
+  {
+    "id": "data-analysis-with-python-video",
+    "type": "youtube_video",
+    "title": "Data Analysis with Python - Full Course for Beginners",
+    "canonical_url": "https://www.youtube.com/watch?v=r-uOLxNrNk8",
+    "description": "Full course covering NumPy, Pandas, Matplotlib, and Seaborn for data analysis.",
+    "author": { "name": "freeCodeCamp.org" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["python", "data-analysis", "pandas"],
+    "youtube": { "video_id": "r-uOLxNrNk8", "channel_name": "freeCodeCamp.org", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=r-uOLxNrNk8" },
+    "associated_lessons": [
+      { "lesson": "00-setup-and-tooling/09-data-management", "role": "supplementary", "relevance_score": 55 }
+    ]
+  }
+]

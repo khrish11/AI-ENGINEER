@@ -1,0 +1,13 @@
+src/app/settings/portfolio/page.tsx(27,1): error TS1128: Declaration or statement expected.
+src/components/navigation/sidebar.tsx(95,57): error TS1005: '...' expected.
+TSC_EXIT=False
+
+E:\AI ENGINEER\src\app\settings\portfolio\page.tsx
+  27:0  error  Parsing error: Declaration or statement expected
+
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx
+  95:56  error  Parsing error: '...' expected
+
+Γ£û 2 problems (2 errors, 0 warnings)
+
+ESLINT_EXIT=False

@@ -1,0 +1,11 @@
+name: Documentation improvement
+description: Suggest a focused documentation change.
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: Proposed improvement
+    validations:
+      required: true

@@ -1,0 +1,6 @@
+
+FullName
+--------
+E:\AI ENGINEER\src\app\settings\page.tsx
+E:\AI ENGINEER\src\app\settings\portfolio\page.tsx
+

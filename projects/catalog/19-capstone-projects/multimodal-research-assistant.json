@@ -1,0 +1,90 @@
+{
+  "id": "proj-capstone-multimodal",
+  "slug": "multimodal-research-assistant",
+  "title": "Capstone: Multimodal Research Assistant",
+  "description": "Ship a text + image + document research assistant: multimodal ingestion (papers, figures, charts), retrieval across modalities, grounded answers with element-level citations, table understanding, an evaluation-gated quality bar, and a serving path with observability.",
+  "level": "capstone",
+  "source": "platform",
+  "estimatedHours": 55,
+  "phaseSlugs": ["19-capstone-projects", "12-multimodal-ai", "17-infrastructure-and-production"],
+  "associatedOccurrences": [
+    "12-multimodal-ai/01-vision-transformer-patch-tokens",
+    "12-multimodal-ai/02-clip-contrastive-pretraining",
+    "17-infrastructure-and-production/01-managed-llm-platforms"
+  ],
+  "skills": ["vlm", "rag", "computer-vision", "embeddings", "model-evaluation", "serving", "observability"],
+  "prerequisites": ["proj-doc-qa"],
+  "learningObjectives": [
+    "Integrate document, figure, and chart understanding into one retrieval stack",
+    "Ground every answer in verifiable multimodal provenance",
+    "Evaluate answer quality with graded rubrics across modalities",
+    "Serve and monitor a multimodal pipeline end-to-end"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Graded cross-modal evaluation" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API + provenance contract" },
+    { "id": "reflection", "kind": "reflection", "title": "Reflection" }
+  ],
+  "milestones": [
+    {
+      "id": "ingest-multi",
+      "title": "Multimodal ingestion",
+      "objective": "Ingest papers/figures/charts into typed elements with regions + extracted tables.",
+      "expectedOutput": "Element registry across ≥5 documents.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 420
+    },
+    {
+      "id": "cross-retrieval",
+      "title": "Cross-modal retrieval",
+      "objective": "Retrieve text, figures, and tables jointly with provenance-preserving schema.",
+      "expectedOutput": "Retrieval demonstrably pulls figures relevant to a text query.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 420
+    },
+    {
+      "id": "answers",
+      "title": "Grounded generating + citing",
+      "objective": "Answers must cite page/figure/table elements; figures must be described from the element itself.",
+      "expectedOutput": "Answer schema with multimodal citations.",
+      "requiredEvidence": ["e-api"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "graded-eval",
+      "title": "Cross-modal graded eval + serving",
+      "objective": "Grade ≥15 answers across modalities; serve with traces + metrics.",
+      "expectedOutput": "Graded table + serving evidence.",
+      "requiredEvidence": ["e-eval", "e-trace"],
+      "estimatedMinutes": 480
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 20, "criteria": ["Typed ingestion", "Retrieval works across modalities", "Answers cite real elements"], "minimumExpectation": "Cross-modal answers with citations", "excellentExpectation": "Fixture tests across document types" },
+      { "id": "grounding", "category": "Provenance & honesty", "weight": 25, "criteria": ["Element-level citations", "Figure claims grounded", "Refusal implemented"], "minimumExpectation": "No uncited multimodal claims accepted", "excellentExpectation": "Adversarial unanswerable-question suite" },
+      { "id": "evaluation", "category": "Evaluation rigor", "weight": 25, "criteria": ["Graded rubric", "Per-modality breakdown", "Inter-run comparison"], "minimumExpectation": "Graded table with per-modality stats", "excellentExpectation": "Regression-aware re-runs after changes" },
+      { "id": "prod", "category": "Serving & ops", "weight": 15, "criteria": ["Traced serving", "Metrics", "Cost notes"], "minimumExpectation": "Serving evidence included", "excellentExpectation": "Latency + cost per modality documented" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture", "Licenses", "Reflection"], "minimumExpectation": "README + reflection", "excellentExpectation": "Compare-and-contrast with single-modal baseline" }
+    ],
+    "completionThreshold": 70,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "CLIP/VLM bindings", "PyMuPDF", "FastAPI", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["ingest → elements (text/figure/table) → joint embedder → retrieve → answer → serve"],
+    "constraints": ["Figure descriptions must come from the figure, not the caption alone", "Cost per query documented"],
+    "hints": ["Tables and charts are the benchmark differentiators vs plain text RAG"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Graded cross-modal evaluation.", "required": true },
+    { "id": "e-api", "kind": "documentation_url", "description": "API + provenance contract.", "required": true },
+    { "id": "e-trace", "kind": "evaluation_result", "description": "Serving traces/metrics evidence.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["rag", "general-ai", "llm-app"],
+  "hasStarterTemplate": false
+}

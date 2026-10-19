@@ -1,0 +1,105 @@
+
+Path                                                                    LineNumber Line
+----                                                                    ---------- ----
+E:\AI ENGINEER\src\app\portfolio\[username]\page.tsx                            67           <section aria-labelledby="portfolio-projects" className="space-y-4">
+E:\AI ENGINEER\src\app\portfolio\[username]\page.tsx                           113           <section aria-labelledby="portfolio-skills" className="space-y-3">
+E:\AI ENGINEER\src\app\portfolio\[username]\page.tsx                           126           <section aria-labelledby="portfolio-achievements" className="space-y-3">
+E:\AI ENGINEER\src\app\portfolio\[username]\page.tsx                           140           <section aria-labelledby="portfolio-progress" className="space-y-2">
+E:\AI ENGINEER\src\app\practice\page.tsx                                       173         aria-label="Checkpoint progress"
+E:\AI ENGINEER\src\app\practice\page.tsx                                       234         <section aria-labelledby="attempt-history-heading" data-testid="attempt-history">
+E:\AI ENGINEER\src\app\practice\page.tsx                                       344             aria-label={`Move option ${position + 1} up`}
+E:\AI ENGINEER\src\app\practice\page.tsx                                       353             aria-label={`Move option ${position + 1} down`}
+E:\AI ENGINEER\src\app\practice\page.tsx                                       398         aria-label={`Short answer for: ${question.prompt}`}
+E:\AI ENGINEER\src\app\projects\page.tsx                                        99               aria-label="Search projects"
+E:\AI ENGINEER\src\app\projects\page.tsx                                       108               aria-label="Filter by phase"
+E:\AI ENGINEER\src\app\projects\page.tsx                                       122               aria-label="Filter by skill"
+E:\AI ENGINEER\src\app\projects\page.tsx                                       136               aria-label="Filter by career track"
+E:\AI ENGINEER\src\app\saved\page.tsx                                          130               aria-label="Search saved items"
+E:\AI ENGINEER\src\app\saved\page.tsx                                          224                       aria-label={`Remove bookmark ${bookmark.title ?? bookmark.id}`}
+E:\AI ENGINEER\src\app\page.tsx                                                 17       <nav aria-label="Landing navigation" className="border-b border-border bg-surface/80 backdrop-blur sticky top-0 z-50">
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              128           aria-label="Analytics period filter"
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              157         <TabsList aria-label="Analytics sections">
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              318                   aria-label="Expected completed workload"
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              322                   aria-label="Actual completed workload"
+E:\AI ENGINEER\src\components\analytics\analytics-page-client.tsx              530       <div role="img" aria-label={`Study time per day for the last ${shown.length} recorded days`}>
+E:\AI ENGINEER\src\components\curriculum\code-viewer.tsx                        84             aria-label="Copy code"
+E:\AI ENGINEER\src\components\curriculum\curriculum-explorer-client.tsx        155             aria-label="Filter phases"
+E:\AI ENGINEER\src\components\curriculum\lesson-projects-panel.tsx             157                   aria-label={`Evidence URL for ${milestone.title}`}
+E:\AI ENGINEER\src\components\curriculum\markdown-viewer.tsx                   124           aria-label="Copy code snippet"
+E:\AI ENGINEER\src\components\curriculum\quiz-runner.tsx                       167                         "border-status-error bg-status-error/15 text-status-error line-through";
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                         80             aria-label="Navigation drawer"
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                         99                 aria-label="Close menu"
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                        105             {/* Quick Search */}
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                        115                 <span className="text-xs">Search curriculum...</span>
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                        166                   aria-label="Toggle theme"
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                        182         aria-label="Mobile bottom navigation"
+E:\AI ENGINEER\src\components\navigation\search-modal.tsx                      202             aria-label="Search AI Engineer OS"
+E:\AI ENGINEER\src\components\navigation\search-modal.tsx                      209           aria-label="Search results"
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx                            42       aria-label="Sidebar navigation"
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx                            75           aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx                            85       {/* Quick Search Button */}
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx                            93           aria-label="Quick search (Ctrl+K)"
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx                            44             aria-label="Open navigation menu"
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx                            50           <nav aria-label="Breadcrumbs" className="flex items-center gap-1.5 text-sm">
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx                            91             aria-label="Search curriculum and resources (Ctrl+K)"
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx                           105               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   131           aria-label="Required milestone progress"
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   182       <section aria-labelledby="milestones-heading" className="space-y-3">
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   185           <Loader2 className="animate-spin text-muted-foreground" aria-label="Loading milestones" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   281         <CheckCircle2 className="w-4 h-4 mt-0.5 text-status-success shrink-0" aria-label="done" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   283         <Circle className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" aria-label="pending" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   381           aria-label={`Notes for milestone ${milestone.title}`}
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   464     <section aria-labelledby="evidence-heading" className="space-y-3">
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   491               aria-label="Evidence kind"
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   506               aria-label="Evidence value"
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   511             <Input value={title} onChange={(e) => setTitle(e.target.value)} aria-label="Evidence title" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   517                 <Input value={branch} onChange={(e) => setBranch(e.target.value)} aria-label="GitHub branch" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   521                 <Input value={commitSha} onChange={(e) => setCommitSha(e.target.value)} aria-label="Commit SHA" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   525                 <Input value={prUrl} onChange={(e) => setPrUrl(e.target.value)} aria-label="Pull request URL" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   529                 <Input value={directory} onChange={(e) => setDirectory(e.target.value)} aria-label="Repository directory" />
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   581                   aria-label="Remove evidence"
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   645     <section aria-labelledby="rubric-heading" className="space-y-3">
+E:\AI ENGINEER\src\components\projects\project-workspace.tsx                   688                     aria-label={`Score for ${category.category} (0 to ${category.weight})`}
+E:\AI ENGINEER\src\components\resources\resource-browser.tsx                   126               aria-label="Search resources"
+E:\AI ENGINEER\src\components\resources\resource-browser.tsx                   132                 aria-label="Clear search"
+E:\AI ENGINEER\src\components\resources\resource-browser.tsx                   144               aria-label="Filter by phase"
+E:\AI ENGINEER\src\components\resources\resource-browser.tsx                   160               aria-label="Sort resources"
+E:\AI ENGINEER\src\components\roadmap\backlog-panel.tsx                        140                     aria-label={`Drop ${item.title} from plan`}
+E:\AI ENGINEER\src\components\roadmap\current-week-card.tsx                     84           aria-label={`Week capacity used: ${capacityPercent}%`}
+E:\AI ENGINEER\src\components\roadmap\current-week-card.tsx                    175                         aria-label={`Why is ${item.title} in my plan?`}
+E:\AI ENGINEER\src\components\roadmap\curriculum-overlay.tsx                   149                   <Progress value={percent} className="mt-1.5 h-1.5" aria-label={`${row.phaseSlug} progress ${percent}%`} />
+E:\AI ENGINEER\src\components\roadmap\item-explainer.tsx                        61       <DialogContent aria-label={`Why ${occurrence.title} is in your roadmap`}>
+E:\AI ENGINEER\src\components\roadmap\item-explainer.tsx                       118                   aria-label="Target week"
+E:\AI ENGINEER\src\components\roadmap\onboarding-wizard.tsx                    109       <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={legend}>
+E:\AI ENGINEER\src\components\roadmap\onboarding-wizard.tsx                    305         <Progress value={progressPercent} aria-label="Onboarding progress" />
+E:\AI ENGINEER\src\components\roadmap\onboarding-wizard.tsx                    439                     aria-label="Hours per week"
+E:\AI ENGINEER\src\components\roadmap\onboarding-wizard.tsx                    448                     aria-label="Start date"
+E:\AI ENGINEER\src\components\roadmap\onboarding-wizard.tsx                    460                     aria-label="Target completion date"
+E:\AI ENGINEER\src\components\roadmap\reschedule-dialog.tsx                     96       <DialogContent aria-label="Reschedule roadmap" className="max-w-xl">
+E:\AI ENGINEER\src\components\roadmap\reschedule-dialog.tsx                    115                 aria-label="Hours per week"
+E:\AI ENGINEER\src\components\roadmap\reschedule-dialog.tsx                    124                 aria-label="New target completion date"
+E:\AI ENGINEER\src\components\roadmap\roadmap-page-client.tsx                  216           aria-label={`Roadmap progress ${progress.percent}%`}
+E:\AI ENGINEER\src\components\roadmap\roadmap-page-client.tsx                  222         <ul className="space-y-1.5" aria-label="Roadmap notifications">
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx               67       <DialogContent aria-label="Roadmap settings" className="max-w-xl">
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx               85                 aria-label="Hours per week"
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx               95                 aria-label="Start date"
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx              104                 aria-label="Target completion date"
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx              188                   aria-label="Week number to mark as buffer"
+E:\AI ENGINEER\src\components\roadmap\roadmap-settings-dialog.tsx              217                       aria-label={`Remove buffer week ${week + 1}`}
+E:\AI ENGINEER\src\components\roadmap\roadmap-summary-card.tsx                 100           aria-label={`Roadmap progress ${progress.percent}%`}
+E:\AI ENGINEER\src\components\roadmap\skills-view.tsx                           39           <section key={group.groupId} aria-labelledby={`skill-group-${group.groupId}`}>
+E:\AI ENGINEER\src\components\roadmap\skills-view.tsx                           76                     aria-label={`${skill.skillName}: ${skill.percent}% complete`}
+E:\AI ENGINEER\src\components\roadmap\track-catalog.tsx                         80                 aria-label="First track to compare"
+E:\AI ENGINEER\src\components\roadmap\track-catalog.tsx                         95                 aria-label="Second track to compare"
+E:\AI ENGINEER\src\components\roadmap\track-catalog.tsx                        267         <DialogContent aria-label="Switch track preview">
+E:\AI ENGINEER\src\components\roadmap\week-timeline.tsx                         59         aria-label={`Week ${week.weekNumber}, ${statusText}`}
+E:\AI ENGINEER\src\components\roadmap\week-timeline.tsx                        106               <Progress value={percent} aria-label={`Week ${week.weekNumber} progress ${percent}%`} />
+E:\AI ENGINEER\src\components\roadmap\week-timeline.tsx                        181       <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Timeline filter">
+E:\AI ENGINEER\src\components\ui\__tests__\primitives.test.tsx                  57         aria-label="Name"
+E:\AI ENGINEER\src\components\ui\accordion.tsx                                 153       aria-labelledby={triggerId}
+E:\AI ENGINEER\src\components\ui\badge.tsx                                      37           "bg-status-error/15 text-status-error border border-status-error/20":
+E:\AI ENGINEER\src\components\ui\dialog.tsx                                    102         aria-labelledby={titleId}
+E:\AI ENGINEER\src\components\ui\dialog.tsx                                    114           aria-label="Close dialog"
+E:\AI ENGINEER\src\components\ui\tabs.tsx                                      145       aria-labelledby={tabId}
+
+

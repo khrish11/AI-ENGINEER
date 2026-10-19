@@ -1,0 +1,5 @@
+aa9460d fix(phase-9): stabilize release verification
+5b18a7f fix: make release migrations replayable
+6927677 feat: add authenticated account deletion
+fbe21f0 chore(release): complete production hardening
+5cbf1ed feat(phase-9): harden production identity and runtime

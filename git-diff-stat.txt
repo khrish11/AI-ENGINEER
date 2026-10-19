@@ -1,0 +1,9 @@
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/button.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/styles/globals.css', LF will be replaced by CRLF the next time Git touches it
+ package-lock.json            | 1331 +++++++++++++++++++++++++++++++++++++++++-
+ package.json                 |    2 +
+ src/components/ui/button.tsx |    4 +-
+ src/styles/globals.css       |   16 +-
+ 4 files changed, 1338 insertions(+), 15 deletions(-)

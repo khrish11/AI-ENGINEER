@@ -1,0 +1,87 @@
+{
+  "id": "proj-doc-qa",
+  "slug": "document-image-qa",
+  "title": "Document & Image QA System",
+  "description": "Build a multimodal question-answering system that answers questions about documents containing text, images/figures, and tables — with per-answer provenance (page/region citations) and a fixed evaluation set with human-graded answers.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 24,
+  "phaseSlugs": ["12-multimodal-ai"],
+  "associatedOccurrences": [
+    "12-multimodal-ai/01-vision-transformer-patch-tokens",
+    "12-multimodal-ai/02-clip-contrastive-pretraining",
+    "12-multimodal-ai/03-blip2-qformer-bridge"
+  ],
+  "skills": ["vlm", "computer-vision", "embeddings", "prompting", "rag", "model-evaluation"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Represent documents as multimodal elements (text blocks, figures, tables)",
+    "Combine image understanding with text retrieval for grounded answers",
+    "Cite page/region provenance for every answer",
+    "Grade answer quality with a documented rubric on a fixed set"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Answer-quality evaluation with grading rubric" }
+  ],
+  "milestones": [
+    {
+      "id": "structure",
+      "title": "Document structuring",
+      "objective": "Parse sample documents into typed elements (blocks/figures/tables) with regions.",
+      "expectedOutput": "Element registry with region references.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "retrieval",
+      "title": "Multimodal retrieval",
+      "objective": "Implement retrieval over text and image embeddings (e.g. CLIP-style) with a schema that keeps provenance.",
+      "expectedOutput": "Retrieval returns elements with page/region IDs.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "answers",
+      "title": "Answer generation + provenance",
+      "objective": "Generate answers from retrieved multimodal context, obligated to cite element IDs.",
+      "expectedOutput": "Answer schema with citations; refusal on insufficient support.",
+      "requiredEvidence": ["e-api"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "graded-eval",
+      "title": "Graded evaluation set",
+      "objective": "Hand-grade at least 15 answers on a three-level rubric; record inter-run consistency.",
+      "expectedOutput": "Graded table with score distribution and failure causes.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 180
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Element parsing deterministic", "Retrieval schema valid", "Refusal behavior implemented"], "minimumExpectation": "End-to-end answer with citations on sample docs", "excellentExpectation": "Fixture-based tests for parsing + retrieval" },
+      { "id": "grounding", "category": "Grounding & provenance", "weight": 25, "criteria": ["Citations required", "Wrong-document answers prevented", "Refusal path"], "minimumExpectation": "Answers cite real elements", "excellentExpectation": "Unanswerable questions detected and refused consistently" },
+      { "id": "evaluation", "category": "Evaluation honesty", "weight": 25, "criteria": ["Graded rubric documented", "Score distribution honest", "Multiple runs compared"], "minimumExpectation": "15+ graded answers", "excellentExpectation": "Repeat-run variance reported" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture explanation", "Model/data licenses", "Cost notes"], "minimumExpectation": "README reproduces results", "excellentExpectation": "Per-stage walkthrough with screenshots" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed schema modules", "Tests for parsers and metrics"], "minimumExpectation": "Parser and grading tests", "excellentExpectation": "CI smoke test on tiny fixture document" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "CLIP/vision-language model bindings", "PyMuPDF", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["parse → structure → embed (text+image) → retrieve → answer with citations", "evaluation/ with grading sheets"],
+    "constraints": ["No fabricated provenance: citation IDs must exist", "Document your model access costs"],
+    "hints": ["Tables are where most systems fail; handle them as first-class elements rather than flattening to text"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Graded answer evaluation.", "required": true },
+    { "id": "e-api", "kind": "documentation_url", "description": "Answer+provenance API docs.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "rag", "llm-app"],
+  "hasStarterTemplate": false
+}

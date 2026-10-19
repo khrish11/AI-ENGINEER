@@ -1,0 +1,35 @@
+
+Path                                                    LineNumber Line
+----                                                    ---------- ----
+E:\AI ENGINEER\src\app\settings\page.tsx                        16 import { useThemeStore } from "@/lib/stores/theme-store";
+E:\AI ENGINEER\src\app\settings\page.tsx                        84   const { theme, setTheme } = useThemeStore();
+E:\AI ENGINEER\src\app\settings\page.tsx                       327               <CardTitle className="text-lg">Appearance &amp; Theme</CardTitle>
+E:\AI ENGINEER\src\app\settings\page.tsx                       334                     { id: "dark", label: "Dark Theme", Icon: Moon },
+E:\AI ENGINEER\src\app\settings\page.tsx                       335                     { id: "light", label: "Light Theme", Icon: Sun },
+E:\AI ENGINEER\src\app\settings\page.tsx                       340                       onClick={() => setTheme(id as "dark" | "light" | "system")}
+E:\AI ENGINEER\src\app\settings\page.tsx                       342                         theme === id
+E:\AI ENGINEER\src\app\layout.tsx                                4 import { ThemeProvider } from "@/components/theme-provider";
+E:\AI ENGINEER\src\app\layout.tsx                               33         <ThemeProvider>
+E:\AI ENGINEER\src\app\layout.tsx                               41         </ThemeProvider>
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx         21 import { useThemeStore } from "@/lib/stores/theme-store";
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx         54   const { theme, setTheme } = useThemeStore();
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx        164                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx        166                   aria-label="Toggle theme"
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx        168                   {theme === "dark" ? (
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx             7 import { useThemeStore } from "@/lib/stores/theme-store";
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx            17   const { theme, setTheme } = useThemeStore();
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx            24   const toggleTheme = () => {
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx            25     setTheme(theme === "dark" ? "light" : "dark");
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx           100           {/* Theme Toggle */}
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx           103               onClick={toggleTheme}
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx           105               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx           107               {theme === "dark" ? (
+E:\AI ENGINEER\src\components\theme-provider.tsx                 4 import { useThemeStore } from "@/lib/stores/theme-store";
+E:\AI ENGINEER\src\components\theme-provider.tsx                 6 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+E:\AI ENGINEER\src\components\theme-provider.tsx                 7   const theme = useThemeStore((state) => state.theme);
+E:\AI ENGINEER\src\components\theme-provider.tsx                13     if (theme === "system") {
+E:\AI ENGINEER\src\components\theme-provider.tsx                14       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+E:\AI ENGINEER\src\components\theme-provider.tsx                18       root.classList.add(systemTheme);
+E:\AI ENGINEER\src\components\theme-provider.tsx                20       root.classList.add(theme);
+
+

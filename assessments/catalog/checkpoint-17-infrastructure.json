@@ -1,0 +1,120 @@
+{
+  "id": "checkpoint-17-infrastructure",
+  "title": "Phase 17 — Infrastructure & Production Checkpoint",
+  "kind": "phase_checkpoint",
+  "phaseSlug": "17-infrastructure-and-production",
+  "description": "Optional checkpoint on serving, observability, and operational reliability.",
+  "passThreshold": 0.7,
+  "status": "active",
+  "questions": [
+    {
+      "id": "p17-batching",
+      "type": "single_choice",
+      "prompt": "Dynamic batching on an inference server primarily trades off:",
+      "options": [
+        "Throughput vs per-request latency",
+        "Memory vs correctness",
+        "Prompt quality vs token cost",
+        "Nothing; it is strictly better"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Batching raises utilization/throughput, but requests wait for the batch window, adding queueing latency.",
+      "lessonRefs": ["17-infrastructure-and-production/02-inference-platform-economics"],
+      "skills": ["serving", "inference-optimization"],
+      "points": 1
+    },
+    {
+      "id": "p17-traces",
+      "type": "true_false",
+      "prompt": "A request trace is most useful for on-call diagnosis when it correlates a unique request ID across all stages of handling.",
+      "correctBoolean": true,
+      "explanation": "Correlated trace IDs are what let one engineer follow a single failing request from ingress through model call to response.",
+      "lessonRefs": ["17-infrastructure-and-production/01-managed-llm-platforms"],
+      "skills": ["observability"],
+      "points": 1
+    },
+    {
+      "id": "p17-autoscale-metric",
+      "type": "single_choice",
+      "prompt": "Which metric is typically the most direct autoscaling trigger for GPU inference?",
+      "options": [
+        "Disk usage",
+        "Queue depth or time-to-first-token pressure with GPU utilization",
+        "Number of GitHub stars",
+        "Daily request count only"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Queue depth / TTFT pressure reflects real demand vs capacity; utilization alone can mislead when batches are draining.",
+      "lessonRefs": ["17-infrastructure-and-production/03-gpu-autoscaling-kubernetes"],
+      "skills": ["serving", "observability"],
+      "points": 1
+    },
+    {
+      "id": "p17-rollback",
+      "type": "ordering",
+      "prompt": "Order a canary rollout with automated rollback:",
+      "options": [
+        "Deploy new version to a small percentage of traffic",
+        "Watch SLO metrics (error rate, latency) on the canary",
+        "Trigger auto-rollback if thresholds breach",
+        "Promote to 100% and keep monitoring"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "explanation": "Canary → observe → auto-rollback on breach → promote; skipping observation is how bad deploys become incidents.",
+      "lessonRefs": ["17-infrastructure-and-production/02-inference-platform-economics"],
+      "skills": ["reliability", "observability"],
+      "points": 2
+    },
+    {
+      "id": "p17-cost",
+      "type": "multiple_choice",
+      "prompt": "Select all honest ways to control LLM serving cost:",
+      "options": [
+        "Caching repeated requests with semantic keys",
+        "Right-sizing model choice per task complexity",
+        "Prompt-inflating every request 'just in case'",
+        "Setting per-tenant token budgets"
+      ],
+      "correctOptionIndices": [0, 1, 3],
+      "explanation": "Caching, task-appropriate models, and budgets control cost; inflating prompts raises cost and dilutes output quality.",
+      "lessonRefs": ["17-infrastructure-and-production/02-inference-platform-economics"],
+      "skills": ["finops", "serving"],
+      "points": 2
+    },
+    {
+      "id": "p17-runbook",
+      "type": "single_choice",
+      "prompt": "A rollback runbook is trustworthy when:",
+      "options": [
+        "It exists as a notion page",
+        "It has been executed for real (or in a staged simulation) and lists exact commands plus verification steps",
+        "It assumes the previous version is still on every node",
+        "It redirects to the vendor console without verification"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Runbooks earn trust by being exercised with concrete steps and post-rollback verification; assumptions break at 3am.",
+      "lessonRefs": ["17-infrastructure-and-production/01-managed-llm-platforms"],
+      "skills": ["reliability", "observability"],
+      "points": 1
+    },
+    {
+      "id": "p17-short-slo",
+      "type": "short_answer",
+      "prompt": "Define an SLO for your LLM service (pick one metric + threshold) and explain how an error budget changes your deployment decisions.",
+      "selfCheck": {
+        "criteria": [
+          "Names a concrete SLO (metric + threshold)",
+          "Explains error budget concept (allowed unreliability)",
+          "Links budget exhaustion to freezing rollouts / prioritizing reliability work"
+        ],
+        "fullPoints": 2,
+        "partialPoints": 1,
+        "guidance": "Self-check against the explanation below."
+      },
+      "explanation": "Example: 'p95 end-to-end latency < 2s for 99% of requests over 30 days.' The 1% gap is your error budget: while it remains, feature deploys proceed; when it's spent, releases pause in favor of reliability work.",
+      "lessonRefs": ["17-infrastructure-and-production/01-managed-llm-platforms"],
+      "skills": ["reliability", "observability"],
+      "points": 2
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "autogpt-repo",
+    "type": "github_repo",
+    "title": "Significant-Gravitas/AutoGPT",
+    "canonical_url": "https://github.com/Significant-Gravitas/AutoGPT",
+    "description": "An early autonomous GPT-4 agent platform; useful as a case study in long-horizon agents.",
+    "author": { "name": "Significant Gravitas" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["autonomous-agents", "history", "autogpt"],
+    "github": { "owner": "Significant-Gravitas", "repository": "AutoGPT", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "15-autonomous-systems/01-long-horizon-agents", "role": "reference", "relevance_score": 78, "recommended": true },
+      { "lesson": "15-autonomous-systems/09-coding-agent-landscape", "role": "reference", "relevance_score": 72 }
+    ]
+  },
+  {
+    "id": "openhands-repo",
+    "type": "github_repo",
+    "title": "All-Hands-AI/OpenHands",
+    "canonical_url": "https://github.com/All-Hands-AI/OpenHands",
+    "description": "An open platform for software development agents.",
+    "author": { "name": "All Hands AI" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["coding-agents", "software-engineering", "platform"],
+    "github": { "owner": "All-Hands-AI", "repository": "OpenHands", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "15-autonomous-systems/09-coding-agent-landscape", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "15-autonomous-systems/11-browser-agents", "role": "reference", "relevance_score": 62 }
+    ]
+  },
+  {
+    "id": "ai-scientist-repo",
+    "type": "github_repo",
+    "title": "SakanaAI/AI-Scientist",
+    "canonical_url": "https://github.com/SakanaAI/AI-Scientist",
+    "description": "The AI Scientist: fully automated open-ended scientific discovery.",
+    "author": { "name": "Sakana AI" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["ai-scientist", "autonomous-research", "discovery"],
+    "github": { "owner": "SakanaAI", "repository": "AI-Scientist", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "15-autonomous-systems/05-ai-scientist-v2", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "19-capstone-projects/05-autonomous-research-agent", "role": "practical", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "purple-llama-repo",
+    "type": "github_repo",
+    "title": "meta-llama/PurpleLlama",
+    "canonical_url": "https://github.com/meta-llama/PurpleLlama",
+    "description": "Meta's Llama Guard and LlamaFirewall safety tooling for LLMs.",
+    "author": { "name": "Meta", "organization": "Meta" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llama-guard", "safety", "moderation"],
+    "github": { "owner": "meta-llama", "repository": "PurpleLlama", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "15-autonomous-systems/18-llama-guard", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard", "role": "practical", "relevance_score": 85 }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "swe-bench-paper",
+    "type": "research_paper",
+    "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+    "canonical_url": "https://arxiv.org/abs/2310.06770",
+    "description": "The SWE-bench benchmark for evaluating language models on real GitHub issues.",
+    "author": { "name": "Carlos E. Jimenez et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["swe-bench", "benchmark", "coding-agents"],
+    "paper": {
+      "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+      "authors": ["Carlos E. Jimenez", "John Yang", "Alexander Wettig", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2310.06770",
+      "paper_url": "https://arxiv.org/abs/2310.06770"
+    },
+    "associated_lessons": [
+      { "lesson": "19-capstone-projects/09-code-migration-agent", "role": "reference", "relevance_score": 78 },
+      { "lesson": "19-capstone-projects/16-github-issue-to-pr-agent", "role": "reference", "relevance_score": 90, "recommended": true },
+      { "lesson": "14-agent-engineering/19-benchmarks-swebench-gaia", "role": "reference", "relevance_score": 88, "recommended": true }
+    ]
+  },
+  {
+    "id": "swe-bench-repo",
+    "type": "github_repo",
+    "title": "princeton-nlp/SWE-bench",
+    "canonical_url": "https://github.com/princeton-nlp/SWE-bench",
+    "description": "The SWE-bench dataset and evaluation harness for software engineering agents.",
+    "author": { "name": "Princeton NLP" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["swe-bench", "evaluation", "coding-agents"],
+    "github": { "owner": "princeton-nlp", "repository": "SWE-bench", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "19-capstone-projects/16-github-issue-to-pr-agent", "role": "practical", "relevance_score": 88, "recommended": true }
+    ]
+  }
+]

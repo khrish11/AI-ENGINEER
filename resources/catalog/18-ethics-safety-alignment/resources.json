@@ -1,0 +1,136 @@
+[
+  {
+    "id": "sleeper-agents-paper",
+    "type": "research_paper",
+    "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+    "canonical_url": "https://arxiv.org/abs/2401.05566",
+    "description": "Shows that deceptive behaviors can persist through standard safety training.",
+    "author": { "name": "Evan Hubinger et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["deception", "safety-training", "alignment"],
+    "paper": {
+      "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+      "authors": ["Evan Hubinger", "Carson Denison", "Jesse Mu", "et al."],
+      "publication_year": 2024,
+      "arxiv_id": "2401.05566",
+      "paper_url": "https://arxiv.org/abs/2401.05566"
+    },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/07-sleeper-agents-persistent-deception", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "weak-to-strong-paper",
+    "type": "research_paper",
+    "title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision",
+    "canonical_url": "https://arxiv.org/abs/2312.09390",
+    "description": "Studies whether weak supervisors can elicit the full capabilities of stronger models.",
+    "author": { "name": "Collin Burns et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["scalable-oversight", "weak-to-strong", "alignment"],
+    "paper": {
+      "title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision",
+      "authors": ["Collin Burns", "Pavel Izmailov", "Jan Hendrik Kirchner", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2312.09390",
+      "paper_url": "https://arxiv.org/abs/2312.09390"
+    },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "many-shot-jailbreaking-paper",
+    "type": "research_paper",
+    "title": "Many-Shot Jailbreaking",
+    "canonical_url": "https://arxiv.org/abs/2404.02151",
+    "description": "Demonstrates that long contexts enable many-shot jailbreaking attacks.",
+    "author": { "name": "Cem Anil et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["jailbreaking", "long-context", "safety"],
+    "paper": {
+      "title": "Many-Shot Jailbreaking",
+      "authors": ["Cem Anil", "Esin Durmus", "Nina Panickssery", "et al."],
+      "publication_year": 2024,
+      "arxiv_id": "2404.02151",
+      "paper_url": "https://arxiv.org/abs/2404.02151"
+    },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/13-many-shot-jailbreaking", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "adversarial-attacks-paper",
+    "type": "research_paper",
+    "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+    "canonical_url": "https://arxiv.org/abs/2307.15043",
+    "description": "Introduces GCG, gradient-based adversarial suffixes that transfer across models.",
+    "author": { "name": "Andy Zou et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["adversarial", "jailbreak", "red-teaming"],
+    "paper": {
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": ["Andy Zou", "Zifan Wang", "Nicholas Carlini", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2307.15043",
+      "paper_url": "https://arxiv.org/abs/2307.15043"
+    },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks", "role": "reference", "relevance_score": 88 },
+      { "lesson": "18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit", "role": "reference", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "garak-repo",
+    "type": "github_repo",
+    "title": "NVIDIA/garak",
+    "canonical_url": "https://github.com/NVIDIA/garak",
+    "description": "An LLM vulnerability scanner for probing for hallucination, prompt injection, and jailbreaks.",
+    "author": { "name": "NVIDIA", "organization": "NVIDIA" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["red-teaming", "scanner", "vulnerability"],
+    "github": { "owner": "NVIDIA", "repository": "garak", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit", "role": "practical", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "pyrit-repo",
+    "type": "github_repo",
+    "title": "Azure/PyRIT",
+    "canonical_url": "https://github.com/Azure/PyRIT",
+    "description": "Microsoft's Python Risk Identification Toolkit for generative AI red teaming.",
+    "author": { "name": "Microsoft", "organization": "Microsoft" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["red-teaming", "risk-identification", "safety"],
+    "github": { "owner": "Azure", "repository": "PyRIT", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks", "role": "practical", "relevance_score": 85 }
+    ]
+  }
+]

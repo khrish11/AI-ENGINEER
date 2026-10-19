@@ -1,0 +1,9 @@
+
+Path                                          LineNumber Line
+----                                          ---------- ----
+E:\AI ENGINEER\src\app\error.tsx                      23       <div className="w-12 h-12 rounded-full bg-status-error/15 border border-status-error/30 flex items-center justify-center text-status-error mb-4">
+E:\AI ENGINEER\src\app\layout.tsx                     36             <a href="#main-content" className="skip-to-content">
+E:\AI ENGINEER\src\app\page.tsx                       15     <main id="main-content" className="min-h-screen bg-background text-foreground flex flex-col selection:bg-accent-cyan/20">
+E:\AI ENGINEER\src\components\page-layout.tsx         34           <main id="main-content" className="flex-1 pb-16 md:pb-8">
+
+

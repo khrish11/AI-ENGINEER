@@ -1,0 +1,88 @@
+{
+  "id": "proj-production-service",
+  "slug": "production-ai-service",
+  "title": "Production AI Service with Tracing & Rollout Controls",
+  "description": "Ship an AI service that would survive on-call: structured traces per request, Prometheus-compatible metrics, health checks, deterministic deployment flags for progressive rollout and rollback, and a documented failure-handling runbook.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 30,
+  "phaseSlugs": ["17-infrastructure-and-production"],
+  "associatedOccurrences": [
+    "17-infrastructure-and-production/01-managed-llm-platforms",
+    "17-infrastructure-and-production/02-inference-platform-economics",
+    "17-infrastructure-and-production/03-gpu-autoscaling-kubernetes"
+  ],
+  "skills": ["serving", "observability", "reliability", "security", "docker", "serving"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Instrument requests with structured, correlated traces",
+    "Expose operational metrics (latency, errors, token usage) in a standard format",
+    "Control rollout with feature flags and staged percentages",
+    "Write and exercise a rollback runbook"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "trace", "kind": "evaluation_results", "title": "Trace + metrics evidence" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API + ops documentation" }
+  ],
+  "milestones": [
+    {
+      "id": "service",
+      "title": "Typed AI service",
+      "objective": "Serve a model/LLM endpoint with typed requests, auth placeholder, and rate limiting.",
+      "expectedOutput": "Containerized service with OpenAPI contract.",
+      "requiredEvidence": ["e-docs"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "tracing",
+      "title": "Structured tracing",
+      "objective": "Every request produces a trace with request ID, stage timings, token counts, and error classification.",
+      "expectedOutput": "Sample traces exported in a standard format.",
+      "requiredEvidence": ["e-trace"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "metrics",
+      "title": "Metrics + dashboards",
+      "objective": "Expose latency/error/saturation metrics; provide a dashboard config that renders them.",
+      "expectedOutput": "Metrics endpoint + dashboard file in repo.",
+      "requiredEvidence": ["e-trace"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "rollout",
+      "title": "Rollout / rollback controls",
+      "objective": "Implement staged rollout (percentage or shadow) and a documented one-command rollback, verified for real.",
+      "expectedOutput": "Rollback runbook demonstrated in the report.",
+      "requiredEvidence": ["e-trace", "e-docs"],
+      "estimatedMinutes": 240
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "observability", "category": "Observability", "weight": 25, "criteria": ["Traces correlate", "Metric definitions standard", "Dashboards render"], "minimumExpectation": "Trace for a failing request is diagnosable", "excellentExpectation": "SLO definition + error-budget note" },
+      { "id": "reliability", "category": "Reliability", "weight": 25, "criteria": ["Graceful degradation", "Timeouts + retries sane", "Rollback verified"], "minimumExpectation": "Doc'd rollback works in a demo", "excellentExpectation": "Failure-injection results included" },
+      { "id": "deploy", "category": "Deployment", "weight": 20, "criteria": ["Reproducible container", "Staged rollout", "Config externalized"], "minimumExpectation": "Compose/K8s deploy documents", "excellentExpectation": "Progressive rollout policy explained" },
+      { "id": "security", "category": "Security", "weight": 15, "criteria": ["No secrets in code", "Input validation", "Rate limiting"], "minimumExpectation": "Threat-model section in README", "excellentExpectation": "Dependency audit + least-priv config" },
+      { "id": "docs", "category": "Runbook & docs", "weight": 15, "criteria": ["On-call runbook", "Reproduction commands", "Cost notes"], "minimumExpectation": "Runbook for two failure modes", "excellentExpectation": "Per-stage cost/latency breakdown" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["FastAPI", "OpenTelemetry or Prometheus client", "Docker / K8s manifests", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["request → traced handler → model/LLM adapter → response", "flags service for rollout"],
+    "constraints": ["No code-execution of user submitted input", "Provider keys only via env refs"],
+    "hints": ["Break something on purpose (bad dependency, wrong port) and make sure the dashboards and traces tell the story an on-call engineer needs"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-trace", "kind": "evaluation_result", "description": "Trace/metrics evidence (exports, screenshots of dashboards).", "required": true },
+    { "id": "e-docs", "kind": "documentation_url", "description": "API + runbook docs.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["mlops", "general-ai", "llm-app"],
+  "hasStarterTemplate": true
+}

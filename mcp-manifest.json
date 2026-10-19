@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "adapter": "ai-engineer-os",
+  "transport": "stdio",
+  "readOnly": true,
+  "tools": [
+    "get_system_status",
+    "search_curriculum",
+    "get_lesson",
+    "get_learning_resources",
+    "search_projects",
+    "get_project",
+    "get_current_week",
+    "get_review_queue",
+    "get_analytics_overview"
+  ],
+  "resources": [
+    "ai-engineer://curriculum/phases"
+  ],
+  "policies": [
+    "PUBLIC",
+    "LOCAL_PRIVATE",
+    "AUTHENTICATED_PRIVATE",
+    "MUTATING",
+    "ADMIN"
+  ]
+}

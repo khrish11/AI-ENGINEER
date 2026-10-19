@@ -1,0 +1,130 @@
+{
+  "id": "checkpoint-11-llm-engineering",
+  "title": "Phase 11 — LLM Engineering Checkpoint",
+  "kind": "phase_checkpoint",
+  "phaseSlug": "11-llm-engineering",
+  "description": "Optional checkpoint after Phase 11: prompting, structured outputs, and RAG fundamentals. Never blocks curriculum access.",
+  "passThreshold": 0.7,
+  "status": "active",
+  "questions": [
+    {
+      "id": "p11-few-shot",
+      "type": "single_choice",
+      "prompt": "Few-shot prompting works mainly by:",
+      "options": [
+        "Fine-tuning weights with small data",
+        "Conditioning the model at inference time with worked examples",
+        "Adding a system prompt with rules",
+        "Retrieving documents at query time"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Few-shot inference conditions behaviour via examples in the prompt; no training happens unless you fine-tune separately.",
+      "lessonRefs": ["11-llm-engineering/02-few-shot-cot"],
+      "skills": ["prompting", "llm-application"],
+      "points": 1
+    },
+    {
+      "id": "p11-structured",
+      "type": "true_false",
+      "prompt": "When you need machine-parseable output, using a constrained structured-output format (e.g. JSON schema) is more reliable than parsing free-form prose.",
+      "correctBoolean": true,
+      "explanation": "Schema-constrained outputs reduce parsing failures and ambiguity versus parsing natural language responses.",
+      "lessonRefs": ["11-llm-engineering/03-structured-outputs"],
+      "skills": ["structured-output"],
+      "points": 1
+    },
+    {
+      "id": "p11-recall",
+      "type": "single_choice",
+      "prompt": "In a RAG evaluation, recall@k measures:",
+      "options": [
+        "How often the mailed answer is correct",
+        "The fraction of required source chunks that appear in the top-k retrieved set",
+        "How diverse the retrieved chunks are",
+        "Generation latency"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Recall@k is a retrieval metric: of the chunks a query needs, how many make it into the top-k",
+      "lessonRefs": ["11-llm-engineering/01-prompt-engineering"],
+      "skills": ["rag-evaluation", "retrieval"],
+      "points": 1
+    },
+    {
+      "id": "p11-chunk-overlap",
+      "type": "single_choice",
+      "prompt": "Increasing chunk overlap when chunking documents most directly trades off:",
+      "options": [
+        "Index size vs answer correctness — more overlap usually hurts retrieval granularity",
+        "Latency vs token cost only",
+        "Nothing — overlap is harmless",
+        "Ranking quality vs schema validity"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Bigger overlap shrinks unique content per chunk and can obscure boundaries, while slightly helping continuity; it should be treated as an ablation, and measured",
+      "lessonRefs": ["11-llm-engineering/01-prompt-engineering"],
+      "skills": ["chunking", "rag"],
+      "points": 1
+    },
+    {
+      "id": "p11-ground",
+      "type": "true_false",
+      "prompt": "A RAG answer generated without grounding in the retrieved context should be labelled enforced-at-architecture-level rather than prompted politely.",
+      "correctBoolean": true,
+      "explanation": "Grounding (constraint via prompt structure, retrieval-only context, refusal paths) is an architectural safeguard; soft prompting weakly guides but does not enforce.",
+      "lessonRefs": ["11-llm-engineering/03-structured-outputs"],
+      "skills": ["rag", "prompting", "security"],
+      "points": 1
+    },
+    {
+      "id": "p11-order-pipeline",
+      "type": "ordering",
+      "prompt": "Order a RAG pipeline's stages into their logical flow:",
+      "options": [
+        "Chunk documents",
+        "Embed chunks",
+        "Retrieve top-k for the query",
+        "Generate an answer grounded in the retrieved chunks"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "explanation": "Chunk, embed, retrieve, generate: you can't retrieve un-embedded chunks and can't generate grounded text without retrieved context.",
+      "lessonRefs": ["11-llm-engineering/01-prompt-engineering"],
+      "skills": ["rag", "retrieval", "chunking"],
+      "points": 2
+    },
+    {
+      "id": "p11-multi-skill",
+      "type": "multiple_choice",
+      "prompt": "Select every practice that makes LLM evaluation results more trustworthy:",
+      "options": [
+        "Fixed evaluation sets versioned in the repo",
+        "Recording model/params/prompt version per run",
+        "Tuning prompts on the test set directly",
+        "Reporting failures and limitation cases"
+      ],
+      "correctOptionIndices": [0, 1, 3],
+      "explanation": "Versioning, provenance, and honest failure reporting build trust; tuning on the eval set inflates results.",
+      "lessonRefs": ["11-llm-engineering/02-few-shot-cot"],
+      "skills": ["llm-evaluation", "rag-evaluation"],
+      "points": 2
+    },
+    {
+      "id": "p11-short-rag",
+      "type": "short_answer",
+      "prompt": "Explain the difference between retrieval failure and generation failure in a RAG pipeline and give one symptom of each.",
+      "selfCheck": {
+        "criteria": [
+          "Distinguishes retrieval (wrong/missing context) from generation (wrong use of good context)",
+          "Symptom of retrieval failure: correct-looking answer to the wrong question OR missed grounding",
+          "Symptom of generation failure: answer contradicts the retrieved chunks"
+        ],
+        "fullPoints": 2,
+        "partialPoints": 1,
+        "guidance": "Self-check against the explanation below."
+      },
+      "explanation": "Retrieval failure gives the model context that doesn't contain the answer (symptom: confident but unsupported claims or correct answers to an adjacent question). Generation failure has good chunks but the model doesn't use them (symptom: answer contradicts cited chunks).",
+      "lessonRefs": ["11-llm-engineering/03-structured-outputs"],
+      "skills": ["rag-evaluation", "rag"],
+      "points": 2
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "id": "proj-rag-app",
+  "slug": "evaluated-rag-application",
+  "title": "Evaluated RAG Application",
+  "description": "Build a RAG assistant that ingests at least two document formats, performs retrieval with configurable chunking, evaluates retrieval quality on a fixed test set, exposes an API endpoint, and records latency and retrieval metrics in a repeatable report.",
+  "level": "intermediate",
+  "source": "upstream",
+  "sourceUrl": "https://github.com/rohitg00/ai-engineering-from-scratch",
+  "estimatedHours": 20,
+  "phaseSlugs": ["11-llm-engineering"],
+  "associatedOccurrences": [
+    "11-llm-engineering/01-prompt-engineering",
+    "11-llm-engineering/02-few-shot-cot",
+    "11-llm-engineering/03-structured-outputs"
+  ],
+  "skills": ["rag", "retrieval", "chunking", "embeddings", "rag-evaluation", "structured-output", "prompting"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Ingest and chunk at least two document formats deterministically",
+    "Make retrieval configurable (chunk size, overlap, top-k) without code edits",
+    "Evaluate retrieval and answer quality on a fixed test set",
+    "Expose typed API responses including provenance (source chunk IDs)"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Retrieval + answer-quality report" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "API documentation with provenance contract" }
+  ],
+  "milestones": [
+    {
+      "id": "ingest",
+      "title": "Multi-format ingestion",
+      "objective": "Ingest at least two formats (e.g. PDF and Markdown) into normalized chunks with stable IDs.",
+      "expectedOutput": "Chunk registry with deterministic IDs and format provenance.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "retrieval",
+      "title": "Configurable retrieval",
+      "objective": "Implement embedding retrieval with configurable chunking/overlap/top-k driven by a config file.",
+      "expectedOutput": "Same corpus retrievable under multiple configs without code changes.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "generation",
+      "title": "Grounded generation",
+      "objective": "Generate answers constrained to retrieved context, returning source chunk IDs with every answer.",
+      "expectedOutput": "API response schema includes citations and refuses ungrounded answers gracefully.",
+      "requiredEvidence": ["e-api"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "evaluation",
+      "title": "Fixed-set evaluation",
+      "objective": "Evaluate retrieval (recall@k) and answer quality on at least 15 fixed queries; record latency.",
+      "expectedOutput": "Report with metric tables across at least two retrieval configs.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 240
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "retrieval", "category": "Retrieval quality", "weight": 25, "criteria": ["Deterministic chunking", "recall@k measured", "Config comparisons"], "minimumExpectation": "recall@k reported for two configs", "excellentExpectation": "Ablation table showing chunk-size/overlap trade-offs" },
+      { "id": "grounding", "category": "Grounding & citations", "weight": 20, "criteria": ["Citations present", "Refusal behavior defined", "No ungrounded answers presented as facts"], "minimumExpectation": "Every answer cites chunks", "excellentExpectation": "Faithfulness spot-check protocol documented" },
+      { "id": "api", "category": "API design", "weight": 15, "criteria": ["Typed schema", "Provenance contract", "Error paths"], "minimumExpectation": "Documented endpoint with citations in response", "excellentExpectation": "Contract tests + rate/latency documentation" },
+      { "id": "evaluation", "category": "Evaluation methodology", "weight": 20, "criteria": ["Fixed query set", "Latency recorded", "Known limitations stated"], "minimumExpectation": "Metrics for a stated fixed set", "excellentExpectation": "Per-query failures analyzed with causes" },
+      { "id": "docs", "category": "Documentation", "weight": 10, "criteria": ["Data sources + licenses", "Reproducible commands", "Cost notes"], "minimumExpectation": "README reproduces the pipeline", "excellentExpectation": "Operational notes (index rebuild, embedding refresh)" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed modules", "Tests for chunking and metrics"], "minimumExpectation": "Chunking tests pass", "excellentExpectation": "Fixture-based end-to-end test without external API" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["FastAPI", "sentence-transformers / provider embeddings", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["ingest → chunk → index → retrieve → generate", "evaluation/ independent of serving path"],
+    "constraints": ["Two document formats minimum", "Chunking purely config-driven", "No answer path that skips retrieval"],
+    "hints": ["Build the offline evaluation harness first; it is what separates this project from a demo chatbot"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with ingestion, retrieval, generation, evaluation.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Recall@k/answer-quality report across configs.", "required": true },
+    { "id": "e-api", "kind": "documentation_url", "description": "API documentation (link or in-repo).", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["rag", "llm-app", "general-ai"],
+  "hasStarterTemplate": true
+}

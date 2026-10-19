@@ -1,0 +1,10 @@
+{
+  "id": "resource-id",
+  "type": "documentation",
+  "title": "Resource title",
+  "canonical_url": "https://example.com/resource",
+  "description": "Why this resource is useful.",
+  "author": { "name": "Author or organization" },
+  "license": "License or unknown",
+  "associated_lessons": ["phase-slug/lesson-slug"]
+}

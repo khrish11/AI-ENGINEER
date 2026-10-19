@@ -1,0 +1,12 @@
+
+Path                                                    LineNumber Line
+----                                                    ---------- ----
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx        105             {/* Quick Search */}
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx        115                 <span className="text-xs">Search curriculum...</span>
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx            85       {/* Quick Search Button */}
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx            93           aria-label="Quick search (Ctrl+K)"
+E:\AI ENGINEER\src\components\navigation\sidebar.tsx            98               <span className="flex-1 text-left text-xs">Search OS...</span>
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx            91             aria-label="Search curriculum and resources (Ctrl+K)"
+E:\AI ENGINEER\src\components\page-layout.tsx                   16       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+
+

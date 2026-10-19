@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792170083388,
+      "tag": "0000_blushing_thanos",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792206900143,
+      "tag": "0001_even_shriek",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792214650166,
+      "tag": "0002_nifty_proteus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792300000000,
+      "tag": "0003_phase4_sync",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792400000000,
+      "tag": "0004_phase4_sync_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792298141966,
+      "tag": "0005_certain_cobalt_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792313222938,
+      "tag": "0006_stormy_adam_warlock",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792500000000,
+      "tag": "0007_split_lesson_identity",
+      "breakpoints": true
+    }
+  ]
+}

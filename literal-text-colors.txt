@@ -1,0 +1,10 @@
+
+Path                                                                  LineNumber Line
+----                                                                  ---------- ----
+E:\AI ENGINEER\src\app\dashboard\page.tsx                                    120       tone: "text-amber-400",
+E:\AI ENGINEER\src\components\curriculum\lesson-progress-controls.tsx        128             <Star className="w-3 h-3 text-amber-400" />
+E:\AI ENGINEER\src\components\navigation\mobile-nav.tsx                      169                     <Sun className="h-4 w-4 text-amber-400" />
+E:\AI ENGINEER\src\components\navigation\top-bar.tsx                         108                 <Sun className="h-4 w-4 text-amber-400" />
+E:\AI ENGINEER\src\components\portfolio\portfolio-settings-client.tsx        215             {slugError && <p className="text-xs text-red-500">{slugError}</p>}
+
+

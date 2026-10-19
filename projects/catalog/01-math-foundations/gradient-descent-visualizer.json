@@ -1,0 +1,93 @@
+{
+  "id": "proj-gd-visualizer",
+  "slug": "gradient-descent-visualizer",
+  "title": "Gradient Descent & Linear Algebra Visualizer",
+  "description": "Implement gradient descent on simple loss surfaces and an interactive visualization of vectors, matrices, and optimization trajectories, then validate numerics with tests against analytic results.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 8,
+  "phaseSlugs": ["01-math-foundations"],
+  "associatedOccurrences": [
+    "01-math-foundations/01-linear-algebra-intuition",
+    "01-math-foundations/02-vectors-matrices-operations",
+    "01-math-foundations/03-matrix-transformations"
+  ],
+  "skills": ["linear-algebra", "calculus", "optimization", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement vector and matrix operations without a linear-algebra library",
+    "Derive and code gradients for quadratic and logistic losses",
+    "Explain learning-rate effects with visual evidence",
+    "Verify numerical gradients with finite differences"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Visualizer repository" },
+    { "id": "tests", "kind": "test_results", "title": "Numerical gradient tests" },
+    { "id": "notebook", "kind": "notebook", "title": "Derivations notebook" }
+  ],
+  "milestones": [
+    {
+      "id": "linalg-core",
+      "title": "Vector & matrix ops from scratch",
+      "objective": "Implement dot products, matmul, transpose, and norms in a plain NumPy-free core.",
+      "expectedOutput": "Tested linear-algebra module with property checks.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "gd-variants",
+      "title": "Gradient descent variants",
+      "objective": "Implement batch, mini-batch, and stochastic updates on quadratic and logistic losses.",
+      "expectedOutput": "Convergence histories recorded per variant and learning rate.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "viz",
+      "title": "Interactive visualization",
+      "objective": "Plot contour maps with animated optimizer trajectories; expose learning-rate and batch-size controls.",
+      "expectedOutput": "Readable notebook animation or small web app.",
+      "requiredEvidence": ["e-notebook"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "validation",
+      "title": "Numerical validation",
+      "objective": "Check analytic gradients against finite differences; document maximum relative error.",
+      "expectedOutput": "Tests asserting gradient correctness within tolerance.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 90
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 20, "criteria": ["Optimizers converge on target losses", "Gradients match finite differences"], "minimumExpectation": "Descent reduces loss monotonically for a small fixed learning rate", "excellentExpectation": "All variants work with configurable rate and momentum plus edge-case tests" },
+      { "id": "numerics", "category": "Numerical rigor", "weight": 20, "criteria": ["Tolerances justified", "No hidden library gradient calls", "Deterministic seeds"], "minimumExpectation": "Tests pass with documented tolerance", "excellentExpectation": "Property-based tests over random matrices" },
+      { "id": "viz", "category": "Visualization quality", "weight": 15, "criteria": ["Contours readable", "Trajectories annotated", "Controls labeled"], "minimumExpectation": "Contour plus one trajectory view", "excellentExpectation": "Interactive controls with readable descriptions" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Derivations shown", "README explains math and usage"], "minimumExpectation": "Derivations for both losses", "excellentExpectation": "Walkthrough links each equation to its code location" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed module structure", "No dead code", "Consistent naming"], "minimumExpectation": "Clean module split, lint-clean", "excellentExpectation": "API documented with docstrings" },
+      { "id": "testing", "category": "Testing", "weight": 15, "criteria": ["Unit tests for ops and optimizers", "CI green"], "minimumExpectation": "Tests cover optimizers and gradients", "excellentExpectation": "CI with coverage report attached" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["NumPy", "Matplotlib", "pytest", "Jupyter"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": [
+      "core/ (pure math + optimizers, no plotting imports)",
+      "viz/ (plotting only)",
+      "tests/ (finite-difference checks + convergence properties)"
+    ],
+    "constraints": ["No autograd frameworks in core", "Deterministic seeding for reproducible runs"],
+    "hints": ["Start with f(w)=||Aw-b||^2 to sanity-check before logistic"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with core math and optimizer code.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Test run output or CI link showing gradient tests passing.", "required": true },
+    { "id": "e-notebook", "kind": "notebook", "description": "Notebook with derivations and rendered visualization.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "research"],
+  "hasStarterTemplate": false
+}

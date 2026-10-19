@@ -1,0 +1,90 @@
+{
+  "id": "proj-capstone-eval-platform",
+  "slug": "ai-evaluation-platform",
+  "title": "Capstone: AI Evaluation Platform",
+  "description": "Ship an evaluation platform for LLM/agent systems: versioned datasets → experiment runs → deterministic metrics → regression tests → reporting. Supports single-choice, rubric-graded, and pairwise comparisons, with experiment provenance stored so any historical number can be re-derived.",
+  "level": "capstone",
+  "source": "platform",
+  "estimatedHours": 50,
+  "phaseSlugs": ["19-capstone-projects", "11-llm-engineering", "18-ethics-safety-alignment"],
+  "associatedOccurrences": [
+    "19-capstone-projects/03-realtime-voice-assistant",
+    "11-llm-engineering/01-prompt-engineering",
+    "18-ethics-safety-alignment/01-instruction-following-alignment-signal"
+  ],
+  "skills": ["llm-evaluation", "model-evaluation", "ml-pipelines", "observability", "python", "rag-evaluation"],
+  "prerequisites": ["proj-supervised-system"],
+  "learningObjectives": [
+    "Design versioned evaluation datasets with licenses and provenance",
+    "Run experiments with captured configs (model, params, prompt version)",
+    "Compute deterministic metrics where possible; grade rubrics transparently",
+    "Turn evaluation into regression tests and CI gates"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Experiment reports" },
+    { "id": "api-docs", "kind": "api_documentation", "title": "Dataset + metric documentation" },
+    { "id": "reflection", "kind": "reflection", "title": "Reflection on evaluation limits" }
+  ],
+  "milestones": [
+    {
+      "id": "datasets",
+      "title": "Versioned datasets",
+      "objective": "Create ≥2 evaluation datasets with versioning, license documentation, grading guidance, and per-item IDs.",
+      "expectedOutput": "Dataset files + manifest.",
+      "requiredEvidence": ["e-docs"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "runner",
+      "title": "Experiment runner",
+      "objective": "Run evaluations capturing full provenance (model, params, prompt version, seeds) per item.",
+      "expectedOutput": "Run records reproducible from config alone.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 360
+    },
+    {
+      "id": "metrics",
+      "title": "Metrics + comparisons",
+      "objective": "Implement exact-match style metrics plus LLM-graded rubrics with documented prompts and human spot-checks.",
+      "expectedOutput": "Metric documentation with limitations stated.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 420
+    },
+    {
+      "id": "regression",
+      "title": "Regression gate + report",
+      "objective": "Convert metrics to CI regression tests with thresholds; produce a comparative report across ≥2 model or prompt versions.",
+      "expectedOutput": "CI gate + comparison report.",
+      "requiredEvidence": ["e-eval", "e-tests"],
+      "estimatedMinutes": 360
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "datasets", "category": "Dataset quality", "weight": 20, "criteria": ["Versioned", "Licenses documented", "Clear grading guidance"], "minimumExpectation": "Datasets fully documented", "excellentExpectation": "Inter-annotator agreement measured" },
+      { "id": "provenance", "category": "Experiment provenance", "weight": 25, "criteria": ["Configs captured", "Seeds recorded", "Historical numbers re-derivable"], "minimumExpectation": "Runs replayable from stored config", "excellentExpectation": "Full lineage from number → run → items" },
+      { "id": "metrics", "category": "Metric rigor", "weight": 25, "criteria": ["Deterministic where possible", "Grader prompts documented", "Spot-checks performed"], "minimumExpectation": "Limitations stated per metric", "excellentExpectation": "Agreement analysis between grader and human" },
+      { "id": "regression", "category": "Regression engineering", "weight": 20, "criteria": ["Thresholds justified", "CI gate exists", "Alert path defined"], "minimumExpectation": "CI quality gate functioning", "excellentExpectation": "Per-category regression dashboards" },
+      { "id": "docs", "category": "Documentation", "weight": 10, "criteria": ["Datasets + metrics documented", "Reflection", "Compare report"], "minimumExpectation": "README + docs", "excellentExpectation": "Decision guide for choosing metrics" }
+    ],
+    "completionThreshold": 70,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "pytest", "pandas", "Provider SDK"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["datasets (versioned) → runner (captures provenance) → metrics → regression gate → reports"],
+    "constraints": ["All LLM-grader prompts version-controlled", "No metric without a stated failure mode"],
+    "hints": ["Pairwise comparisons are seductive but statistically tricky; document ranking stability before claiming improvements"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Experiment + comparison reports.", "required": true },
+    { "id": "e-docs", "kind": "documentation_url", "description": "Dataset/metric docs.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "CI regression gate evidence.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "research", "mlops"],
+  "hasStarterTemplate": false
+}

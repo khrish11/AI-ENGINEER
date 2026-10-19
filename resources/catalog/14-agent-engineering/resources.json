@@ -1,0 +1,230 @@
+[
+  {
+    "id": "reflexion-paper",
+    "type": "research_paper",
+    "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+    "canonical_url": "https://arxiv.org/abs/2303.11366",
+    "description": "Agents that reflect on failures in natural language to improve over trials.",
+    "author": { "name": "Noah Shinn et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["reflexion", "agents", "self-improvement"],
+    "paper": {
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": ["Noah Shinn", "Federico Cassano", "Ashwin Gopinath", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2303.11366",
+      "paper_url": "https://arxiv.org/abs/2303.11366"
+    },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/03-reflexion-verbal-rl", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "tree-of-thoughts-paper",
+    "type": "research_paper",
+    "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2305.10601",
+    "description": "Deliberate search over intermediate reasoning steps using a tree of thoughts.",
+    "author": { "name": "Shunyu Yao et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["tree-of-thoughts", "reasoning", "planning"],
+    "paper": {
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "authors": ["Shunyu Yao", "Dian Yu", "Jeffrey Zhao", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2305.10601",
+      "paper_url": "https://arxiv.org/abs/2305.10601"
+    },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/04-tree-of-thoughts-lats", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "self-refine-paper",
+    "type": "research_paper",
+    "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "canonical_url": "https://arxiv.org/abs/2303.17651",
+    "description": "Models iteratively refine their own outputs using self-generated feedback.",
+    "author": { "name": "Aman Madaan et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["self-refine", "feedback", "agents"],
+    "paper": {
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "authors": ["Aman Madaan", "Niket Tandon", "Prakhar Gupta", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2303.17651",
+      "paper_url": "https://arxiv.org/abs/2303.17651"
+    },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/05-self-refine-and-critic", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "voyager-paper",
+    "type": "research_paper",
+    "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2305.16291",
+    "description": "An LLM agent that builds and reuses a growing library of skills.",
+    "author": { "name": "Guanzhi Wang et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["voyager", "skill-library", "agents"],
+    "paper": {
+      "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "authors": ["Guanzhi Wang", "Yuqi Xie", "Yunfan Jiang", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2305.16291",
+      "paper_url": "https://arxiv.org/abs/2305.16291"
+    },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/10-skill-libraries-voyager", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "anthropic-docs",
+    "type": "official_documentation",
+    "title": "Anthropic Documentation",
+    "canonical_url": "https://docs.anthropic.com/en/docs/overview",
+    "description": "Official documentation for the Claude API, tool use, and agent workflows.",
+    "author": { "name": "Anthropic", "organization": "Anthropic" },
+    "difficulty": "intermediate",
+    "source_platform": "docs.anthropic.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["claude", "api", "tool-use"],
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/12-anthropic-workflow-patterns", "role": "primary", "relevance_score": 85, "recommended": true },
+      { "lesson": "14-agent-engineering/17-claude-agent-sdk", "role": "reference", "relevance_score": 82 },
+      { "lesson": "18-ethics-safety-alignment/01-instruction-following-alignment-signal", "role": "reference", "relevance_score": 60 }
+    ]
+  },
+  {
+    "id": "microsoft-autogen-repo",
+    "type": "github_repo",
+    "title": "microsoft/autogen",
+    "canonical_url": "https://github.com/microsoft/autogen",
+    "description": "A programming framework for agentic AI and multi-agent conversations.",
+    "author": { "name": "Microsoft", "organization": "Microsoft" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["autogen", "multi-agent", "framework"],
+    "github": { "owner": "microsoft", "repository": "autogen", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/14-autogen-actor-model", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern", "role": "practical", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "crewai-repo",
+    "type": "github_repo",
+    "title": "crewAIInc/crewAI",
+    "canonical_url": "https://github.com/crewAIInc/crewAI",
+    "description": "A framework for orchestrating role-playing, autonomous AI agents.",
+    "author": { "name": "CrewAI", "organization": "CrewAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["crewai", "multi-agent", "role-based"],
+    "github": { "owner": "crewAIInc", "repository": "crewAI", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/15-crewai-role-based-crews", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "16-multi-agent-and-swarms/08-role-specialization", "role": "practical", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "smolagents-repo",
+    "type": "github_repo",
+    "title": "huggingface/smolagents",
+    "canonical_url": "https://github.com/huggingface/smolagents",
+    "description": "A minimal library for building capable agents that write and execute code.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["smolagents", "code-agents", "framework"],
+    "github": { "owner": "huggingface", "repository": "smolagents", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/18-agno-and-mastra-runtimes", "role": "reference", "relevance_score": 72 },
+      { "lesson": "13-tools-and-protocols/22-skills-and-agent-sdks", "role": "practical", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "hf-agents-course",
+    "type": "github_repo",
+    "title": "huggingface/agents-course",
+    "canonical_url": "https://github.com/huggingface/agents-course",
+    "description": "The Hugging Face Agents Course covering agent fundamentals, frameworks, and evaluation.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "beginner",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["agents", "course", "tutorial"],
+    "github": { "owner": "huggingface", "repository": "agents-course", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/01-the-agent-loop", "role": "primary", "relevance_score": 85, "recommended": true },
+      { "lesson": "14-agent-engineering/19-benchmarks-swebench-gaia", "role": "reference", "relevance_score": 72 }
+    ]
+  },
+  {
+    "id": "generative-ai-for-beginners",
+    "type": "github_repo",
+    "title": "microsoft/generative-ai-for-beginners",
+    "canonical_url": "https://github.com/microsoft/generative-ai-for-beginners",
+    "description": "A 21-lesson course teaching the fundamentals of generative AI and agents.",
+    "author": { "name": "Microsoft", "organization": "Microsoft" },
+    "difficulty": "beginner",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["course", "generative-ai", "fundamentals"],
+    "github": { "owner": "microsoft", "repository": "generative-ai-for-beginners", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/01-the-agent-loop", "role": "supplementary", "relevance_score": 72 }
+    ]
+  },
+  {
+    "id": "langfuse-repo",
+    "type": "github_repo",
+    "title": "langfuse/langfuse",
+    "canonical_url": "https://github.com/langfuse/langfuse",
+    "description": "Open-source LLM engineering platform for observability, tracing, and evaluation.",
+    "author": { "name": "Langfuse", "organization": "Langfuse" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["observability", "tracing", "evaluation"],
+    "github": { "owner": "langfuse", "repository": "langfuse", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "14-agent-engineering/24-agent-observability-platforms", "role": "practical", "relevance_score": 85, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/13-llm-observability", "role": "practical", "relevance_score": 80 }
+    ]
+  }
+]

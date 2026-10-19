@@ -1,0 +1,89 @@
+[
+  {
+    "id": "openai-gym",
+    "type": "github_repo",
+    "title": "openai/gym",
+    "canonical_url": "https://github.com/openai/gym",
+    "description": "A toolkit for developing and comparing reinforcement learning algorithms.",
+    "author": { "name": "OpenAI", "organization": "OpenAI" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["reinforcement-learning", "environments", "gym"],
+    "github": { "owner": "openai", "repository": "gym", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "09-reinforcement-learning/01-mdps-states-actions-rewards", "role": "practical", "relevance_score": 80, "recommended": true },
+      { "lesson": "09-reinforcement-learning/04-q-learning-sarsa", "role": "practical", "relevance_score": 78 },
+      { "lesson": "09-reinforcement-learning/12-rl-for-games", "role": "practical", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "stable-baselines3",
+    "type": "github_repo",
+    "title": "DLR-RM/stable-baselines3",
+    "canonical_url": "https://github.com/DLR-RM/stable-baselines3",
+    "description": "Reliable implementations of reinforcement learning algorithms in PyTorch.",
+    "author": { "name": "Stable-Baselines3 contributors" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["reinforcement-learning", "ppo", "dqn", "pytorch"],
+    "github": { "owner": "DLR-RM", "repository": "stable-baselines3", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "09-reinforcement-learning/05-dqn", "role": "practical", "relevance_score": 82 },
+      { "lesson": "09-reinforcement-learning/08-ppo", "role": "practical", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "rlhf-preferences-paper",
+    "type": "research_paper",
+    "title": "Deep Reinforcement Learning from Human Preferences",
+    "canonical_url": "https://arxiv.org/abs/1706.03741",
+    "description": "Trains reward models from human preference comparisons for RL.",
+    "author": { "name": "Paul F. Christiano et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["rlhf", "reward-modeling", "preferences"],
+    "paper": {
+      "title": "Deep Reinforcement Learning from Human Preferences",
+      "authors": ["Paul F. Christiano", "Jan Leike", "Tom Brown", "et al."],
+      "publication_year": 2017,
+      "arxiv_id": "1706.03741",
+      "paper_url": "https://arxiv.org/abs/1706.03741"
+    },
+    "associated_lessons": [
+      { "lesson": "09-reinforcement-learning/09-reward-modeling-rlhf", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "instructgpt-paper",
+    "type": "research_paper",
+    "title": "Training language models to follow instructions with human feedback",
+    "canonical_url": "https://arxiv.org/abs/2203.02155",
+    "description": "The InstructGPT paper describing the RLHF pipeline for instruction following.",
+    "author": { "name": "Long Ouyang et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["rlhf", "instructgpt", "alignment"],
+    "paper": {
+      "title": "Training language models to follow instructions with human feedback",
+      "authors": ["Long Ouyang", "Jeff Wu", "Xu Jiang", "et al."],
+      "publication_year": 2022,
+      "arxiv_id": "2203.02155",
+      "paper_url": "https://arxiv.org/abs/2203.02155"
+    },
+    "associated_lessons": [
+      { "lesson": "09-reinforcement-learning/09-reward-modeling-rlhf", "role": "reference", "relevance_score": 88 }
+    ]
+  }
+]

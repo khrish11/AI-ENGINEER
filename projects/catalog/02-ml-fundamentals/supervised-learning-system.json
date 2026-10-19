@@ -1,0 +1,88 @@
+{
+  "id": "proj-supervised-system",
+  "slug": "supervised-learning-system",
+  "title": "End-to-End Supervised Learning System",
+  "description": "Build a supervised learning system with reproducible evaluation: dataset documentation, leakage-free train/validation/test splits, at least three model families under identical preprocessing, fixed random seeds, a metrics report, and a CLI that reproduces every number in the README from a clean checkout.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 12,
+  "phaseSlugs": ["02-ml-fundamentals"],
+  "associatedOccurrences": [
+    "02-ml-fundamentals/01-what-is-machine-learning",
+    "02-ml-fundamentals/02-linear-regression",
+    "02-ml-fundamentals/03-logistic-regression"
+  ],
+  "skills": ["classification", "regression", "feature-engineering", "model-evaluation", "ml-pipelines", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Design leakage-free train/val/test pipelines",
+    "Compare model families with identical preprocessing and splits",
+    "Report confusion matrix, ROC/PR-AUC, calibration, and baseline comparisons",
+    "Reproduce every reported metric from a single command and seed"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Project repository" },
+    { "id": "eval-report", "kind": "evaluation_results", "title": "Evaluation report", "description": "Metrics tables and charts with seeds recorded." }
+  ],
+  "milestones": [
+    {
+      "id": "data-pipeline",
+      "title": "Dataset ingestion & splits",
+      "objective": "Load a public dataset, document its license, and produce deterministic train/val/test splits with a fixed seed.",
+      "expectedOutput": "Data module that outputs identical splits given the same seed and hash.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "models",
+      "title": "Three model families",
+      "objective": "Train at least three families (linear, tree ensemble, simple MLP) under identical preprocessing.",
+      "expectedOutput": "Model registry with saved artifacts and configs.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "evaluation",
+      "title": "Evaluation & baselines",
+      "objective": "Evaluate with accuracy, ROC-AUC/PR-AUC, calibration curves, and a trivial-baseline beat check.",
+      "expectedOutput": "evaluation/metrics.json plus rendered charts.",
+      "requiredEvidence": ["e-eval", "e-tests"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "cli",
+      "title": "Reproducible CLI",
+      "objective": "One documented command chain reproduces every README metric from a clean clone.",
+      "expectedOutput": "CI or documented commands matching README numbers to stated precision.",
+      "requiredEvidence": ["e-eval", "e-tests"],
+      "estimatedMinutes": 120
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Splits leak-free", "Metrics implemented correctly", "Baseline comparison present"], "minimumExpectation": "Honest val/test separation with documented metric definitions", "excellentExpectation": "Leakage test that re-derives splits and detects contamination" },
+      { "id": "methodology", "category": "Evaluation methodology", "weight": 20, "criteria": ["Seeds recorded", "Repeated runs documented", "Calibration considered"], "minimumExpectation": "Fixed seeds and repeated runs documented", "excellentExpectation": "Multi-seed variance reported" },
+      { "id": "repro", "category": "Reproducibility", "weight": 20, "criteria": ["Single-command reproduction", "Locked dependencies", "Data provenance"], "minimumExpectation": "README numbers reproduced by a reviewer", "excellentExpectation": "CI recomputes metrics on every commit" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Dataset description and license", "Model notes per family"], "minimumExpectation": "Dataset license and usage docs", "excellentExpectation": "Per-model notes with known limitations" },
+      { "id": "testing", "category": "Testing", "weight": 10, "criteria": ["Split and metric unit tests", "Smoke test of the pipeline"], "minimumExpectation": "Tests for metrics and splits", "excellentExpectation": "End-to-end integration test on a tiny dataset" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed pipeline modules", "CLI flags documented"], "minimumExpectation": "Consistent structure and naming", "excellentExpectation": "Pipeline verified by unit tests at each stage" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["scikit-learn", "pandas", "pytest", "Makefile"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["data/ → features/ → models/ → evaluation/ pipeline", "Config-driven with one YAML per experiment"],
+    "constraints": ["No metric reported without a code path producing it"],
+    "hints": ["Include a majority-class baseline; a model that barely beats it is a finding, not a failure"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with data, models, evaluation, and CLI.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Metrics report (or in-repo path) with seeds and splits documented.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "CI link or test output showing the pipeline tests passing.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml"],
+  "hasStarterTemplate": false
+}

@@ -1,0 +1,87 @@
+{
+  "id": "proj-nn-scratch",
+  "slug": "nn-from-scratch-pytorch-comparison",
+  "title": "Neural Network From Scratch vs. PyTorch",
+  "description": "Implement a multi-layer neural network with manual backpropagation, train it against an equivalent PyTorch implementation on the same data under identical seeds, and show loss curves match within tolerance — proving the gradients, not just the training loop.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 14,
+  "phaseSlugs": ["03-deep-learning-core"],
+  "associatedOccurrences": [
+    "03-deep-learning-core/01-the-perceptron",
+    "03-deep-learning-core/02-multi-layer-networks",
+    "03-deep-learning-core/03-backpropagation"
+  ],
+  "skills": ["backpropagation", "perceptron", "optimizers", "pytorch", "regularization"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement forward and backward passes manually for an MLP",
+    "Match a PyTorch reference within numerical tolerance",
+    "Apply optimizers (SGD, momentum, Adam) correctly",
+    "Demonstrate overfitting and regularization effects with data"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository with both implementations" },
+    { "id": "report", "kind": "benchmark_report", "title": "Loss-curve comparison report" }
+  ],
+  "milestones": [
+    {
+      "id": "forward",
+      "title": "Manual forward pass + losses",
+      "objective": "Implement linear layers, ReLU/tanh activations, and cross-entropy without autograd.",
+      "expectedOutput": "Forward outputs match PyTorch within 1e-6 on seeded random inputs.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "backward",
+      "title": "Manual backpropagation",
+      "objective": "Derive and implement gradients for every layer; verify against finite differences, then against PyTorch autograd.",
+      "expectedOutput": "Gradient-check tests pass with documented tolerances.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "train-compare",
+      "title": "Matched training comparison",
+      "objective": "Train both implementations with identical seeds, data order, and initialization; compare loss curves.",
+      "expectedOutput": "Report with overlay plots and a stated equivalence tolerance.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "regularization",
+      "title": "Regularization experiments",
+      "objective": "Show overfitting on a small dataset and mitigate with L2/dropout; document findings.",
+      "expectedOutput": "Experiment table with train/val gaps before and after regularization.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 120
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 30, "criteria": ["Gradients correct vs autograd", "Loss curves match reference"], "minimumExpectation": "Gradient checks pass and loss tracks PyTorch within tolerance", "excellentExpectation": "Multiple architectures and shapes verified" },
+      { "id": "math", "category": "Mathematical clarity", "weight": 20, "criteria": ["Backprop derivations documented", "Shapes annotated"], "minimumExpectation": "Derivations for used activations and losses", "excellentExpectation": "Each derivation linked to its code location" },
+      { "id": "testing", "category": "Testing", "weight": 20, "criteria": ["Gradient checks", "Seeded determinism", "CI green"], "minimumExpectation": "Numerical and autograd gradient tests", "excellentExpectation": "Property tests over random shapes" },
+      { "id": "experiment", "category": "Experiment quality", "weight": 20, "criteria": ["Fair comparison protocol", "Regularization findings explained"], "minimumExpectation": "Seeded comparison with plot", "excellentExpectation": "Ablations (init, lr, width) with conclusions" },
+      { "id": "docs", "category": "Documentation", "weight": 10, "criteria": ["README explains design and results", "No vague claims"], "minimumExpectation": "Clear README with reproducible commands", "excellentExpectation": "Walkthrough of a full training example" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["Python", "NumPy", "PyTorch", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["scratch/ (no torch imports except tests)", "torch_ref/", "tests/", "reports/"],
+    "constraints": ["Identical seeds and data order in the comparison", "Document dropout/eval-mode behavior explicitly"],
+    "hints": ["Implement gradient checks before training; failing loss equivalence almost always traces to one wrong derivative"]
+  },
+  "requiredEvidence": [
+    { "id": "e-tests", "kind": "test_result", "description": "Gradient-check and equivalence test output or CI link.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Loss-curve comparison and regularization findings.", "required": true },
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with both implementations.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "research"],
+  "hasStarterTemplate": false
+}

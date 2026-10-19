@@ -1,0 +1,59 @@
+{
+  "id": "ml",
+  "slug": "ml-engineer",
+  "name": "ML Engineer",
+  "tagline": "Train, evaluate, and improve models — classical ML through transformers.",
+  "description": "A model-centric path. You build the mathematical and machine-learning foundations properly, learn deep learning and training dynamics, then move through transformers, generative models, and LLM training. Agents and multi-agent systems are deprioritized: your value comes from model quality, evaluation, and training pipelines.",
+  "targetRoles": ["Machine Learning Engineer", "Applied Scientist", "Model Training Engineer"],
+  "coreSkills": ["python", "linear-algebra", "probability", "regression", "classification", "model-evaluation", "backpropagation", "pytorch", "optimizers", "transformers", "pretraining", "fine-tuning"],
+  "phaseImportance": {
+    "00-setup-and-tooling": "core",
+    "01-math-foundations": "core",
+    "02-ml-fundamentals": "core",
+    "03-deep-learning-core": "core",
+    "04-computer-vision": "important",
+    "05-nlp-foundations-to-advanced": "important",
+    "06-speech-and-audio": "optional",
+    "07-transformers-deep-dive": "important",
+    "08-generative-ai": "important",
+    "09-reinforcement-learning": "important",
+    "10-llms-from-scratch": "important",
+    "11-llm-engineering": "important",
+    "12-multimodal-ai": "optional",
+    "13-tools-and-protocols": "optional",
+    "14-agent-engineering": "optional",
+    "15-autonomous-systems": "skip",
+    "16-multi-agent-and-swarms": "skip",
+    "17-infrastructure-and-production": "important",
+    "18-ethics-safety-alignment": "optional",
+    "19-capstone-projects": "important"
+  },
+  "overrides": {
+    "01-math-foundations/11-singular-value-decomposition": "core",
+    "01-math-foundations/18-convex-optimization": "core",
+    "02-ml-fundamentals/09-model-evaluation": "core",
+    "02-ml-fundamentals/10-bias-variance": "core",
+    "03-deep-learning-core/03-backpropagation": "core",
+    "10-llms-from-scratch/04-pre-training-mini-gpt": "core",
+    "10-llms-from-scratch/06-instruction-tuning-sft": "core",
+    "10-llms-from-scratch/08-dpo": "core",
+    "10-llms-from-scratch/11-quantization": "important",
+    "07-transformers-deep-dive/09-vision-transformers": "important",
+    "04-computer-vision/14-vision-transformers": "optional",
+    "19-capstone-projects/07-end-to-end-fine-tuning-pipeline": "core",
+    "19-capstone-projects/14-speculative-decoding-server": "important",
+    "19-capstone-projects/81-end-to-end-distributed-train": "core"
+  },
+  "phaseRationale": {
+    "15-autonomous-systems": "Autonomous agent research is a different discipline from model development and does not improve training outcomes.",
+    "16-multi-agent-and-swarms": "Multi-agent orchestration does not contribute to model quality, which is the focus of this track.",
+    "13-tools-and-protocols": "Protocol engineering is valuable for product work but is not where model engineers spend their time.",
+    "06-speech-and-audio": "Audio modeling is a worthwhile specialization but optional for a general ML engineering foundation.",
+    "12-multimodal-ai": "Multimodal model internals are deep research territory and optional for this track."
+  },
+  "majorProjects": [
+    "End-to-end fine-tuning pipeline (data → SFT → DPO → serve)",
+    "End-to-end distributed training run",
+    "Mini GPT pre-training and evaluation harness"
+  ]
+}

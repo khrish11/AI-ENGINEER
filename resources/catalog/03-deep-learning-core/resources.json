@@ -1,0 +1,184 @@
+[
+  {
+    "id": "neural-networks-3b1b",
+    "type": "youtube_playlist",
+    "title": "Neural Networks (3Blue1Brown)",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",
+    "description": "Visual series explaining neural networks, gradient descent, and backpropagation.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["neural-networks", "backpropagation", "intuition"],
+    "youtube": { "playlist_id": "PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/01-the-perceptron", "role": "primary", "relevance_score": 88, "recommended": true },
+      { "lesson": "03-deep-learning-core/02-multi-layer-networks", "role": "primary", "relevance_score": 88 },
+      { "lesson": "03-deep-learning-core/03-backpropagation", "role": "primary", "relevance_score": 90 }
+    ]
+  },
+  {
+    "id": "what-is-a-neural-network-3b1b",
+    "type": "youtube_video",
+    "title": "But what is a neural network? | Deep learning chapter 1",
+    "canonical_url": "https://www.youtube.com/watch?v=aircAruvnKk",
+    "description": "Introduces neural networks and the structure of layered networks.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["neural-networks", "perceptron"],
+    "youtube": { "video_id": "aircAruvnKk", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=aircAruvnKk" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/01-the-perceptron", "role": "primary", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "gradient-descent-3b1b",
+    "type": "youtube_video",
+    "title": "Gradient descent, how neural networks learn | Deep Learning Chapter 2",
+    "canonical_url": "https://www.youtube.com/watch?v=IHZwWFHWa-w",
+    "description": "Explains gradient descent and how networks minimize loss.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["gradient-descent", "optimization"],
+    "youtube": { "video_id": "IHZwWFHWa-w", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=IHZwWFHWa-w" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/06-optimizers", "role": "supplementary", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "backpropagation-intuitively-3b1b",
+    "type": "youtube_video",
+    "title": "Backpropagation, intuitively | Deep Learning Chapter 3",
+    "canonical_url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U",
+    "description": "Intuitive explanation of the backpropagation algorithm.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["backpropagation"],
+    "youtube": { "video_id": "Ilg3gGewQ5U", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/03-backpropagation", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "backpropagation-calculus-3b1b",
+    "type": "youtube_video",
+    "title": "Backpropagation calculus | Deep Learning Chapter 4",
+    "canonical_url": "https://www.youtube.com/watch?v=tIeHLnjs5U8",
+    "description": "Derives backpropagation using calculus.",
+    "author": { "name": "3Blue1Brown" },
+    "difficulty": "intermediate",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["backpropagation", "calculus"],
+    "youtube": { "video_id": "tIeHLnjs5U8", "channel_name": "3Blue1Brown", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=tIeHLnjs5U8" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/03-backpropagation", "role": "supplementary", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "micrograd-video",
+    "type": "youtube_video",
+    "title": "The spelled-out intro to neural networks and backpropagation: building micrograd",
+    "canonical_url": "https://www.youtube.com/watch?v=VMj-3S1tku0",
+    "description": "Karpathy builds an autograd engine and neural network from scratch.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "intermediate",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["autograd", "backpropagation", "from-scratch"],
+    "youtube": { "video_id": "VMj-3S1tku0", "channel_name": "Andrej Karpathy", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=VMj-3S1tku0" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/03-backpropagation", "role": "primary", "relevance_score": 90 },
+      { "lesson": "03-deep-learning-core/10-mini-framework", "role": "primary", "relevance_score": 95, "recommended": true, "order_index": 1 }
+    ]
+  },
+  {
+    "id": "micrograd-repo",
+    "type": "github_repo",
+    "title": "karpathy/micrograd",
+    "canonical_url": "https://github.com/karpathy/micrograd",
+    "description": "A tiny scalar-valued autograd engine and neural network library.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["autograd", "from-scratch", "education"],
+    "github": { "owner": "karpathy", "repository": "micrograd", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/10-mini-framework", "role": "practical", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "pytorch-tutorials",
+    "type": "official_documentation",
+    "title": "PyTorch Tutorials",
+    "canonical_url": "https://pytorch.org/tutorials/",
+    "description": "Official PyTorch tutorials covering tensors, training loops, and neural networks.",
+    "author": { "name": "PyTorch", "organization": "PyTorch" },
+    "difficulty": "beginner",
+    "source_platform": "pytorch.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["pytorch", "tutorial", "training"],
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/11-intro-to-pytorch", "role": "primary", "relevance_score": 92, "recommended": true, "order_index": 1 },
+      { "lesson": "03-deep-learning-core/12-intro-to-jax", "role": "supplementary", "relevance_score": 40 }
+    ]
+  },
+  {
+    "id": "jax-docs",
+    "type": "official_documentation",
+    "title": "JAX Documentation",
+    "canonical_url": "https://jax.readthedocs.io/en/latest/",
+    "description": "Official JAX reference for composable transformations of numerical functions.",
+    "author": { "name": "JAX developers", "organization": "JAX" },
+    "difficulty": "intermediate",
+    "source_platform": "jax.readthedocs.io",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["jax", "autograd", "jit"],
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/12-intro-to-jax", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "pytorch-repo",
+    "type": "github_repo",
+    "title": "pytorch/pytorch",
+    "canonical_url": "https://github.com/pytorch/pytorch",
+    "description": "The PyTorch source repository.",
+    "author": { "name": "PyTorch", "organization": "PyTorch" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["pytorch", "source"],
+    "github": { "owner": "pytorch", "repository": "pytorch", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "03-deep-learning-core/11-intro-to-pytorch", "role": "reference", "relevance_score": 60 }
+    ]
+  }
+]

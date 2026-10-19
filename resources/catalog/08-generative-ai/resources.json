@@ -1,0 +1,118 @@
+[
+  {
+    "id": "vae-paper",
+    "type": "research_paper",
+    "title": "Auto-Encoding Variational Bayes",
+    "canonical_url": "https://arxiv.org/abs/1312.6114",
+    "description": "Introduces the variational autoencoder (VAE) and the reparameterization trick.",
+    "author": { "name": "Diederik P. Kingma, Max Welling" },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vae", "autoencoder", "variational"],
+    "paper": {
+      "title": "Auto-Encoding Variational Bayes",
+      "authors": ["Diederik P. Kingma", "Max Welling"],
+      "publication_year": 2013,
+      "arxiv_id": "1312.6114",
+      "paper_url": "https://arxiv.org/abs/1312.6114"
+    },
+    "associated_lessons": [
+      { "lesson": "08-generative-ai/02-autoencoders-vae", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "gan-paper",
+    "type": "research_paper",
+    "title": "Generative Adversarial Networks",
+    "canonical_url": "https://arxiv.org/abs/1406.2661",
+    "description": "Introduces generative adversarial networks (GANs).",
+    "author": { "name": "Ian J. Goodfellow et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["gan", "generative", "adversarial"],
+    "paper": {
+      "title": "Generative Adversarial Networks",
+      "authors": ["Ian J. Goodfellow", "Jean Pouget-Abadie", "Mehdi Mirza", "et al."],
+      "publication_year": 2014,
+      "arxiv_id": "1406.2661",
+      "paper_url": "https://arxiv.org/abs/1406.2661"
+    },
+    "associated_lessons": [
+      { "lesson": "08-generative-ai/03-gans-generator-discriminator", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "ddpm-paper",
+    "type": "research_paper",
+    "title": "Denoising Diffusion Probabilistic Models",
+    "canonical_url": "https://arxiv.org/abs/2006.11239",
+    "description": "Introduces denoising diffusion probabilistic models (DDPM).",
+    "author": { "name": "Jonathan Ho et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["diffusion", "generative", "paper"],
+    "paper": {
+      "title": "Denoising Diffusion Probabilistic Models",
+      "authors": ["Jonathan Ho", "Ajay Jain", "Pieter Abbeel"],
+      "publication_year": 2020,
+      "arxiv_id": "2006.11239",
+      "paper_url": "https://arxiv.org/abs/2006.11239"
+    },
+    "associated_lessons": [
+      { "lesson": "04-computer-vision/10-image-generation-diffusion", "role": "reference", "relevance_score": 88 },
+      { "lesson": "08-generative-ai/06-diffusion-ddpm-from-scratch", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "latent-diffusion-paper",
+    "type": "research_paper",
+    "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+    "canonical_url": "https://arxiv.org/abs/2112.10752",
+    "description": "The latent diffusion / Stable Diffusion paper operating in a compressed latent space.",
+    "author": { "name": "Robin Rombach et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["stable-diffusion", "latent-diffusion", "paper"],
+    "paper": {
+      "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+      "authors": ["Robin Rombach", "Andreas Blattmann", "Dominik Lorenz", "et al."],
+      "publication_year": 2021,
+      "arxiv_id": "2112.10752",
+      "paper_url": "https://arxiv.org/abs/2112.10752"
+    },
+    "associated_lessons": [
+      { "lesson": "08-generative-ai/07-latent-diffusion-stable-diffusion", "role": "reference", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "diffusers-repo",
+    "type": "github_repo",
+    "title": "huggingface/diffusers",
+    "canonical_url": "https://github.com/huggingface/diffusers",
+    "description": "State-of-the-art diffusion models for image and audio generation in PyTorch.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "intermediate",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["diffusers", "diffusion", "image-generation"],
+    "github": { "owner": "huggingface", "repository": "diffusers", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "08-generative-ai/07-latent-diffusion-stable-diffusion", "role": "practical", "relevance_score": 85 },
+      { "lesson": "08-generative-ai/08-controlnet-lora-conditioning", "role": "practical", "relevance_score": 80 }
+    ]
+  }
+]

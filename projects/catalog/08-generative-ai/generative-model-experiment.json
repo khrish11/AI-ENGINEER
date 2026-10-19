@@ -1,0 +1,87 @@
+{
+  "id": "proj-generative-experiment",
+  "slug": "generative-model-experiment",
+  "title": "Generative Model Experiment",
+  "description": "Train or fine-tune a small generative model (VAE, GAN, or diffusion surrogate) on a bounded public dataset, implement a fixed generation benchmark, and report sample-quality metrics plus failure cases with analysis.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 15,
+  "phaseSlugs": ["08-generative-ai"],
+  "associatedOccurrences": [
+    "08-generative-ai/01-generative-models-taxonomy-history",
+    "08-generative-ai/02-autoencoders-vae",
+    "08-generative-ai/03-gans-generator-discriminator"
+  ],
+  "skills": ["diffusion", "pytorch", "model-evaluation", "probability", "python"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Implement a small generative architecture end-to-end",
+    "Define a fixed, seeded sample-benchmark protocol",
+    "Report quantitative metrics (FID-like proxy or reconstruction score) with honesty about limits",
+    "Analyze mode collapse or blur artifacts concretely"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Benchmark report with sample grids" }
+  ],
+  "milestones": [
+    {
+      "id": "model",
+      "title": "Generative model implementation",
+      "objective": "Implement one generative architecture (VAE/GAN/diffusion) sized to finish training on a small dataset.",
+      "expectedOutput": "Model + training loop that terminates with checkpoints.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "benchmark",
+      "title": "Fixed benchmark protocol",
+      "objective": "Define a fixed, seeded generation benchmark (N samples, fixed prompts/noise) recorded in a file.",
+      "expectedOutput": "Benchmark configuration committed; runs reproducible.",
+      "requiredEvidence": ["e-repo"],
+      "required": false,
+      "estimatedMinutes": 90
+    },
+    {
+      "id": "metrics",
+      "title": "Quality metrics",
+      "objective": "Measure at least two metrics (e.g. reconstruction MSE for VAE, an FID proxy or distance-based score).",
+      "expectedOutput": "Metric table in the report with formulas.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "analysis",
+      "title": "Failure analysis",
+      "objective": "Show worst generations and explain artifacts (blur, collapse, artifacts) with a hypothesis.",
+      "expectedOutput": "Failure gallery + analysis section.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 120
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Model trains to completion", "Sampling deterministic given seed", "Metrics computed from fixed runs"], "minimumExpectation": "Benchmark runs reproducibly from README", "excellentExpectation": "Checks catch nondeterminism across identical runs" },
+      { "id": "methodology", "category": "Evaluation honesty", "weight": 25, "criteria": ["Metric limits acknowledged", "Fixed protocol", "No cherry-picking"], "minimumExpectation": "Protocol documented; all runs reported", "excellentExpectation": "Failure gallery treated as first-class evidence" },
+      { "id": "analysis", "category": "Failure analysis", "weight": 20, "criteria": ["Concrete failure cases", "Plausible hypotheses", "Next-step suggestions"], "minimumExpectation": "Failures listed with commentary", "excellentExpectation": "Diagnosis backed by training curves" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture explained", "Training cost documented (GPU hours)", "License/data source cited"], "minimumExpectation": "Reproducible training instructions", "excellentExpectation": "Cost table enabling rescaling decisions" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed modules", "Tests for data pipeline and metrics"], "minimumExpectation": "Metric + pipeline unit tests", "excellentExpectation": "Fixture run validating the whole loop on a tiny dataset" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["PyTorch", "torchvision", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["model/", "training loop with checkpointing", "benchmark/ (fixed protocol)", "analysis/"],
+    "constraints": ["Bounded compute: state GPU-hours; avoid unbounded training", "Data licensed for redistribution or downloaded by script"],
+    "hints": ["A small VAE with honest metrics beats a GAN that half-converges: fidelity of evaluation is the point of this project"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with model, training, and benchmark.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Metrics table + failure gallery.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "research"],
+  "hasStarterTemplate": false
+}

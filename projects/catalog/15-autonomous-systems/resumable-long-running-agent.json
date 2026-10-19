@@ -1,0 +1,87 @@
+{
+  "id": "proj-resumable-agent",
+  "slug": "resumable-long-running-agent",
+  "title": "Long-Running Resumable Autonomous System",
+  "description": "Build an autonomous agent designed for multi-hour tasks: durable task queue with checkpoints, failure recovery with exponential backoff, budget enforcement (time/cost/steps), and an honest end-of-run report that never hides failures behind retries.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 28,
+  "phaseSlugs": ["15-autonomous-systems"],
+  "associatedOccurrences": [
+    "15-autonomous-systems/01-long-horizon-agents",
+    "15-autonomous-systems/02-star-family-reasoning",
+    "15-autonomous-systems/03-alphaevolve-evolutionary-coding"
+  ],
+  "skills": ["planning", "agent-evaluation", "reliability", "observability", "agent-memory"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Design checkpointed long-running execution with crash recovery",
+    "Enforce budgets deterministically (steps, tokens, wall clock)",
+    "Implement retry with backoff that preserves failure history",
+    "Produce auditable end-of-run reports including aborted work"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Run report with budget table" }
+  ],
+  "milestones": [
+    {
+      "id": "queue",
+      "title": "Durable task queue",
+      "objective": "Persist a task graph; a mid-run kill resumes with completed tasks untouched.",
+      "expectedOutput": "Crash-recovery test passes at three crash points.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "budget",
+      "title": "Budget enforcement",
+      "objective": "Enforce wall-clock, step-count, and cost budgets; overruns abort cleanly with partial results.",
+      "expectedOutput": "Budget table showing limits and actual usage per run.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "recovery",
+      "title": "Failure recovery",
+      "objective": "Retries with exponential backoff; repeated failures marked failed with reason, never silently dropped.",
+      "expectedOutput": "Injected-failure test showing backoff + failure surfacing.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "report",
+      "title": "Auditable report",
+      "objective": "Generate an end-of-run report: tasks done/failed/aborted, tokens, cost, wall time, and trace links.",
+      "expectedOutput": "Report artifact for at least one full run.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 180
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "reliability", "category": "Reliability", "weight": 30, "criteria": ["Checkpointing + resume correct", "Backoff sane", "No silent drops"], "minimumExpectation": "Kill-and-resume tests pass at multiple crash points", "excellentExpectation": "Corruption-tolerant state store documented" },
+      { "id": "budgets", "category": "Budget enforcement", "weight": 20, "criteria": ["Time/steps/cost enforced", "Clean abort semantics", "Partial results preserved"], "minimumExpectation": "Budget overrun aborts cleanly", "excellentExpectation": "Graceful degradation with fallback actions" },
+      { "id": "reporting", "category": "Reporting honesty", "weight": 25, "criteria": ["All failures surfaced", "Trace links valid", "Retries counted, not hidden"], "minimumExpectation": "Report matches logs", "excellentExpectation": "Reviewer can re-derive the report from raw traces" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Architecture + failure taxonomy", "Reproducible demos"], "minimumExpectation": "README documents resume behavior", "excellentExpectation": "Failure-injection cookbook for contributors" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Typed state models", "Unit tests for queue + budgets"], "minimumExpectation": "Queue and budget tests", "excellentExpectation": "Simulation harness for long runs" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "Postgres/SQLite durable queue", "Backoff utilities", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["task graph store → scheduler → workers with checkpoints → reporter", "budgets as first-class config"],
+    "constraints": ["Failures must appear in reports even after successful retries", "No unbounded retries"],
+    "hints": ["Pick a genuinely long task (e.g. evolving code benchmarks for hours) but prove the machinery with 10-minute scaled-down runs"]
+  },
+  "requiredEvidence": [
+    { "id": "e-tests", "kind": "test_result", "description": "Crash-recovery + failure-injection test output/CI.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Run report with budget table.", "required": true },
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["agent", "general-ai", "mlops"],
+  "hasStarterTemplate": false
+}

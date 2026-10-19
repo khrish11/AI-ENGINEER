@@ -1,0 +1,88 @@
+{
+  "id": "proj-gridworld-rl",
+  "slug": "gridworld-rl-agent",
+  "title": "Grid-World RL Agent",
+  "description": "Build a configurable grid-world environment and train tabular control agents (value iteration, Q-learning, SARSA) on it, comparing learning curves under a fixed seeded protocol and analyzing stochasticity and reward-shaping effects.",
+  "level": "beginner",
+  "source": "platform",
+  "estimatedHours": 6,
+  "phaseSlugs": ["09-reinforcement-learning"],
+  "associatedOccurrences": [
+    "09-reinforcement-learning/01-mdps-states-actions-rewards",
+    "09-reinforcement-learning/02-dynamic-programming",
+    "09-reinforcement-learning/03-monte-carlo-methods"
+  ],
+  "skills": ["reinforcement-learning", "python", "probability", "optimization"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Formalize an MDP with explicit transition and reward definitions",
+    "Implement value iteration and two temporal-difference agents",
+    "Compare convergence under identical seeds and stochasticity",
+    "Explain the effect of reward shaping with evidence"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "report", "kind": "benchmark_report", "title": "Learning-curve comparison" }
+  ],
+  "milestones": [
+    {
+      "id": "env",
+      "title": "Configurable grid world",
+      "objective": "Implement a deterministic-seed grid world with walls, stochastic slips, and terminal states.",
+      "expectedOutput": "Env that passes determinism tests given the same seed.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "value-iteration",
+      "title": "Value iteration reference",
+      "objective": "Implement value iteration as an optimal-solver reference point.",
+      "expectedOutput": "Optimal value function and policy on a small world.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 90
+    },
+    {
+      "id": "td-agents",
+      "title": "Q-learning & SARSA",
+      "objective": "Train both agents with epsilon-greedy policies; run the fixed seeded protocol.",
+      "expectedOutput": "Learning curves over the same number of steps.",
+      "requiredEvidence": ["e-report"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "analysis",
+      "title": "Stochasticity & shaping analysis",
+      "objective": "Compare performance with and without slips; test one reward-shaping change and its effects.",
+      "expectedOutput": "Comparison table and short discussion.",
+      "requiredEvidence": ["e-report"],
+      "required": false,
+      "estimatedMinutes": 90
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 30, "criteria": ["Env matches its MDP description", "Updates implemented correctly", "Determinism verified"], "minimumExpectation": "Value iteration matches manual solution on a tiny world", "excellentExpectation": "Property tests for determinism and slip behavior" },
+      { "id": "protocol", "category": "Experimental protocol", "weight": 25, "criteria": ["Fixed seeds", "Identical steps budget", "Multi-run variance"], "minimumExpectation": "Named seeds and steps in the report", "excellentExpectation": "Multi-seed bands on learning curves" },
+      { "id": "report", "category": "Comparison report", "weight": 25, "criteria": ["Curves readable", "Differences explained", "Shaping effect quantified"], "minimumExpectation": "Curves for all three methods", "excellentExpectation": "Shaping ablation with a causal explanation" },
+      { "id": "docs", "category": "Documentation", "weight": 10, "criteria": ["MDP documented", "Reproduce commands"], "minimumExpectation": "README reproduces curves", "excellentExpectation": "Env editor docs enabling new worlds" },
+      { "id": "quality", "category": "Code quality", "weight": 10, "criteria": ["Environment/agent separation", "Unit tests"], "minimumExpectation": "Clean interfaces + determinism tests", "excellentExpectation": "Gym-style API with typed observations" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["Python", "NumPy", "Matplotlib", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["env/ (pure, seedable)", "agents/ (planner + TD learners)", "experiments/ (fixed protocol)", "tests/"],
+    "constraints": ["No learning inside the env", "Single source of randomness per agent"],
+    "hints": ["Sanity-check Q-learning convergence against value iteration on the identical small world first"]
+  },
+  "requiredEvidence": [
+    { "id": "e-tests", "kind": "test_result", "description": "Determinism + value-iteration test output/CI link.", "required": true },
+    { "id": "e-report", "kind": "benchmark_report", "description": "Learning-curve comparison report.", "required": true },
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "research", "agent"],
+  "hasStarterTemplate": false
+}

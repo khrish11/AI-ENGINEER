@@ -1,0 +1,87 @@
+{
+  "id": "proj-audio-pipeline",
+  "slug": "audio-transcription-pipeline",
+  "title": "Offline Speech Transcription Pipeline",
+  "description": "Build an audio-processing pipeline that ingests recordings, computes mel-spectrogram features, runs speech transcription, and produces per-segment, timestamped transcripts evaluated with Word Error Rate on a fixed public evaluation set.",
+  "level": "intermediate",
+  "source": "platform",
+  "estimatedHours": 12,
+  "phaseSlugs": ["06-speech-and-audio"],
+  "associatedOccurrences": [
+    "06-speech-and-audio/01-audio-fundamentals",
+    "06-speech-and-audio/02-spectrograms-mel-features",
+    "06-speech-and-audio/03-audio-classification"
+  ],
+  "skills": ["audio-processing", "asr", "python", "model-evaluation", "ml-pipelines"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Load, resample, and normalize audio deterministically",
+    "Compute and interpret mel-spectrogram features",
+    "Run ASR inference and align outputs to time segments",
+    "Measure Word Error Rate on a fixed evaluation set"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "WER evaluation report" }
+  ],
+  "milestones": [
+    {
+      "id": "audio-io",
+      "title": "Deterministic audio ingestion",
+      "objective": "Implement resampling, duration checks, and normalization; unit-test determinism on fixtures.",
+      "expectedOutput": "audio module with fixture tests.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 120
+    },
+    {
+      "id": "features",
+      "title": "Mel-spectrogram features",
+      "objective": "Compute mel features and visualize them for two example clips.",
+      "expectedOutput": "Feature module + rendered spectrograms in the report.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 90
+    },
+    {
+      "id": "asr",
+      "title": "Transcription stage",
+      "objective": "Run an offline/open ASR model over the clips, producing segments with timestamps.",
+      "expectedOutput": "JSON transcripts with segment boundaries.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 150
+    },
+    {
+      "id": "wer",
+      "title": "WER evaluation",
+      "objective": "Score transcripts against a fixed reference set; record overall WER plus the worst clips.",
+      "expectedOutput": "WER table and error analysis.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 120
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Deterministic ingestion", "Valid segment timestamps", "WER math correct"], "minimumExpectation": "Pipeline runs end-to-end on fixed clips", "excellentExpectation": "Edge cases (empty audio, silence-only) handled with tests" },
+      { "id": "evaluation", "category": "Evaluation rigor", "weight": 25, "criteria": ["Fixed reference set", "WER formula documented", "Error analysis present"], "minimumExpectation": "WER on a stated evaluation set", "excellentExpectation": "Category-level breakdown (silence vs speech errors)" },
+      { "id": "repro", "category": "Reproducibility", "weight": 20, "criteria": ["Model + data versions pinned", "Single-command run", "License documented"], "minimumExpectation": "README reproduces WER", "excellentExpectation": "CI smoke test on a tiny fixture clip" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Pipeline diagram", "Config table", "Failure examples"], "minimumExpectation": "README with pipeline overview", "excellentExpectation": "Per-stage docs with config effects" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed pipeline modules", "Tests for ingestion and metrics"], "minimumExpectation": "Lint-clean with ingestion + WER tests", "excellentExpectation": "Property tests (determinism, idempotency)" }
+    ],
+    "completionThreshold": 60,
+    "masteryThreshold": 75
+  },
+  "suggestedStack": ["librosa or torchaudio", "faster-whisper or vosk", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["ingest → features → asr segments → scorer", "Reports read only from artifact files"],
+    "constraints": ["No cloud-only runtime dependency; document any gated model checkpoint source"],
+    "hints": ["Write WER scoring yourself on a reference set; it is a small deterministic function and a common interview topic"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository with pipeline and scorer.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "WER table + error analysis.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Fixture test output/CI link.", "required": false }
+  ],
+  "status": "active",
+  "relevantTracks": ["general-ai", "ml", "mlops"],
+  "hasStarterTemplate": false
+}

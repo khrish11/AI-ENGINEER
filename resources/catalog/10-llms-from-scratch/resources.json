@@ -1,0 +1,262 @@
+[
+  {
+    "id": "build-gpt-tokenizer-video",
+    "type": "youtube_video",
+    "title": "Let's build the GPT Tokenizer",
+    "canonical_url": "https://www.youtube.com/watch?v=zduSFxRajkE",
+    "description": "Karpathy implements a byte-pair encoding tokenizer from scratch and explains tokenization.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "advanced",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["tokenizer", "bpe", "from-scratch"],
+    "youtube": { "video_id": "zduSFxRajkE", "channel_name": "Andrej Karpathy", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=zduSFxRajkE" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/01-tokenizers", "role": "primary", "relevance_score": 92, "recommended": true },
+      { "lesson": "10-llms-from-scratch/02-building-a-tokenizer", "role": "primary", "relevance_score": 92, "recommended": true }
+    ]
+  },
+  {
+    "id": "reproduce-gpt2-video",
+    "type": "youtube_video",
+    "title": "Let's reproduce GPT-2 (124M)",
+    "canonical_url": "https://www.youtube.com/watch?v=l8pRSuU81PU",
+    "description": "Karpathy reproduces GPT-2 training end to end, from data preparation to optimization.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "advanced",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["gpt-2", "pretraining", "from-scratch"],
+    "youtube": { "video_id": "l8pRSuU81PU", "channel_name": "Andrej Karpathy", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=l8pRSuU81PU" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/04-pre-training-mini-gpt", "role": "primary", "relevance_score": 90, "recommended": true },
+      { "lesson": "10-llms-from-scratch/13-building-complete-llm-pipeline", "role": "supplementary", "relevance_score": 82 }
+    ]
+  },
+  {
+    "id": "deep-dive-llms-video",
+    "type": "youtube_video",
+    "title": "Deep Dive into LLMs like ChatGPT",
+    "canonical_url": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+    "description": "A broad deep dive into the full LLM training and inference stack, from pretraining to RLHF.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "intermediate",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llm", "overview", "pretraining"],
+    "youtube": { "video_id": "7xTGNNLPyMI", "channel_name": "Andrej Karpathy", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=7xTGNNLPyMI" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/01-tokenizers", "role": "supplementary", "relevance_score": 78 },
+      { "lesson": "10-llms-from-scratch/14-open-models-architecture-walkthroughs", "role": "primary", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "llms-from-scratch-book-repo",
+    "type": "github_repo",
+    "title": "rasbt/LLMs-from-scratch",
+    "canonical_url": "https://github.com/rasbt/LLMs-from-scratch",
+    "description": "Code repository for the book 'Build a Large Language Model (From Scratch)' covering the full pipeline.",
+    "author": { "name": "Sebastian Raschka" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llm", "from-scratch", "book"],
+    "github": { "owner": "rasbt", "repository": "LLMs-from-scratch", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/04-pre-training-mini-gpt", "role": "practical", "relevance_score": 88 },
+      { "lesson": "10-llms-from-scratch/06-instruction-tuning-sft", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "10-llms-from-scratch/07-rlhf", "role": "practical", "relevance_score": 82 },
+      { "lesson": "10-llms-from-scratch/08-dpo", "role": "practical", "relevance_score": 84 },
+      { "lesson": "10-llms-from-scratch/13-building-complete-llm-pipeline", "role": "practical", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "llm-c-repo",
+    "type": "github_repo",
+    "title": "karpathy/llm.c",
+    "canonical_url": "https://github.com/karpathy/llm.c",
+    "description": "LLM training in simple, raw C/CUDA.",
+    "author": { "name": "Andrej Karpathy" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llm", "cuda", "low-level"],
+    "github": { "owner": "karpathy", "repository": "llm.c", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/13-building-complete-llm-pipeline", "role": "advanced", "relevance_score": 78 }
+    ]
+  },
+  {
+    "id": "meta-llama-models-repo",
+    "type": "github_repo",
+    "title": "meta-llama/llama-models",
+    "canonical_url": "https://github.com/meta-llama/llama-models",
+    "description": "Utilities and model definitions for the Llama family of open-weight models.",
+    "author": { "name": "Meta", "organization": "Meta" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["llama", "open-weights", "architecture"],
+    "github": { "owner": "meta-llama", "repository": "llama-models", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/14-open-models-architecture-walkthroughs", "role": "reference", "relevance_score": 85, "recommended": true }
+    ]
+  },
+  {
+    "id": "trl-repo",
+    "type": "github_repo",
+    "title": "huggingface/trl",
+    "canonical_url": "https://github.com/huggingface/trl",
+    "description": "Train transformer language models with reinforcement learning: SFT, DPO, PPO, and more.",
+    "author": { "name": "Hugging Face", "organization": "Hugging Face" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["sft", "dpo", "rlhf", "fine-tuning"],
+    "github": { "owner": "huggingface", "repository": "trl", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/06-instruction-tuning-sft", "role": "practical", "relevance_score": 88, "recommended": true },
+      { "lesson": "10-llms-from-scratch/07-rlhf", "role": "practical", "relevance_score": 85 },
+      { "lesson": "10-llms-from-scratch/08-dpo", "role": "practical", "relevance_score": 88, "recommended": true }
+    ]
+  },
+  {
+    "id": "dpo-paper",
+    "type": "research_paper",
+    "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+    "canonical_url": "https://arxiv.org/abs/2305.18290",
+    "description": "Introduces DPO, which aligns language models to preferences without a separate reward model.",
+    "author": { "name": "Rafael Rafailov et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["dpo", "alignment", "preferences"],
+    "paper": {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": ["Rafael Rafailov", "Archit Sharma", "Eric Mitchell", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2305.18290",
+      "paper_url": "https://arxiv.org/abs/2305.18290"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/08-dpo", "role": "reference", "relevance_score": 92, "recommended": true },
+      { "lesson": "18-ethics-safety-alignment/03-direct-preference-optimization-family", "role": "reference", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "constitutional-ai-paper",
+    "type": "research_paper",
+    "title": "Constitutional AI: Harmlessness from AI Feedback",
+    "canonical_url": "https://arxiv.org/abs/2212.08073",
+    "description": "Introduces Constitutional AI and RLAIF for training harmless assistants.",
+    "author": { "name": "Yuntao Bai et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["constitutional-ai", "rlaif", "alignment"],
+    "paper": {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": ["Yuntao Bai", "Saurav Kadavath", "Sandipan Kundu", "et al."],
+      "publication_year": 2022,
+      "arxiv_id": "2212.08073",
+      "paper_url": "https://arxiv.org/abs/2212.08073"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/09-constitutional-ai-self-improvement", "role": "reference", "relevance_score": 90, "recommended": true },
+      { "lesson": "18-ethics-safety-alignment/05-constitutional-ai-rlaif", "role": "reference", "relevance_score": 90 },
+      { "lesson": "15-autonomous-systems/17-constitutional-ai", "role": "reference", "relevance_score": 80 }
+    ]
+  },
+  {
+    "id": "qlora-paper",
+    "type": "research_paper",
+    "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+    "canonical_url": "https://arxiv.org/abs/2305.14314",
+    "description": "Enables finetuning of large quantized models on a single GPU.",
+    "author": { "name": "Tim Dettmers et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["qlora", "quantization", "fine-tuning"],
+    "paper": {
+      "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+      "authors": ["Tim Dettmers", "Artidoro Pagnoni", "Ari Holtzman", "Luke Zettlemoyer"],
+      "publication_year": 2023,
+      "arxiv_id": "2305.14314",
+      "paper_url": "https://arxiv.org/abs/2305.14314"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/11-quantization", "role": "reference", "relevance_score": 90, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/09-production-quantization", "role": "reference", "relevance_score": 75 }
+    ]
+  },
+  {
+    "id": "vllm-pagedattention-paper",
+    "type": "research_paper",
+    "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+    "canonical_url": "https://arxiv.org/abs/2309.06180",
+    "description": "Introduces PagedAttention, the technique behind vLLM's high-throughput serving.",
+    "author": { "name": "Woosuk Kwon et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["vllm", "pagedattention", "serving"],
+    "paper": {
+      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "authors": ["Woosuk Kwon", "Zhuohan Li", "Siyuan Zhuang", "et al."],
+      "publication_year": 2023,
+      "arxiv_id": "2309.06180",
+      "paper_url": "https://arxiv.org/abs/2309.06180"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/12-inference-optimization", "role": "reference", "relevance_score": 88, "recommended": true },
+      { "lesson": "17-infrastructure-and-production/04-vllm-serving-internals", "role": "reference", "relevance_score": 90, "recommended": true }
+    ]
+  },
+  {
+    "id": "chinchilla-paper",
+    "type": "research_paper",
+    "title": "Training Compute-Optimal Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2203.15556",
+    "description": "The Chinchilla scaling laws relating model size and training tokens.",
+    "author": { "name": "Jordan Hoffmann et al." },
+    "difficulty": "advanced",
+    "source_platform": "arxiv.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["scaling-laws", "chinchilla", "pretraining"],
+    "paper": {
+      "title": "Training Compute-Optimal Large Language Models",
+      "authors": ["Jordan Hoffmann", "Sebastian Borgeaud", "Arthur Mensch", "et al."],
+      "publication_year": 2022,
+      "arxiv_id": "2203.15556",
+      "paper_url": "https://arxiv.org/abs/2203.15556"
+    },
+    "associated_lessons": [
+      { "lesson": "10-llms-from-scratch/05-scaling-distributed", "role": "reference", "relevance_score": 85 }
+    ]
+  }
+]

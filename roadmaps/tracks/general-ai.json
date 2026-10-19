@@ -1,0 +1,51 @@
+{
+  "id": "general-ai",
+  "slug": "general-ai-engineer",
+  "name": "General AI Engineer",
+  "tagline": "The full-stack AI engineer: models, retrieval, agents, and production.",
+  "description": "A broad path across the whole curriculum. You learn the mathematics and machine learning foundations, then the LLM stack, agents, and production infrastructure. Choose this when you want to be useful across an AI product rather than deep in one specialization.",
+  "targetRoles": ["AI Engineer", "Applied AI Engineer", "AI Product Engineer"],
+  "coreSkills": ["python", "linear-algebra", "model-evaluation", "transformers", "prompting", "rag", "tool-calling", "serving", "observability"],
+  "phaseImportance": {
+    "00-setup-and-tooling": "core",
+    "01-math-foundations": "core",
+    "02-ml-fundamentals": "core",
+    "03-deep-learning-core": "core",
+    "04-computer-vision": "important",
+    "05-nlp-foundations-to-advanced": "important",
+    "06-speech-and-audio": "optional",
+    "07-transformers-deep-dive": "core",
+    "08-generative-ai": "important",
+    "09-reinforcement-learning": "optional",
+    "10-llms-from-scratch": "important",
+    "11-llm-engineering": "core",
+    "12-multimodal-ai": "optional",
+    "13-tools-and-protocols": "important",
+    "14-agent-engineering": "core",
+    "15-autonomous-systems": "optional",
+    "16-multi-agent-and-swarms": "optional",
+    "17-infrastructure-and-production": "important",
+    "18-ethics-safety-alignment": "important",
+    "19-capstone-projects": "important"
+  },
+  "overrides": {
+    "07-transformers-deep-dive/09-vision-transformers": "important",
+    "04-computer-vision/14-vision-transformers": "optional",
+    "19-capstone-projects/01-terminal-native-coding-agent": "core",
+    "19-capstone-projects/02-rag-over-codebase": "core",
+    "19-capstone-projects/08-production-rag-chatbot": "core",
+    "19-capstone-projects/11-llm-observability-dashboard": "core"
+  },
+  "phaseRationale": {
+    "06-speech-and-audio": "Speech pipelines matter for voice products, but most general AI engineering work does not require them.",
+    "09-reinforcement-learning": "RL theory is valuable context, yet day-to-day product work rarely needs policy optimization.",
+    "12-multimodal-ai": "Multimodal research moves fast; it is depth rather than a baseline requirement.",
+    "15-autonomous-systems": "Long-horizon autonomy is still frontier work and is not required to ship reliable AI features.",
+    "16-multi-agent-and-swarms": "Most products ship a single well-instrumented agent before they need multi-agent orchestration."
+  },
+  "majorProjects": [
+    "Production RAG chatbot with evaluation harness",
+    "Terminal-native coding agent",
+    "LLM observability and eval dashboard"
+  ]
+}

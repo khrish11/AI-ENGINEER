@@ -1,0 +1,51 @@
+{
+  "id": "llm-app",
+  "slug": "llm-application-engineer",
+  "name": "LLM Application Engineer",
+  "tagline": "Ship LLM features: prompting, retrieval, structured outputs, evaluation.",
+  "description": "Focused on building applications on top of hosted language models. You cover transformer fundamentals, prompting and context engineering, retrieval, structured outputs, agent tooling, and the evaluation and observability needed to keep an LLM feature reliable in production.",
+  "targetRoles": ["LLM Application Engineer", "AI Product Engineer", "Backend AI Engineer"],
+  "coreSkills": ["python", "prompting", "structured-output", "rag", "llm-evaluation", "tool-calling", "serving", "observability"],
+  "phaseImportance": {
+    "00-setup-and-tooling": "core",
+    "01-math-foundations": "important",
+    "02-ml-fundamentals": "important",
+    "03-deep-learning-core": "important",
+    "04-computer-vision": "skip",
+    "05-nlp-foundations-to-advanced": "important",
+    "06-speech-and-audio": "skip",
+    "07-transformers-deep-dive": "core",
+    "08-generative-ai": "optional",
+    "09-reinforcement-learning": "skip",
+    "10-llms-from-scratch": "optional",
+    "11-llm-engineering": "core",
+    "12-multimodal-ai": "optional",
+    "13-tools-and-protocols": "important",
+    "14-agent-engineering": "core",
+    "15-autonomous-systems": "skip",
+    "16-multi-agent-and-swarms": "optional",
+    "17-infrastructure-and-production": "important",
+    "18-ethics-safety-alignment": "important",
+    "19-capstone-projects": "important"
+  },
+  "overrides": {
+    "07-transformers-deep-dive/09-vision-transformers": "optional",
+    "04-computer-vision/14-vision-transformers": "skip",
+    "19-capstone-projects/08-production-rag-chatbot": "core",
+    "19-capstone-projects/11-llm-observability-dashboard": "core",
+    "19-capstone-projects/02-rag-over-codebase": "important",
+    "19-capstone-projects/01-terminal-native-coding-agent": "important"
+  },
+  "phaseRationale": {
+    "04-computer-vision": "Classical and diffusion vision pipelines are not part of application engineering on hosted LLMs.",
+    "06-speech-and-audio": "Voice work is a specialization. Text-first LLM applications do not need spectrogram or ASR internals.",
+    "09-reinforcement-learning": "You consume aligned models through APIs; you are not training policies.",
+    "15-autonomous-systems": "Autonomy research is far ahead of what production LLM features require today.",
+    "10-llms-from-scratch": "Useful for intuition, but pre-training a model is not on the path to shipping an LLM feature."
+  },
+  "majorProjects": [
+    "Production RAG chatbot with a regulated-domain evaluation suite",
+    "LLM observability and evaluation dashboard",
+    "Issue-to-PR coding agent"
+  ]
+}

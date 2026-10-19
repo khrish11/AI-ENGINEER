@@ -1,0 +1,87 @@
+{
+  "id": "proj-multi-agent",
+  "slug": "multi-agent-coordination",
+  "title": "Multi-Agent Task Coordination System",
+  "description": "Build a multi-agent system where specialized agents coordinate on shared tasks via explicit message contracts: a planner/worker topology with typed handoffs, state isolation, loop detection, and an evaluation comparing coordination against a single-agent baseline on the same task set.",
+  "level": "advanced",
+  "source": "platform",
+  "estimatedHours": 26,
+  "phaseSlugs": ["16-multi-agent-and-swarms"],
+  "associatedOccurrences": [
+    "16-multi-agent-and-swarms/01-why-multi-agent",
+    "16-multi-agent-and-swarms/02-fipa-acl-heritage",
+    "16-multi-agent-and-swarms/03-communication-protocols"
+  ],
+  "skills": ["multi-agent", "agent-orchestration", "planning", "agent-evaluation", "structured-output"],
+  "prerequisites": [],
+  "learningObjectives": [
+    "Define typed message contracts between at least three agent roles",
+    "Isolate each agent's state so failures don't cascade silently",
+    "Detect and break coordination loops deterministically",
+    "Compare multi-agent vs single-agent performance honestly on identical tasks"
+  ],
+  "deliverables": [
+    { "id": "repo", "kind": "github_repo", "title": "Repository" },
+    { "id": "eval", "kind": "evaluation_results", "title": "Coordination vs baseline comparison" }
+  ],
+  "milestones": [
+    {
+      "id": "contracts",
+      "title": "Typed message contracts",
+      "objective": "Define message schemas (task, result, query, escalation) validated on send/receive.",
+      "expectedOutput": "Schema-validated message bus.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 240
+    },
+    {
+      "id": "topology",
+      "title": "Planner/worker topology",
+      "objective": "Implement planner decomposition,≥2 specialized workers, and an aggregator; each with isolated state.",
+      "expectedOutput": "A task of ≥6 subtasks executes end-to-end.",
+      "requiredEvidence": ["e-repo"],
+      "estimatedMinutes": 300
+    },
+    {
+      "id": "loops",
+      "title": "Loop detection & escalation",
+      "objective": "Detect repeated exchanges (e.g. same pair twice without progress) and escalate to human or abort.",
+      "expectedOutput": "Injected-loop test terminates deterministically.",
+      "requiredEvidence": ["e-tests"],
+      "estimatedMinutes": 180
+    },
+    {
+      "id": "compare",
+      "title": "Baseline comparison",
+      "objective": "Run the same ≥5 tasks single-agent vs multi-agent; report quality, latency, and cost per task.",
+      "expectedOutput": "Per-task table; honest claim about where multi-agent helped or hurt.",
+      "requiredEvidence": ["e-eval"],
+      "estimatedMinutes": 240
+    }
+  ],
+  "rubric": {
+    "categories": [
+      { "id": "correctness", "category": "Functional correctness", "weight": 25, "criteria": ["Contracts validated", "Topology executes", "State isolated per agent"], "minimumExpectation": "Sample multi-agent task completes", "excellentExpectation": "Failure-injection tests for worker crashes" },
+      { "id": "loops", "category": "Loop & failure handling", "weight": 20, "criteria": ["Loop detection", "Deterministic escalation", "Bounded exchanges"], "minimumExpectation": "Loop test terminates", "excellentExpectation": "Escalation policy configurable and tested" },
+      { "id": "evaluation", "category": "Evaluation honesty", "weight": 25, "criteria": ["Same tasks both topologies", "Cost + latency reported", "Claims match data"], "minimumExpectation": "Per-task comparison table", "excellentExpectation": "Analysis of task types where one wins" },
+      { "id": "docs", "category": "Documentation", "weight": 15, "criteria": ["Protocol diagram", "Role descriptions", "Failure modes"], "minimumExpectation": "README documents topology", "excellentExpectation": "Extensibility guide for new roles" },
+      { "id": "quality", "category": "Code quality", "weight": 15, "criteria": ["Typed bus/roles", "Tests for bus + loop detection"], "minimumExpectation": "Bus + loop tests", "excellentExpectation": "Simulation harness for replays" }
+    ],
+    "completionThreshold": 65,
+    "masteryThreshold": 80
+  },
+  "suggestedStack": ["Python", "asyncio or queue-based bus", "pytest"],
+  "referenceResources": [],
+  "buildGuide": {
+    "architecture": ["message bus → planner → workers → aggregator", "shared task ledger, isolated per-agent memory"],
+    "constraints": ["No direct agent-to-agent side channels; everything via typed bus", "Budgets per agent role"],
+    "hints": ["The most common failure is parallel workers editing shared state: prove isolation or lower expectations honestly"]
+  },
+  "requiredEvidence": [
+    { "id": "e-repo", "kind": "github_repo_url", "description": "Repository.", "required": true },
+    { "id": "e-tests", "kind": "test_result", "description": "Contract + loop test output/CI.", "required": true },
+    { "id": "e-eval", "kind": "evaluation_result", "description": "Comparison table vs single-agent.", "required": true }
+  ],
+  "status": "active",
+  "relevantTracks": ["agent", "llm-app", "general-ai"],
+  "hasStarterTemplate": false
+}

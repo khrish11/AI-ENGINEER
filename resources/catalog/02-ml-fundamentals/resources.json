@@ -1,0 +1,135 @@
+[
+  {
+    "id": "scikit-learn-docs",
+    "type": "official_documentation",
+    "title": "scikit-learn User Guide",
+    "canonical_url": "https://scikit-learn.org/stable/",
+    "description": "Official scikit-learn documentation and user guide covering classical machine learning algorithms and model evaluation.",
+    "author": { "name": "scikit-learn developers", "organization": "scikit-learn" },
+    "difficulty": "intermediate",
+    "source_platform": "scikit-learn.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["scikit-learn", "ml", "python", "reference"],
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/02-linear-regression", "role": "reference", "relevance_score": 80 },
+      { "lesson": "02-ml-fundamentals/03-logistic-regression", "role": "reference", "relevance_score": 80 },
+      { "lesson": "02-ml-fundamentals/04-decision-trees", "role": "reference", "relevance_score": 78 },
+      { "lesson": "02-ml-fundamentals/05-support-vector-machines", "role": "reference", "relevance_score": 78 },
+      { "lesson": "02-ml-fundamentals/09-model-evaluation", "role": "primary", "relevance_score": 88, "recommended": true },
+      { "lesson": "02-ml-fundamentals/11-ensemble-methods", "role": "reference", "relevance_score": 80 },
+      { "lesson": "02-ml-fundamentals/12-hyperparameter-tuning", "role": "primary", "relevance_score": 85 }
+    ]
+  },
+  {
+    "id": "scikit-learn-repo",
+    "type": "github_repo",
+    "title": "scikit-learn/scikit-learn",
+    "canonical_url": "https://github.com/scikit-learn/scikit-learn",
+    "description": "Source repository for scikit-learn.",
+    "author": { "name": "scikit-learn", "organization": "scikit-learn" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["scikit-learn", "source"],
+    "github": { "owner": "scikit-learn", "repository": "scikit-learn", "default_branch": "main" },
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/13-ml-pipelines", "role": "reference", "relevance_score": 60 }
+    ]
+  },
+  {
+    "id": "statquest-machine-learning",
+    "type": "youtube_playlist",
+    "title": "Machine Learning (StatQuest)",
+    "canonical_url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF",
+    "description": "StatQuest's visual explanations of core machine learning algorithms.",
+    "author": { "name": "StatQuest with Josh Starmer" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["machine-learning", "algorithms", "intuition"],
+    "youtube": { "playlist_id": "PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF", "channel_name": "StatQuest with Josh Starmer", "embed_allowed": "unknown", "region_status": "unknown" },
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/02-linear-regression", "role": "supplementary", "relevance_score": 75 },
+      { "lesson": "02-ml-fundamentals/03-logistic-regression", "role": "supplementary", "relevance_score": 75 },
+      { "lesson": "02-ml-fundamentals/11-ensemble-methods", "role": "supplementary", "relevance_score": 70 }
+    ]
+  },
+  {
+    "id": "machine-learning-for-everybody",
+    "type": "youtube_video",
+    "title": "Machine Learning for Everybody - Full Course",
+    "canonical_url": "https://www.youtube.com/watch?v=i_LwzRVP7bg",
+    "description": "Beginner-friendly full course introducing machine learning concepts and workflows.",
+    "author": { "name": "freeCodeCamp.org" },
+    "difficulty": "beginner",
+    "source_platform": "youtube.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["machine-learning", "overview"],
+    "youtube": { "video_id": "i_LwzRVP7bg", "channel_name": "freeCodeCamp.org", "embed_allowed": "unknown", "region_status": "unknown", "direct_watch_url": "https://www.youtube.com/watch?v=i_LwzRVP7bg" },
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/01-what-is-machine-learning", "role": "supplementary", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "pandas-docs",
+    "type": "official_documentation",
+    "title": "pandas Documentation",
+    "canonical_url": "https://pandas.pydata.org/docs/",
+    "description": "Official pandas reference for data manipulation and feature engineering.",
+    "author": { "name": "pandas developers", "organization": "pandas" },
+    "difficulty": "intermediate",
+    "source_platform": "pandas.pydata.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["pandas", "data", "features"],
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/08-feature-engineering", "role": "reference", "relevance_score": 75 },
+      { "lesson": "02-ml-fundamentals/13-ml-pipelines", "role": "supplementary", "relevance_score": 65 }
+    ]
+  },
+  {
+    "id": "mlflow-docs",
+    "type": "official_documentation",
+    "title": "MLflow Documentation",
+    "canonical_url": "https://mlflow.org/docs/latest/",
+    "description": "Official MLflow documentation for experiment tracking, model registry, and deployment.",
+    "author": { "name": "MLflow", "organization": "MLflow" },
+    "difficulty": "intermediate",
+    "source_platform": "mlflow.org",
+    "editorial_status": "verified",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["mlflow", "tracking", "mlops"],
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/13-ml-pipelines", "role": "reference", "relevance_score": 70 },
+      { "lesson": "02-ml-fundamentals/20-model-monitoring-and-drift", "role": "reference", "relevance_score": 60 }
+    ]
+  },
+  {
+    "id": "mlflow-repo",
+    "type": "github_repo",
+    "title": "mlflow/mlflow",
+    "canonical_url": "https://github.com/mlflow/mlflow",
+    "description": "Source repository for MLflow, an open-source platform for the machine learning lifecycle.",
+    "author": { "name": "MLflow", "organization": "MLflow" },
+    "difficulty": "advanced",
+    "source_platform": "github.com",
+    "editorial_status": "pending_review",
+    "verification_status": "reachable",
+    "last_verified_at": "2026-10-17T00:00:00Z",
+    "tags": ["mlflow", "mlops", "source"],
+    "github": { "owner": "mlflow", "repository": "mlflow", "default_branch": "master" },
+    "associated_lessons": [
+      { "lesson": "02-ml-fundamentals/13-ml-pipelines", "role": "practical", "relevance_score": 60 }
+    ]
+  }
+]
