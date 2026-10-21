@@ -27,9 +27,10 @@ function hasDatabaseUrl(): boolean {
   }
 }
 
-const HAS_DATABASE = hasDatabaseUrl();
-
-const describeWithDb = HAS_DATABASE ? describe : describe.skip;
+// Verify exact test database identity: localhost:5432/ai_engineer_os_test
+const hasTestDatabase = process.env.DATABASE_URL === "postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_test";
+// Use test database for integration tests
+const describeWithDb = hasTestDatabase ? describe : describe.skip;
 
 describeWithDb("sync API (PostgreSQL)", () => {
   let POST: (request: unknown) => Promise<Response>;

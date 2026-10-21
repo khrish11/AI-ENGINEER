@@ -22,9 +22,10 @@ vi.mock("@/lib/auth/session", () => ({
   getAuthenticatedUserId: async () => authState.userId,
 }));
 
-const hasReleaseDatabase = process.env.DATABASE_URL?.includes("55432") === true;
-const hasLocalDatabase = process.env.DATABASE_URL?.includes("5432") === true;
-const describeWithDatabase = (hasReleaseDatabase || hasLocalDatabase) ? describe : describe.skip;
+// Verify exact test database identity: localhost:5432/ai_engineer_os_test
+const hasTestDatabase = process.env.DATABASE_URL === "postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_test";
+// Use test database for integration tests
+const describeWithDatabase = hasTestDatabase ? describe : describe.skip;
 
 describeWithDatabase("account deletion against PostgreSQL", () => {
   let dbModule: typeof import("@/db");

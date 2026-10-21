@@ -15,6 +15,9 @@ export default defineConfig({
     maxWorkers: 1,
     include: ["src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
     exclude: ["node_modules", "e2e", ".next"],
+    env: {
+      DATABASE_URL: "postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_test",
+    },
   },
   resolve: {
     alias: {

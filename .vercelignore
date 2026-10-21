@@ -1,0 +1,16 @@
+# Exclude sensitive and development-only files from Vercel deployments
+.env*.local
+.env.neon.local
+.env.soyog.local
+.env.production
+.env.test.local
+.env.test-wrong-hostname.local
+.gitignore
+node_modules
+.next
+e2e
+upstream
+.DS_Store
+*.log
+*.tmp
+*.temp
