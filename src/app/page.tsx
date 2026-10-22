@@ -123,7 +123,7 @@ export default function LandingPage() {
 
           <div className="space-y-8 text-center">
             <p className="text-[#e5e5e5] leading-relaxed">
-              Every phase, every published lesson, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.
+              Every phase, every published lesson, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it&apos;s doing under the hood.
             </p>
             <p className="text-[#e5e5e5] leading-relaxed">
               Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.

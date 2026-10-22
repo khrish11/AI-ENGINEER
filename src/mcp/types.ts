@@ -32,7 +32,7 @@ export interface McpResourceDefinition {
   name: string;
   description: string;
   policy: McpPolicy;
-  read: (uri: URL, context: McpToolContext) => Promise<unknown>;
+  read: () => Promise<unknown>;
 }
 
 export interface McpPromptDefinition {

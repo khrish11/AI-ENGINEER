@@ -37,12 +37,12 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       return { jsonrpc: "2.0", id, result: { resources: resources.map(({ uriTemplate, name, description, policy }) => ({ uriTemplate, name, description, policy })) } };
     }
     if (method === "resources/read") {
-      const uri = new URL(String((request.params as { uri?: string }).uri));
-      const resource = resources.find((candidate) => candidate.uriTemplate === uri.toString().replace(/\/$/, ""));
+      const uri = String((request.params as { uri?: string }).uri);
+      const resource = resources.find((candidate) => candidate.uriTemplate === uri.replace(/\/$/, ""));
       if (!resource) throw new McpError("NOT_FOUND", "Resource was not found.");
       assertPolicyAvailable(resource.policy, context.policy);
-      const contents = await resource.read(uri, context);
-      return { jsonrpc: "2.0", id, result: { contents: [{ uri: uri.toString(), mimeType: "application/json", text: JSON.stringify(contents) }] } };
+      const contents = await resource.read();
+      return { jsonrpc: "2.0", id, result: { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(contents) }] } };
     }
     if (method === "prompts/list") return { jsonrpc: "2.0", id, result: { prompts } };
     if (method === "prompts/get") {
