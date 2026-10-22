@@ -5,9 +5,9 @@ import { safeProgressSummary } from "@/mcp/serializers";
 describe("MCP adapter", () => {
   it("lists only registered read-oriented tools", async () => {
     const response = await handleMcpRequest({ jsonrpc: "2.0", id: 1, method: "tools/list" });
-    const tools = (response?.result as { tools: Array<{ name: string; annotations: { readOnly: boolean } }> }).tools;
+    const tools = (response?.result as { tools: Array<{ name: string; annotations: { readOnlyHint: boolean } }> }).tools;
     expect(tools.length).toBeGreaterThanOrEqual(8);
-    expect(tools.every((tool) => tool.annotations.readOnly)).toBe(true);
+    expect(tools.every((tool) => tool.annotations.readOnlyHint)).toBe(true);
   });
 
   it("serves public project data without private evidence", async () => {
@@ -17,9 +17,10 @@ describe("MCP adapter", () => {
       method: "tools/call",
       params: { name: "search_projects", arguments: { limit: 1 } },
     });
-    const result = response?.result as { structuredContent: { results: Array<Record<string, unknown>> } };
-    expect(result.structuredContent.results[0]).not.toHaveProperty("evidence");
-    expect(result.structuredContent.results[0]).not.toHaveProperty("userId");
+    const result = response?.result as { content: Array<{ type: string; text: string }> };
+    const data = JSON.parse(result.content[0].text) as { results: Array<Record<string, unknown>> };
+    expect(data.results[0]).not.toHaveProperty("evidence");
+    expect(data.results[0]).not.toHaveProperty("userId");
   });
 
   it("blocks private tools without a local context", async () => {

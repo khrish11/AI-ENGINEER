@@ -2,16 +2,54 @@ import { McpError, toMcpError } from "./errors";
 import { assertPolicyAvailable } from "./policies";
 import { prompts, resources, tools } from "./registry";
 import type { McpToolContext } from "./types";
+import { z } from "zod";
 
 export const MCP_ADAPTER_VERSION = 1;
 export const defaultContext: McpToolContext = { policy: "LOCAL_PRIVATE" };
 
 function toolSchema(tool: (typeof tools)[number]) {
+  const shape = (tool.inputSchema as { shape?: Record<string, unknown> }).shape ?? {};
+  const zodSchema = tool.inputSchema as z.ZodObject<any>;
   return {
     type: "object",
     properties: Object.fromEntries(
-      Object.keys((tool.inputSchema as { shape?: Record<string, unknown> }).shape ?? {}).map((key) => [key, {}])
+      Object.keys(shape).map((key) => {
+        const field = shape[key];
+        const zodField = zodSchema.shape[key];
+        let jsonSchema: Record<string, unknown> = {};
+
+        if (zodField instanceof z.ZodString) {
+          jsonSchema = { type: "string" };
+          const checks = zodField._def.checks;
+          if (checks) {
+            for (const check of checks) {
+              if (check.kind === "min") jsonSchema.minLength = check.value;
+              if (check.kind === "max") jsonSchema.maxLength = check.value;
+            }
+          }
+        } else if (zodField instanceof z.ZodNumber) {
+          jsonSchema = { type: "number" };
+          const checks = zodField._def.checks;
+          if (checks) {
+            for (const check of checks) {
+              if (check.kind === "min") jsonSchema.minimum = check.value;
+              if (check.kind === "max") jsonSchema.maximum = check.value;
+              if (check.kind === "int") jsonSchema.type = "integer";
+            }
+          }
+        } else if (zodField instanceof z.ZodBoolean) {
+          jsonSchema = { type: "boolean" };
+        } else {
+          jsonSchema = { type: "string" };
+        }
+
+        return [key, jsonSchema];
+      })
     ),
+    required: Object.keys(shape).filter((key) => {
+      const zodField = zodSchema.shape[key];
+      return !zodField.isOptional();
+    }),
   };
 }
 
@@ -23,7 +61,7 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       return { jsonrpc: "2.0", id, result: { protocolVersion: "2025-06-18", capabilities: { tools: {}, resources: {}, prompts: {} }, serverInfo: { name: "ai-engineer-os", version: String(MCP_ADAPTER_VERSION) } } };
     }
     if (method === "tools/list") {
-      return { jsonrpc: "2.0", id, result: { tools: tools.map((tool) => ({ name: tool.name, description: tool.description, inputSchema: toolSchema(tool), annotations: { policy: tool.policy, readOnly: tool.policy !== "MUTATING" } })) } };
+      return { jsonrpc: "2.0", id, result: { tools: tools.map((tool) => ({ name: tool.name, description: tool.description, inputSchema: toolSchema(tool), annotations: { policy: tool.policy, readOnlyHint: tool.policy !== "MUTATING" } })) } };
     }
     if (method === "tools/call") {
       const params = (request.params ?? {}) as { name?: string; arguments?: unknown };
@@ -31,7 +69,11 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       if (!tool) throw new McpError("NOT_FOUND", "Tool was not found.");
       assertPolicyAvailable(tool.policy, context.policy);
       const result = await tool.handler(params.arguments ?? {}, context);
-      return { jsonrpc: "2.0", id, result: { content: [{ type: "text", text: JSON.stringify(result) }], structuredContent: result, isError: false } };
+      const resultString = JSON.stringify(result);
+      if (resultString.length > 500000) {
+        throw new McpError("INTERNAL_ERROR", "Response size exceeds limit (500KB). Use more specific queries.");
+      }
+      return { jsonrpc: "2.0", id, result: { content: [{ type: "text", text: resultString }], isError: false } };
     }
     if (method === "resources/list") {
       return { jsonrpc: "2.0", id, result: { resources: resources.map(({ uriTemplate, name, description, policy }) => ({ uriTemplate, name, description, policy })) } };

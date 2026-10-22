@@ -8,6 +8,7 @@ export type McpErrorCode =
   | "PRIVATE_DATA"
   | "RATE_LIMITED"
   | "CONFLICT"
+  | "INTERNAL_ERROR"
   | "UNSUPPORTED";
 
 export class McpError extends Error {
