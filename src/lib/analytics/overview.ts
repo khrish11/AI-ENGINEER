@@ -72,7 +72,9 @@ export function computeOverview(sources: AnalyticsSources, timeZone: string): An
 
   const counts = countSkillBands(sources);
   const roadmapProgress =
-    sources.roadmapPlan && sources.roadmapPlan.summary.totalOccurrences > 0
+    sources.roadmapPlan &&
+    sources.roadmapPlan.summary &&
+    sources.roadmapPlan.summary.totalOccurrences > 0
       ? Math.round(
           (sources.roadmapPlan.summary.completedOccurrences /
             sources.roadmapPlan.summary.totalOccurrences) *
