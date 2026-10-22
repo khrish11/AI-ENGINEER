@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ai-engineer-os": {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "src/scripts/mcp-start.ts"
+      ],
+      "cwd": "E:\\AI ENGINEER"
+    }
+  }
+}

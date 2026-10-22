@@ -10,12 +10,18 @@
     "get_learning_resources",
     "search_projects",
     "get_project",
+    "get_all_phases",
+    "get_phase_details",
+    "suggest_learning_path",
     "get_current_week",
     "get_review_queue",
     "get_analytics_overview"
   ],
   "resources": [
-    "ai-engineer://curriculum/phases"
+    "ai-engineer://curriculum/phases",
+    "ai-engineer://curriculum/lesson-counts",
+    "ai-engineer://stats/overview",
+    "ai-engineer://resources/catalog"
   ],
   "policies": [
     "PUBLIC",
