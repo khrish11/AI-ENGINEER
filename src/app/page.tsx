@@ -26,6 +26,8 @@ export default function LandingPage() {
     await signIn("google", { callbackUrl: "/dashboard" });
   };
 
+  console.log("Landing page loaded with sign-in handler");
+
   return (
     <main id="main-content" className="min-h-screen bg-background text-foreground flex flex-col selection:bg-accent-cyan/20">
       {/* Top minimal nav */}
