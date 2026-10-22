@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const SearchCurriculumInput = z.object({
   query: z.string().trim().min(1).max(200).optional(),
-  phase: z.number().int().min(1).max(20).optional(),
+  phase: z.number().int().min(0).max(20).optional(),
   limit: z.number().int().min(1).max(50).default(10),
 }).strict();
 
