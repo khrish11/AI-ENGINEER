@@ -1,5 +1,5 @@
 import { McpError, toMcpError } from "./errors";
-import { assertPolicyAvailable } from "./policies";
+import { assertPolicyAvailable, isPolicyAvailable } from "./policies";
 import { prompts, resources, tools } from "./registry";
 import type { McpToolContext } from "./types";
 import { z } from "zod";
@@ -14,7 +14,11 @@ function toolSchema(tool: (typeof tools)[number]) {
     type: "object",
     properties: Object.fromEntries(
       Object.keys(shape).map((key) => {
-        const zodField = zodSchema.shape[key];
+        const inputField = zodSchema.shape[key];
+        let zodField = inputField;
+        while (zodField instanceof z.ZodOptional || zodField instanceof z.ZodDefault) {
+          zodField = zodField._def.innerType;
+        }
         let jsonSchema: Record<string, unknown> = {};
 
         if (zodField instanceof z.ZodString) {
@@ -46,9 +50,9 @@ function toolSchema(tool: (typeof tools)[number]) {
       })
     ),
     required: Object.keys(shape).filter((key) => {
-      const zodField = zodSchema.shape[key];
-      return !zodField.isOptional();
+      return !zodSchema.shape[key].isOptional();
     }),
+    additionalProperties: false,
   };
 }
 
@@ -60,7 +64,7 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       return { jsonrpc: "2.0", id, result: { protocolVersion: "2025-06-18", capabilities: { tools: {}, resources: {}, prompts: {} }, serverInfo: { name: "ai-engineer-os", version: String(MCP_ADAPTER_VERSION) } } };
     }
     if (method === "tools/list") {
-      return { jsonrpc: "2.0", id, result: { tools: tools.map((tool) => ({ name: tool.name, description: tool.description, inputSchema: toolSchema(tool), annotations: { policy: tool.policy, readOnlyHint: tool.policy !== "MUTATING" } })) } };
+      return { jsonrpc: "2.0", id, result: { tools: tools.filter((tool) => isPolicyAvailable(tool.policy, context.policy)).map((tool) => ({ name: tool.name, description: tool.description, inputSchema: toolSchema(tool), annotations: { readOnlyHint: tool.policy !== "MUTATING" } })) } };
     }
     if (method === "tools/call") {
       const params = (request.params ?? {}) as { name?: string; arguments?: unknown };
@@ -77,7 +81,7 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       return { jsonrpc: "2.0", id, result: { content: [{ type: "text", text: resultString }], structuredContent: result, isError: false } };
     }
     if (method === "resources/list") {
-      return { jsonrpc: "2.0", id, result: { resources: resources.map(({ uriTemplate, name, description, policy }) => ({ uriTemplate, name, description, policy })) } };
+      return { jsonrpc: "2.0", id, result: { resources: resources.filter((resource) => isPolicyAvailable(resource.policy, context.policy)).map(({ uriTemplate, name, description }) => ({ uri: uriTemplate, name, description })) } };
     }
     if (method === "resources/read") {
       const uri = String((request.params as { uri?: string }).uri);

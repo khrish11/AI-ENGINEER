@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleMcpRequest } from "@/mcp/server";
-import { tools, resources } from "@/mcp/registry";
+import { tools } from "@/mcp/registry";
 import type { McpToolContext } from "@/mcp/types";
 
 // Rate limiting: Simple in-memory counter (for production, use Redis or Vercel KV)
@@ -42,56 +42,6 @@ const remoteContext: McpToolContext = { policy: "PUBLIC" };
 const publicToolNames = tools
   .filter((tool) => tool.policy === "PUBLIC")
   .map((tool) => tool.name);
-
-// Override tools/list to return only public tools
-const originalHandleMcpRequest = handleMcpRequest;
-
-async function handleRemoteMcpRequest(request: Record<string, unknown>, context: McpToolContext = remoteContext) {
-  const method = request.method;
-  const id = request.id;
-
-  // Override tools/list to filter private tools
-  if (method === "tools/list") {
-    const publicTools = tools.filter((tool) => tool.policy === "PUBLIC");
-    return {
-      jsonrpc: "2.0",
-      id,
-      result: {
-        tools: publicTools.map((tool) => ({
-          name: tool.name,
-          description: tool.description,
-          inputSchema: {
-            type: "object",
-            properties: Object.fromEntries(
-              Object.keys((tool.inputSchema as { shape?: Record<string, unknown> }).shape ?? {}).map((key) => [key, {}])
-            ),
-          },
-          annotations: { policy: tool.policy, readOnly: true },
-        })),
-      },
-    };
-  }
-
-  // Override resources/list to filter private resources
-  if (method === "resources/list") {
-    const publicResources = resources.filter((resource) => resource.policy === "PUBLIC");
-    return {
-      jsonrpc: "2.0",
-      id,
-      result: {
-        resources: publicResources.map(({ uriTemplate, name, description, policy }) => ({
-          uriTemplate,
-          name,
-          description,
-          policy,
-        })),
-      },
-    };
-  }
-
-  // Delegate to original handler for other methods
-  return originalHandleMcpRequest(request, context);
-}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -189,7 +139,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Handle MCP request with PUBLIC context
-    const response = await handleRemoteMcpRequest(body, remoteContext);
+    const response = await handleMcpRequest(body, remoteContext);
 
     // Return JSON-RPC response
     return NextResponse.json(response, {
