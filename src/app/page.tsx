@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +22,10 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
+  const handleSignIn = async () => {
+    await signIn("google", { callbackUrl: "/dashboard" });
+  };
+
   return (
     <main id="main-content" className="min-h-screen bg-background text-foreground flex flex-col selection:bg-accent-cyan/20">
       {/* Top minimal nav */}
@@ -44,11 +50,9 @@ export default function LandingPage() {
             <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:inline">
               Dashboard
             </Link>
-            <Link href="/settings">
-              <Button size="sm" variant="outline" className="gap-1.5">
-                <LogIn className="w-3.5 h-3.5" /> Sign In
-              </Button>
-            </Link>
+            <Button size="sm" variant="outline" className="gap-1.5" onClick={handleSignIn}>
+              <LogIn className="w-3.5 h-3.5" /> Sign In
+            </Button>
           </div>
         </div>
       </nav>
@@ -82,11 +86,9 @@ export default function LandingPage() {
                   <BookOpen className="w-4 h-4" /> Start the Course <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Link href="/settings">
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2">
-                  <LogIn className="w-4 h-4" /> Sign In to Save Progress
-                </Button>
-              </Link>
+              <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2" onClick={handleSignIn}>
+                <LogIn className="w-4 h-4" /> Sign In to Save Progress
+              </Button>
             </div>
 
             <div className="pt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
