@@ -9,12 +9,11 @@ export const defaultContext: McpToolContext = { policy: "LOCAL_PRIVATE" };
 
 function toolSchema(tool: (typeof tools)[number]) {
   const shape = (tool.inputSchema as { shape?: Record<string, unknown> }).shape ?? {};
-  const zodSchema = tool.inputSchema as z.ZodObject<any>;
+  const zodSchema = tool.inputSchema as z.ZodObject<Record<string, z.ZodTypeAny>>;
   return {
     type: "object",
     properties: Object.fromEntries(
       Object.keys(shape).map((key) => {
-        const field = shape[key];
         const zodField = zodSchema.shape[key];
         let jsonSchema: Record<string, unknown> = {};
 
@@ -73,7 +72,9 @@ export async function handleMcpRequest(request: Record<string, unknown>, context
       if (resultString.length > 500000) {
         throw new McpError("INTERNAL_ERROR", "Response size exceeds limit (500KB). Use more specific queries.");
       }
-      return { jsonrpc: "2.0", id, result: { content: [{ type: "text", text: resultString }], isError: false } };
+      // Return structuredContent for backward compatibility with custom clients
+      // Standard MCP clients use content.text, but we preserve structuredContent for compatibility
+      return { jsonrpc: "2.0", id, result: { content: [{ type: "text", text: resultString }], structuredContent: result, isError: false } };
     }
     if (method === "resources/list") {
       return { jsonrpc: "2.0", id, result: { resources: resources.map(({ uriTemplate, name, description, policy }) => ({ uriTemplate, name, description, policy })) } };
