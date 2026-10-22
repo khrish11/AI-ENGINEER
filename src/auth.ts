@@ -122,3 +122,11 @@ const nextAuth = NextAuth({
 });
 
 export const { handlers, auth, signIn, signOut } = nextAuth;
+
+/**
+ * Check if the current session is authenticated (not guest mode)
+ */
+export async function isAuthenticated(): Promise<boolean> {
+  const session = await auth();
+  return session?.user?.id !== undefined && session.user.id !== "";
+}

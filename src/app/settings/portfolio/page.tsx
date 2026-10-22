@@ -5,7 +5,7 @@ import { PortfolioSettingsClient } from "@/components/portfolio/portfolio-settin
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 
 export default function PortfolioSettingsPage() {
-  const { auth, loading } = useAuthStatus();
+  const { authStatus, loading } = useAuthStatus();
   if (loading) {
     return (
       <main
@@ -20,7 +20,7 @@ export default function PortfolioSettingsPage() {
   }
   return (
     <main id="main-content" className="container mx-auto px-4 md:px-6 py-6 md:py-8 max-w-3xl">
-      <PortfolioSettingsClient auth={auth} />
+      <PortfolioSettingsClient auth={authStatus} />
     </main>
   );
 }

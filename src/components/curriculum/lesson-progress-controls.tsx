@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLessonProgress } from "@/hooks/useLessonProgress";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useStudySession } from "@/hooks/useStudySession";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { lessonStatusLabel, type LessonActivityAvailability } from "@/lib/progress/completion";
 import {
   BookOpen,
@@ -19,6 +20,7 @@ import {
   HelpCircle,
   Library,
   Star,
+  LogIn,
 } from "lucide-react";
 
 export function LessonProgressControls({
@@ -36,6 +38,7 @@ export function LessonProgressControls({
   href: string;
   availability: LessonActivityAvailability;
 }) {
+  const { authStatus } = useAuthStatus();
   const metadata = React.useMemo(
     () => ({ lessonTitle: title, lessonHref: href, phaseSlug, phaseNumber }),
     [title, href, phaseSlug, phaseNumber]
@@ -49,8 +52,30 @@ export function LessonProgressControls({
   useStudySession({ lessonId });
   const bookmarked = bookmarks.some((b) => b.lessonId === lessonId);
 
+  // Show login prompt for guest users when trying to save progress
+  const handleProgressAction = React.useCallback(
+    (action: () => void) => {
+      if (!authStatus.authenticated) {
+        // Redirect to settings page to sign in
+        window.location.href = "/settings";
+        return;
+      }
+      action();
+    },
+    [authStatus.authenticated]
+  );
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
+      {!authStatus.authenticated && (
+        <div className="w-full flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs mb-2">
+          <LogIn className="w-4 h-4" />
+          <span>Sign in to save your progress. Guest mode is read-only.</span>
+          <Link href="/settings" className="text-amber-500 underline font-medium">
+            Sign in with Google
+          </Link>
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-2">
         <Badge
           data-testid="lesson-status"
@@ -67,7 +92,7 @@ export function LessonProgressControls({
         {progress?.needsReview && <Badge variant="warning">Needs review</Badge>}
         <Button
           data-testid="mark-reading-complete"
-          onClick={() => void markReadingComplete()}
+          onClick={() => handleProgressAction(() => void markReadingComplete())}
           variant={progress?.readingComplete ? "secondary" : "outline"}
           size="sm"
           className="gap-1"
@@ -79,7 +104,7 @@ export function LessonProgressControls({
           <Button
             data-testid="mark-lesson-complete"
             size="sm"
-            onClick={() => void upsert({ status: "completed" })}
+            onClick={() => handleProgressAction(() => void upsert({ status: "completed" }))}
           >
             <CheckCircle2 className="w-3 h-3" /> Mark complete
           </Button>
@@ -90,7 +115,7 @@ export function LessonProgressControls({
             size="sm"
             variant="outline"
             className="gap-1"
-            onClick={() => void upsert({ requiredResourcesComplete: true })}
+            onClick={() => handleProgressAction(() => void upsert({ requiredResourcesComplete: true }))}
           >
             <Library className="w-3 h-3" /> Resources complete
           </Button>
@@ -101,7 +126,7 @@ export function LessonProgressControls({
             size="sm"
             variant="outline"
             className="gap-1"
-            onClick={() => void upsert({ practiceComplete: true })}
+            onClick={() => handleProgressAction(() => void upsert({ practiceComplete: true }))}
           >
             <HelpCircle className="w-3 h-3" /> Practice complete
           </Button>
@@ -112,7 +137,7 @@ export function LessonProgressControls({
             size="sm"
             variant="outline"
             className="gap-1"
-            onClick={() => void upsert({ projectComplete: true })}
+            onClick={() => handleProgressAction(() => void upsert({ projectComplete: true }))}
           >
             <FolderKanban className="w-3 h-3" /> Project complete
           </Button>
@@ -122,7 +147,7 @@ export function LessonProgressControls({
           size="sm"
           variant="ghost"
           className="gap-1"
-          onClick={() => void upsert({ needsReview: !progress?.needsReview })}
+          onClick={() => handleProgressAction(() => void upsert({ needsReview: !progress?.needsReview }))}
         >
           {progress?.needsReview ? (
             <Star className="w-3 h-3 text-amber-400" />
@@ -134,15 +159,17 @@ export function LessonProgressControls({
         <Button
           data-testid="bookmark-lesson"
           onClick={() =>
-            void toggleBookmark({
-              lessonId,
-              resourceId: null,
-              projectId: null,
-              targetType: "lesson",
-              title,
-              href,
-              note: null,
-            })
+            handleProgressAction(() =>
+              void toggleBookmark({
+                lessonId,
+                resourceId: null,
+                projectId: null,
+                targetType: "lesson",
+                title,
+                href,
+                note: null,
+              })
+            )
           }
           variant={bookmarked ? "default" : "outline"}
           size="sm"

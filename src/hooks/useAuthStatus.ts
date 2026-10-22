@@ -4,36 +4,39 @@ import { useEffect, useState } from "react";
 
 export interface AuthStatus {
   configured: boolean;
-  providers: Array<{ id: string; name: string }>;
+  providers: string[];
   authenticated: boolean;
-  user: {
-    name?: string;
-    email?: string;
-    image?: string | null;
-  } | null;
+  user: { id: string; name: string | null; email: string | null } | null;
 }
 
 export function useAuthStatus() {
-  const [auth, setAuth] = useState<AuthStatus | null>(null);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>({
+    configured: false,
+    providers: [],
+    authenticated: false,
+    user: null,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let cancelled = false;
-    void (async () => {
+    async function loadAuthStatus() {
       try {
-        const response = await fetch("/api/auth/status");
-        const payload = (await response.json()) as AuthStatus;
-        if (!cancelled) setAuth(payload);
+        const response = await fetch("/api/auth/status", { cache: "no-store" });
+        const json = (await response.json()) as AuthStatus;
+        setAuthStatus(json);
       } catch {
-        if (!cancelled) setAuth({ configured: false, providers: [], authenticated: false, user: null });
+        setAuthStatus({
+          configured: false,
+          providers: [],
+          authenticated: false,
+          user: null,
+        });
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    }
+    void loadAuthStatus();
   }, []);
 
-  return { auth, loading };
+  return { authStatus, loading };
 }
