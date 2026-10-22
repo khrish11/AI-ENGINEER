@@ -1,3 +1,4 @@
+// Landing page with Google OAuth sign-in
 "use client";
 
 import Link from "next/link";
