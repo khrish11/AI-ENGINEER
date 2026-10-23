@@ -18,6 +18,14 @@ import {
   GitCommit,
 } from "lucide-react";
 
+interface AuthStatus {
+  configured: boolean;
+  providers: string[];
+  developmentHint: string | null;
+  authenticated: boolean;
+  user: { id: string; name: string | null; email: string | null } | null;
+}
+
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/curriculum", label: "Curriculum", icon: BookOpen, badge: "20 Phases" },
@@ -36,6 +44,22 @@ export interface SidebarProps {
 export function Sidebar({ onSearchClick }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [authStatus, setAuthStatus] = React.useState<AuthStatus | null>(null);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const loadAuthStatus = async () => {
+      try {
+        const response = await fetch("/api/auth/status", { cache: "no-store" });
+        const json = (await response.json()) as AuthStatus;
+        setAuthStatus(json);
+      } catch {
+        setAuthStatus(null);
+      }
+    };
+    void loadAuthStatus();
+  }, []);
 
   return (
     <aside
@@ -158,24 +182,32 @@ export function Sidebar({ onSearchClick }: SidebarProps) {
         {!isCollapsed ? (
           <div className="p-3 rounded-lg bg-muted/40 border border-border flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-accent-violet/20 border border-accent-violet/30 flex items-center justify-center text-accent-violet font-semibold text-xs shrink-0">
-              G
+              {mounted && authStatus?.authenticated && authStatus.user?.name
+                ? authStatus.user.name.charAt(0).toUpperCase()
+                : "G"}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-semibold text-foreground truncate">
-                  Guest Learner
+                  {mounted && authStatus?.authenticated && authStatus.user?.name
+                    ? authStatus.user.name
+                    : "Guest Learner"}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-status-success" />
               </div>
               <p className="text-[10px] text-muted-foreground truncate">
-                Local-first persistence
+                {mounted && authStatus?.authenticated
+                  ? "Authenticated with cloud sync"
+                  : "Local-first persistence"}
               </p>
             </div>
           </div>
         ) : (
           <div className="flex justify-center">
             <div className="w-8 h-8 rounded-full bg-accent-violet/20 border border-accent-violet/30 flex items-center justify-center text-accent-violet font-semibold text-xs">
-              G
+              {mounted && authStatus?.authenticated && authStatus.user?.name
+                ? authStatus.user.name.charAt(0).toUpperCase()
+                : "G"}
             </div>
           </div>
         )}

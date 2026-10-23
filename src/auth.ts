@@ -91,7 +91,10 @@ async function upsertAuthUser(params: {
 const nextAuth = NextAuth({
   secret: AUTH_SECRET ?? "dev-only-unconfigured-secret",
   trustHost: true,
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   providers,
   pages: {
     signIn: "/settings",
@@ -114,7 +117,7 @@ const nextAuth = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = String(token.userId ?? "");
+        session.user.id = String(token.userId ?? token.sub ?? "");
       }
       return session;
     },

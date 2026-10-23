@@ -282,16 +282,6 @@ export default function SettingsPage() {
     }
   };
 
-  const handleContinueAsGuest = async () => {
-    if (profileAuthenticated) {
-      await handleSignOut();
-      return;
-    }
-    await markGuest();
-    setProfileAuthenticated(false);
-    await refreshSync();
-  };
-
   const syncBadgeVariant =
     status === "synced"
       ? "success"
@@ -362,11 +352,11 @@ export default function SettingsPage() {
                 <div>
                   <CardTitle className="text-lg">Account</CardTitle>
                   <CardDescription>
-                    Guest mode works completely offline. Signing in adds cloud sync.
+                    Sign in to access all features and sync your learning progress.
                   </CardDescription>
                 </div>
                 <Badge variant={profileAuthenticated ? "success" : "muted"}>
-                  {profileAuthenticated ? "Authenticated" : "Guest Mode"}
+                  {profileAuthenticated ? "Authenticated" : "Not Signed In"}
                 </Badge>
               </div>
             </CardHeader>
@@ -413,12 +403,15 @@ export default function SettingsPage() {
                   >
                     <Globe className="w-4 h-4" /> Sign in with Google
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => void handleContinueAsGuest()}>
-                    Continue as guest
-                  </Button>
                 </div>
               ) : (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 items-center">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/40 border border-border">
+                    <span className="text-xs text-muted-foreground">Signed in as:</span>
+                    <span className="text-xs font-semibold text-foreground">
+                      {authStatus.user?.email || authStatus.user?.name || "User"}
+                    </span>
+                  </div>
                   <Button variant="outline" onClick={() => void handleSignOut()} disabled={busy}>
                     <LogOut className="w-4 h-4" /> Sign out
                   </Button>
@@ -430,9 +423,6 @@ export default function SettingsPage() {
                   >
                     Delete cloud account and learning data
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => void handleContinueAsGuest()}>
-                    Continue as guest
-                  </Button>
                 </div>
               )}
 
@@ -442,7 +432,7 @@ export default function SettingsPage() {
                   className="text-xs text-muted-foreground rounded-lg border border-border bg-surface p-3"
                 >
                   {authStatus.developmentHint ??
-                    "OAuth is not configured. Set AUTH_SECRET plus GitHub and/or Google client credentials to enable sign-in. Guest Mode remains fully usable."}
+                    "OAuth is not configured. Set AUTH_SECRET plus GitHub and/or Google client credentials to enable sign-in."}
                 </p>
               )}
             </CardContent>
@@ -791,18 +781,10 @@ export default function SettingsPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="p-3 rounded-lg bg-surface border border-border">
-                <h4 className="text-sm font-semibold text-foreground">Guest Mode</h4>
+                <h4 className="text-sm font-semibold text-foreground">Data Privacy</h4>
                 <p className="text-xs text-muted-foreground">
-                  Your learning data remains on this device unless you export it or sign in with an
-                  account. No progress data is sent to any third party.
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-surface border border-border">
-                <h4 className="text-sm font-semibold text-foreground">Authenticated Mode</h4>
-                <p className="text-xs text-muted-foreground">
-                  When you sign in with GitHub or Google, your learning data is synchronized to
-                  PostgreSQL so it survives device changes. OAuth tokens are never stored in
-                  IndexedDB.
+                  Your learning data is synchronized to PostgreSQL so it survives device changes.
+                  OAuth tokens are never stored in IndexedDB. Your data is private to your account.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-surface border border-border">
