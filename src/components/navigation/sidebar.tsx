@@ -182,32 +182,37 @@ export function Sidebar({ onSearchClick }: SidebarProps) {
         {!isCollapsed ? (
           <div className="p-3 rounded-lg bg-muted/40 border border-border flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-accent-violet/20 border border-accent-violet/30 flex items-center justify-center text-accent-violet font-semibold text-xs shrink-0">
-              {mounted && authStatus?.authenticated && authStatus.user?.name
-                ? authStatus.user.name.charAt(0).toUpperCase()
-                : "G"}
+              {mounted && authStatus?.authenticated
+                ? (authStatus.user?.name || authStatus.user?.email || "U").charAt(0).toUpperCase()
+                : "—"}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-semibold text-foreground truncate">
-                  {mounted && authStatus?.authenticated && authStatus.user?.name
-                    ? authStatus.user.name
-                    : "Guest Learner"}
+                  {mounted && authStatus?.authenticated
+                    ? authStatus.user?.name || authStatus.user?.email || "Learner"
+                    : "Not Signed In"}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-status-success" />
+                <span
+                  className={cn(
+                    "w-1.5 h-1.5 rounded-full",
+                    authStatus?.authenticated ? "bg-status-success" : "bg-muted-foreground"
+                  )}
+                />
               </div>
               <p className="text-[10px] text-muted-foreground truncate">
                 {mounted && authStatus?.authenticated
                   ? "Authenticated with cloud sync"
-                  : "Local-first persistence"}
+                  : "Sign in via Settings"}
               </p>
             </div>
           </div>
         ) : (
           <div className="flex justify-center">
             <div className="w-8 h-8 rounded-full bg-accent-violet/20 border border-accent-violet/30 flex items-center justify-center text-accent-violet font-semibold text-xs">
-              {mounted && authStatus?.authenticated && authStatus.user?.name
-                ? authStatus.user.name.charAt(0).toUpperCase()
-                : "G"}
+              {mounted && authStatus?.authenticated
+                ? (authStatus.user?.name || authStatus.user?.email || "U").charAt(0).toUpperCase()
+                : "—"}
             </div>
           </div>
         )}

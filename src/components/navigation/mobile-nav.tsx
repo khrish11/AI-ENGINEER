@@ -45,6 +45,11 @@ export interface MobileNavProps {
   onSearchClick?: () => void;
 }
 
+interface AuthStatus {
+  authenticated: boolean;
+  user: { id: string; name: string | null; email: string | null } | null;
+}
+
 export function MobileNav({
   drawerOpen = false,
   onDrawerClose,
@@ -53,9 +58,20 @@ export function MobileNav({
   const pathname = usePathname();
   const { theme, setTheme } = useThemeStore();
   const [mounted, setMounted] = React.useState(false);
+  const [authStatus, setAuthStatus] = React.useState<AuthStatus | null>(null);
 
   React.useEffect(() => {
     setMounted(true);
+    const loadAuthStatus = async () => {
+      try {
+        const response = await fetch("/api/auth/status", { cache: "no-store" });
+        const json = (await response.json()) as AuthStatus;
+        setAuthStatus(json);
+      } catch {
+        setAuthStatus(null);
+      }
+    };
+    void loadAuthStatus();
   }, []);
 
   return (
@@ -155,9 +171,15 @@ export function MobileNav({
             <div className="pt-4 border-t border-border flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-full bg-accent-violet/20 flex items-center justify-center text-accent-violet text-xs font-semibold">
-                  G
+                  {mounted && authStatus?.authenticated
+                    ? (authStatus.user?.name || authStatus.user?.email || "U").charAt(0).toUpperCase()
+                    : "—"}
                 </div>
-                <span className="text-xs font-medium text-foreground">Guest Mode</span>
+                <span className="text-xs font-medium text-foreground">
+                  {mounted && authStatus?.authenticated
+                    ? authStatus.user?.name || authStatus.user?.email || "Learner"
+                    : "Not Signed In"}
+                </span>
               </div>
               {mounted && (
                 <button
