@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
 import * as path from "path";
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local"), quiet: true });
+dotenv.config({ quiet: true });
 
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
