@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type McpErrorCode =
   | "NOT_FOUND"
   | "INVALID_INPUT"
@@ -6,6 +8,7 @@ export type McpErrorCode =
   | "PRIVATE_DATA"
   | "RATE_LIMITED"
   | "CONFLICT"
+  | "INTERNAL_ERROR"
   | "UNSUPPORTED";
 
 export class McpError extends Error {
@@ -25,4 +28,3 @@ export function toMcpError(error: unknown): McpError {
   }
   return new McpError("UNSUPPORTED", "The MCP operation could not be completed.");
 }
-import { z } from "zod";

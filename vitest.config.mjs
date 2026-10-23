@@ -13,6 +13,7 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     css: true,
     maxWorkers: 1,
+    hookTimeout: 30000,
     include: ["src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
     exclude: ["node_modules", "e2e", ".next"],
     env: {

@@ -9,7 +9,7 @@ export const POLICY_DESCRIPTIONS: Record<McpPolicy, string> = {
   ADMIN: "A maintainer-only capability.",
 };
 
-export function assertPolicyAvailable(policy: McpPolicy, contextPolicy: McpPolicy): void {
+export function isPolicyAvailable(policy: McpPolicy, contextPolicy: McpPolicy): boolean {
   const rank: Record<McpPolicy, number> = {
     PUBLIC: 0,
     LOCAL_PRIVATE: 1,
@@ -17,7 +17,11 @@ export function assertPolicyAvailable(policy: McpPolicy, contextPolicy: McpPolic
     MUTATING: 3,
     ADMIN: 4,
   };
-  if (rank[contextPolicy] < rank[policy]) {
+  return rank[contextPolicy] >= rank[policy];
+}
+
+export function assertPolicyAvailable(policy: McpPolicy, contextPolicy: McpPolicy): void {
+  if (!isPolicyAvailable(policy, contextPolicy)) {
     throw new McpError(
       policy === "AUTHENTICATED_PRIVATE" ? "NOT_AUTHENTICATED" : "NOT_AUTHORIZED",
       `This MCP operation requires ${policy.toLowerCase().replace("_", " ")} access.`

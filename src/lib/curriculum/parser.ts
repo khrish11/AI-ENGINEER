@@ -173,7 +173,7 @@ export function parseLessonDirectory(
   // Extract Learning Objectives
   const learningObjectives: string[] = [];
   const objectivesSection = rawMd.match(
-    /##\s+Learning Objectives\s*([\s\S]*?)(?=##|\Z)/i
+    /##\s+(?:Learning\s+)?Objectives\s*([\s\S]*?)(?=##|\Z)/i
   );
   if (objectivesSection) {
     const lines = objectivesSection[1].split("\n");

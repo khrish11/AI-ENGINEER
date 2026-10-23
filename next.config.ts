@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  turbopack: {},
   async headers() {
     return [
       {
@@ -19,6 +20,14 @@ const nextConfig: NextConfig = {
       {
         source: "/api/(.*)",
         headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      {
+        source: "/api/mcp",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "X-RateLimit-Limit", value: "60" },
+          { key: "X-RateLimit-Window", value: "60" },
+        ],
       },
     ];
   },

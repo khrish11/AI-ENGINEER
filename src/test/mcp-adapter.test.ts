@@ -5,9 +5,45 @@ import { safeProgressSummary } from "@/mcp/serializers";
 describe("MCP adapter", () => {
   it("lists only registered read-oriented tools", async () => {
     const response = await handleMcpRequest({ jsonrpc: "2.0", id: 1, method: "tools/list" });
-    const tools = (response?.result as { tools: Array<{ name: string; annotations: { readOnly: boolean } }> }).tools;
+    const tools = (response?.result as { tools: Array<{ name: string; annotations: { readOnlyHint: boolean } }> }).tools;
     expect(tools.length).toBeGreaterThanOrEqual(8);
-    expect(tools.every((tool) => tool.annotations.readOnly)).toBe(true);
+    expect(tools.every((tool) => tool.annotations.readOnlyHint)).toBe(true);
+  });
+
+  it("publishes SDK-compatible public discovery metadata", async () => {
+    const context = { policy: "PUBLIC" as const };
+    const toolResponse = await handleMcpRequest(
+      { jsonrpc: "2.0", id: 11, method: "tools/list" },
+      context
+    );
+    const listedTools = (toolResponse?.result as {
+      tools: Array<{
+        name: string;
+        inputSchema: { properties: Record<string, { type?: string }> };
+        annotations: { readOnlyHint?: boolean; readOnly?: boolean };
+      }>;
+    }).tools;
+
+    expect(listedTools).toHaveLength(9);
+    expect(listedTools.some((tool) => tool.name === "get_current_week")).toBe(false);
+    expect(listedTools.every((tool) => tool.annotations.readOnlyHint === true)).toBe(true);
+    expect(listedTools.every((tool) => tool.annotations.readOnly === undefined)).toBe(true);
+    expect(listedTools.find((tool) => tool.name === "search_curriculum")?.inputSchema.properties).toMatchObject({
+      query: { type: "string" },
+      phase: { type: "integer" },
+      limit: { type: "integer" },
+    });
+
+    const resourceResponse = await handleMcpRequest(
+      { jsonrpc: "2.0", id: 12, method: "resources/list" },
+      context
+    );
+    const listedResources = (resourceResponse?.result as {
+      resources: Array<{ uri?: string; uriTemplate?: string }>;
+    }).resources;
+    expect(listedResources).toHaveLength(4);
+    expect(listedResources.every((resource) => typeof resource.uri === "string")).toBe(true);
+    expect(listedResources.every((resource) => resource.uriTemplate === undefined)).toBe(true);
   });
 
   it("serves public project data without private evidence", async () => {
@@ -17,9 +53,10 @@ describe("MCP adapter", () => {
       method: "tools/call",
       params: { name: "search_projects", arguments: { limit: 1 } },
     });
-    const result = response?.result as { structuredContent: { results: Array<Record<string, unknown>> } };
-    expect(result.structuredContent.results[0]).not.toHaveProperty("evidence");
-    expect(result.structuredContent.results[0]).not.toHaveProperty("userId");
+    const result = response?.result as { content: Array<{ type: string; text: string }> };
+    const data = JSON.parse(result.content[0].text) as { results: Array<Record<string, unknown>> };
+    expect(data.results[0]).not.toHaveProperty("evidence");
+    expect(data.results[0]).not.toHaveProperty("userId");
   });
 
   it("blocks private tools without a local context", async () => {
