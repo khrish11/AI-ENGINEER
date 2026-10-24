@@ -4,7 +4,8 @@ test.describe("Navigation", () => {
   test("home page loads", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/AI Engineer OS/);
-    await expect(page.locator("main h1:visible").first()).toContainText("AI Engineer OS");
+    // Home hero heading (site title lives in <title>; the h1 is the marketing headline).
+    await expect(page.locator("main h1:visible").first()).toContainText(/AI Engineering/i);
   });
 
   test("navigate to curriculum via sidebar", async ({ page }) => {

@@ -5,11 +5,19 @@ const LESSON_URL = "/curriculum/00-setup-and-tooling/01-dev-environment";
 test.describe.configure({ timeout: 120_000 });
 
 async function openLesson(page: Page, url: string = LESSON_URL) {
+  // Register the hydration barrier before navigation. /api/auth/status is fetched
+  // by the client progress controls only after React has hydrated; until then the
+  // SSR-rendered action buttons have no handlers and a click is silently lost.
+  const hydrated = page.waitForResponse(
+    (res) => res.url().includes("/api/auth/status"),
+    { timeout: 30_000 },
+  );
   await page.goto(url);
   await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
   await expect(page.getByRole("main").getByTestId("mark-reading-complete")).toBeVisible({
     timeout: 30_000,
   });
+  await hydrated;
 }
 
 async function waitForAutosave(page: Page) {
@@ -122,8 +130,10 @@ test.describe("Offline behavior", () => {
     await openLesson(page);
 
     await context.setOffline(true);
-    await page.getByRole("main").getByTestId("mark-reading-complete").click();
-    await expect(page.getByTestId("sync-status")).toHaveText("Offline", { timeout: 15_000 });
+    await expect(async () => {
+      await page.getByRole("main").getByTestId("mark-reading-complete").click();
+      await expect(page.getByTestId("sync-status")).toHaveText("Offline", { timeout: 3_000 });
+    }).toPass({ timeout: 30_000 });
     await expect(page.getByRole("button", { name: "Reading complete", exact: true }).first()).toBeVisible();
 
     // Restore the network, then confirm the queued local state survived.

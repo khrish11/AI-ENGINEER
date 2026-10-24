@@ -8,6 +8,9 @@ test.describe("Roadmap journey — Progress", () => {
     // 1. Start roadmap lesson.
     await page.getByTestId("start-item").first().click();
     await expect(page.getByTestId("mark-reading-complete")).toBeVisible({ timeout: 30_000 });
+    // Deterministic point: auth status resolved (guest banner only ever renders
+    // for genuinely unauthenticated visitors — see BUG-006 loading gate).
+    await expect(page.getByRole("link", { name: "Sign in with Google" })).toBeHidden();
 
     // 2. Mark lesson progress (all controls the lesson offers).
     await page.getByTestId("mark-reading-complete").click();

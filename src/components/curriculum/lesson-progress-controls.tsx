@@ -38,7 +38,7 @@ export function LessonProgressControls({
   href: string;
   availability: LessonActivityAvailability;
 }) {
-  const { authStatus } = useAuthStatus();
+  const { authStatus, loading } = useAuthStatus();
   const metadata = React.useMemo(
     () => ({ lessonTitle: title, lessonHref: href, phaseSlug, phaseNumber }),
     [title, href, phaseSlug, phaseNumber]
@@ -55,6 +55,11 @@ export function LessonProgressControls({
   // Show login prompt for guest users when trying to save progress
   const handleProgressAction = React.useCallback(
     (action: () => void) => {
+      if (loading) {
+        // Auth status still in flight — never treat a signed-in user as a guest
+        // (clicking again after resolution is the intended retry path).
+        return;
+      }
       if (!authStatus.authenticated) {
         // Redirect to settings page to sign in
         window.location.href = "/settings";
@@ -62,12 +67,12 @@ export function LessonProgressControls({
       }
       action();
     },
-    [authStatus.authenticated]
+    [authStatus.authenticated, loading]
   );
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
-      {!authStatus.authenticated && (
+      {!loading && !authStatus.authenticated && (
         <div className="w-full flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs mb-2">
           <LogIn className="w-4 h-4" />
           <span>Sign in to save your progress. Guest mode is read-only.</span>

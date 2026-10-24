@@ -29,6 +29,7 @@ yarn-error.log*
 
 # Local env files
 .env
+.env.vercel
 .env*.local
 .env.development.local
 .env.test.local
@@ -58,6 +59,7 @@ Thumbs.db
 test-results/
 playwright-report/
 playwright/.cache/
+playwright/.auth/
 
 # Temporary files
 *.tmp

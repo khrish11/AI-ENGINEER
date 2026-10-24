@@ -8,8 +8,11 @@ export default auth((req) => {
   const isAuthenticated = !!req.auth?.user?.id;
   const { pathname } = req.nextUrl;
 
-  // Allow auth pages, health checks, version, MCP endpoint, and public portfolios
+  // Allow auth pages, health checks, version, MCP endpoint, public portfolios,
+  // and the service worker script (must be served directly; a redirect breaks
+  // ServiceWorker registration with a SecurityError).
   const isPublicRoute =
+    pathname === "/sw.js" ||
     pathname.startsWith("/settings") ||
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/health") ||

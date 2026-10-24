@@ -7,9 +7,17 @@ test.describe("Offline service worker", () => {
       await navigator.serviceWorker.ready;
     });
     await page.goto("/curriculum/00-setup-and-tooling/01-dev-environment");
-    await expect(page.getByRole("heading", { name: "Dev Environment" })).toBeVisible();
-    await page.getByTestId("mark-reading-complete").click();
-    await page.waitForTimeout(250);
+    // The lesson markdown body repeats the title as a content h1; assert the workspace header only.
+    await expect(page.getByRole("heading", { name: "Dev Environment" }).first()).toBeVisible();
+    // A click before client hydration lands on the SSR-only button and is a no-op
+    // (the write never reaches IndexedDB), so retry the click until the local
+    // store visibly registers it. Scope to main + first(): the offline shell
+    // reload can leave a duplicate status badge in the DOM.
+    await expect(async () => {
+      await page.getByRole("main").getByTestId("mark-reading-complete").click();
+      await expect(page.getByRole("main").getByTestId("lesson-status").first()).not.toHaveText("Not Started", { timeout: 2_000 });
+      await expect(page).toHaveURL(/01-dev-environment/);
+    }).toPass({ timeout: 30_000 });
 
     const cacheState = await page.evaluate(async () => {
       const names = await caches.keys();
@@ -28,10 +36,10 @@ test.describe("Offline service worker", () => {
 
     await context.setOffline(true);
     await page.reload();
-    await expect(page.getByRole("heading", { name: "Dev Environment" })).toBeVisible();
-    await expect(page.getByTestId("lesson-status")).toContainText(/In Progress|Complete/);
+    await expect(page.getByRole("heading", { name: "Dev Environment" }).first()).toBeVisible();
+    await expect(page.getByRole("main").getByTestId("lesson-status").first()).toContainText(/In Progress|Complete/, { timeout: 15_000 });
     await context.setOffline(false);
     await page.reload();
-    await expect(page.getByRole("heading", { name: "Dev Environment" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Dev Environment" }).first()).toBeVisible();
   });
 });

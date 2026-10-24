@@ -6,9 +6,19 @@ test.describe("Curriculum Explorer & Lesson Workspace", () => {
     await expect(page).toHaveTitle(/Curriculum/);
     await expect(page.getByRole("heading", { name: "Curriculum Explorer" })).toBeVisible();
 
-    // Check stats badges scoped to the hero section
-    await expect(page.getByText(/^\d+ Phases$/).first()).toBeVisible();
-    await expect(page.getByText(/^\d+ Lessons$/).first()).toBeVisible();
+    // Check stats badges scoped to the hero section. On phone viewports the hero
+    // stat chips are intentionally hidden (responsive `hidden sm:flex`), so assert
+    // attachment rather than visibility there.
+    const mobile = (page.viewportSize()?.width ?? 1280) < 640;
+    const phases = page.getByText(/^\d+ Phases$/).first();
+    const lessons = page.getByText(/^\d+ Lessons$/).first();
+    if (mobile) {
+      await expect(phases).toBeAttached();
+      await expect(lessons).toBeAttached();
+    } else {
+      await expect(phases).toBeVisible();
+      await expect(lessons).toBeVisible();
+    }
 
     // Check phase card
     const phase0 = page.getByText("Phase 00", { exact: false }).first();

@@ -131,8 +131,9 @@ export default function SettingsPage() {
       const auth = await loadAuthStatus();
       const profile = await getLocalProfile();
 
-      if (auth.authenticated && profile && !profile.isAuthenticated) {
-        // First sign-in on this device: keep guest data, merge cloud state.
+      if (auth.authenticated && !profile?.isAuthenticated) {
+        // First sign-in on this device (or fresh browser with no local
+        // profile yet): keep guest data, merge cloud state.
         await markAuthenticated(auth.user?.email ?? null, auth.user?.name ?? null);
         setProfileAuthenticated(true);
         if (!mergeAttempted.current) {
