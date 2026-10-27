@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 import {
   ArrowRight,
   LogIn,
@@ -14,6 +15,12 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
+  // BUG-07: the landing page must not advertise sign-in to a signed-in visitor.
+  // Until the status request settles we keep the neutral sign-in affordance;
+  // the copy only flips to "Dashboard" once we truly know the session exists.
+  const { authStatus, settled } = useAuthStatus();
+  const signedIn = settled && authStatus.authenticated;
+
   const handleSignIn = async () => {
     await signIn("google", { callbackUrl: "/dashboard" });
   };
@@ -35,9 +42,17 @@ export default function LandingPage() {
             <Link href="/resources" className="text-sm text-[#888] hover:text-[#e5e5e5] transition-colors">
               Resources
             </Link>
-            <Button size="sm" variant="outline" className="gap-1.5 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]" onClick={handleSignIn}>
-              <LogIn className="w-3.5 h-3.5" /> Sign In
-            </Button>
+            {signedIn ? (
+              <Link href="/dashboard" data-testid="landing-dashboard-cta">
+                <Button size="sm" variant="outline" className="gap-1.5 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]">
+                  <BookOpen className="w-3.5 h-3.5" /> Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Button size="sm" variant="outline" className="gap-1.5 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]" onClick={handleSignIn}>
+                <LogIn className="w-3.5 h-3.5" /> Sign In
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -65,9 +80,17 @@ export default function LandingPage() {
                 <Play className="w-4 h-4" /> Start the Course <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]" onClick={handleSignIn}>
-              <LogIn className="w-4 h-4" /> Sign In to Save Progress
-            </Button>
+            {signedIn ? (
+              <Link href="/dashboard" data-testid="landing-dashboard-hero-cta">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]">
+                  <BookOpen className="w-4 h-4" /> Go to Dashboard <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            ) : (
+              <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 border-[#444] bg-transparent hover:bg-[#333] text-[#e5e5e5]" onClick={handleSignIn}>
+                <LogIn className="w-4 h-4" /> Sign In to Save Progress
+              </Button>
+            )}
           </div>
 
           <div className="pt-8 flex flex-wrap items-center justify-center gap-8 text-sm text-[#888]">

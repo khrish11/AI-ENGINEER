@@ -23,6 +23,21 @@ interface ProjectEvidenceRemoteDetails {
   directory?: string | null;
 }
 
+// BUG-10 retention policy: local delete tombstones are bookkeeping only —
+// deletes reach the cloud through the mutation queue, and no application
+// read path queries db.tombstones — so keep a bounded 90-day audit window
+// instead of letting the table grow forever with createBase()-id rows.
+const TOMBSTONE_RETENTION_MS = 90 * 24 * 60 * 60 * 1000;
+
+export async function pruneLocalTombstones(): Promise<number> {
+  const cutoff = new Date(Date.now() - TOMBSTONE_RETENTION_MS).toISOString();
+  const stale = await db.tombstones
+    .filter((row) => typeof row.deletedAt === "string" && row.deletedAt < cutoff)
+    .primaryKeys();
+  if (stale.length > 0) await db.tombstones.bulkDelete(stale);
+  return stale.length;
+}
+
 export interface QueuedRemoteChange {
   entityType: string;
   entityId: string;
@@ -68,6 +83,13 @@ export async function flushSyncQueue(): Promise<
 
   const deviceId = await getOrCreateDeviceId();
   const metadata = await db.syncMetadata.get("sync_meta");
+  // First sync ever on this device: the server treats a null cursor as
+  // "send the whole account history", which would merge another device or
+  // browser session's cloud rows straight into this client. That passive
+  // full-history download breaks account isolation (req #8); a genuine merge
+  // is an explicit action (settings sign-in / Sync now -> forceMerge). So the
+  // initial flush only uploads local mutations and advances the cursor.
+  const isBootstrapSync = !metadata?.lastSyncCursor;
   const body = SyncRequestSchema.parse({
     clientBatchId: uuidv4(),
     deviceId,
@@ -93,7 +115,13 @@ export async function flushSyncQueue(): Promise<
   }
 
   if (!response.ok) {
-    for (const item of eligible) {
+    // Only touch rows this batch still owns. If a newer mutation coalesced
+    // into one while the request was in flight (its mutationId turned over),
+    // leave it pending — a stale 5xx/4xx must not retry/fail fresh work.
+    const current = await db.syncQueue.bulkGet(eligible.map((item) => item.id));
+    for (let i = 0; i < eligible.length; i += 1) {
+      const item = eligible[i];
+      if (current[i]?.mutationId !== item.mutationId) continue;
       if (response.status >= 500) await syncQueue.incrementRetry(item.id);
       else await syncQueue.markFailed(item.id);
     }
@@ -102,15 +130,24 @@ export async function flushSyncQueue(): Promise<
 
   const json = SyncResponseSchema.parse(await response.json());
 
-  await applyRemoteChanges(json.remoteChanges as QueuedRemoteChange[]);
+  // Apply real-time deltas on every sync *after* bootstrap; skip the full
+  // history download on the first one (see isBootstrapSync above).
+  if (!isBootstrapSync) {
+    await applyRemoteChanges(json.remoteChanges as QueuedRemoteChange[]);
+  }
 
   const rejectedIds = new Set(json.rejected.map((r) => r.entityId));
   const acceptedItems = eligible.filter((item) => !rejectedIds.has(item.entityId));
-  await syncQueue.acknowledgeMany(acceptedItems.map((item) => item.id));
+  // Acknowledge by identity, not just row id: rows re-mutated during this
+  // request stay pending so their newer mutation is flushed next cycle.
+  await syncQueue.acknowledgeCommitted(
+    acceptedItems.map((item) => ({ id: item.id, mutationId: item.mutationId }))
+  );
 
   for (const rejected of json.rejected) {
     const item = eligible.find((p) => p.entityId === rejected.entityId);
     if (!item) continue;
+    if ((await db.syncQueue.get(item.id))?.mutationId !== item.mutationId) continue;
     if (rejected.retryable) await syncQueue.incrementRetry(item.id);
     else await syncQueue.markFailed(item.id);
   }
@@ -166,6 +203,8 @@ export async function flushSyncQueue(): Promise<
     deviceId,
   });
   await updateLastSync();
+  // Only after a fully server-acknowledged cycle (never on skips/errors).
+  await pruneLocalTombstones();
   return json;
 }
 

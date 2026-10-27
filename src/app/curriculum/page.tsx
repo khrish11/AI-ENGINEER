@@ -12,6 +12,12 @@ export const metadata = {
     "Explore 20 comprehensive phases covering AI Engineering from scratch: deep learning, RAG, fine-tuning, autonomous agents, and production MLOps.",
 };
 
+// BUG-06 fix: entries were re-aligned to the canonical upstream phase list
+// (upstream/ai-engineering-from-scratch/phases/00..19). Keys are phase
+// numbers as stored in the database; descriptions/topics now match the
+// actual phase titles (Setup, Math, Classical ML, DL Core, CV, NLP, Speech,
+// Transformers, GenAI, RL, LLMs-from-scratch, LLM Eng, Multimodal, Tools,
+// Agents, Autonomous, Swarms, Infra, Ethics, Capstone).
 const PHASE_METADATA_FALLBACK: Record<
   number,
   {
@@ -25,15 +31,15 @@ const PHASE_METADATA_FALLBACK: Record<
   0: {
     tier: "Foundations",
     description:
-      "Linux CLI, UV package manager, CUDA toolchain, Git, Docker, and developer environments.",
-    topics: ["CUDA", "UV", "Docker", "PyTorch Setup"],
+      "Environment setup: Linux CLI, UV/pip toolchains, Git, Docker, GPU/CUDA drivers, and editor workflows, provisioned lesson-by-lesson as the route needs them.",
+    topics: ["Linux CLI", "UV", "Git", "Docker"],
     fallbackLessons: 25,
     fallbackHours: 12,
   },
   1: {
     tier: "Foundations",
     description:
-      "Matrix decompositions, multivariable calculus, probability distributions, and gradient descent.",
+      "The intuition behind every AI algorithm through code: matrix decompositions, multivariable calculus, probability, and gradient descent.",
     topics: ["Linear Algebra", "Calculus", "Probability", "SVD"],
     fallbackLessons: 25,
     fallbackHours: 20,
@@ -41,144 +47,144 @@ const PHASE_METADATA_FALLBACK: Record<
   2: {
     tier: "Foundations",
     description:
-      "Asyncio, memory management, profiling, Pydantic v2, Ruff linting, and Pytest suites.",
-    topics: ["Asyncio", "Pydantic", "Pytest", "Profiling"],
+      "Classical machine learning — still the backbone of production AI: linear & logistic models, decision trees, ensembles (XGBoost/LightGBM), clustering, PCA, and evaluation metrics.",
+    topics: ["Scikit-Learn", "XGBoost", "Clustering", "Ensembles"],
     fallbackLessons: 25,
-    fallbackHours: 18,
+    fallbackHours: 22,
   },
   3: {
     tier: "Foundations",
     description:
-      "Polars, DuckDB, Arrow formats, feature stores, and distributed ETL pipelines.",
-    topics: ["Polars", "DuckDB", "Apache Arrow", "Parquet"],
+      "Neural networks from first principles: hand-written backpropagation, MLPs, activations, optimizers, and regularization — no framework until you build one yourself.",
+    topics: ["Backpropagation", "MLPs", "Optimizers", "Regularization"],
     fallbackLessons: 25,
-    fallbackHours: 16,
+    fallbackHours: 28,
   },
   4: {
     tier: "Foundations",
     description:
-      "Linear & logistic models, decision trees, ensemble methods (XGBoost/LightGBM), and PCA.",
-    topics: ["Scikit-Learn", "XGBoost", "Clustering", "Ensembles"],
+      "From pixels to understanding across image, video, and 3D: CNNs, Vision Transformers (ViT), object detection, segmentation, and CLIP representations.",
+    topics: ["CNNs", "Vision Transformers", "Detection", "CLIP"],
     fallbackLessons: 25,
     fallbackHours: 22,
   },
   5: {
     tier: "Foundations",
     description:
-      "Loss functions, ROC-AUC, cross-validation, MLflow, Weights & Biases experiment tracking.",
-    topics: ["MLflow", "W&B", "Cross-Validation", "Metrics"],
-    fallbackLessons: 25,
-    fallbackHours: 14,
-  },
-  6: {
-    tier: "Intermediate",
-    description:
-      "Backpropagation math, PyTorch autograd, custom layers, activations, and residual networks.",
-    topics: ["PyTorch Autograd", "ResNet", "Loss Surfaces", "CNNs"],
-    fallbackLessons: 25,
-    fallbackHours: 28,
-  },
-  7: {
-    tier: "Intermediate",
-    description:
-      "ViT (Vision Transformers), object detection, segment anything, and CLIP representations.",
-    topics: ["Vision Transformers", "CLIP", "Diffusion", "Detection"],
-    fallbackLessons: 25,
-    fallbackHours: 22,
-  },
-  8: {
-    tier: "Intermediate",
-    description:
-      "Tokenization, Word2Vec, GloVe, recurrent networks, LSTMs, and sequence-to-sequence models.",
+      "Language as the interface to intelligence: tokenization, Word2Vec/GloVe embeddings, recurrent networks, LSTMs, and sequence-to-sequence models from foundations to advanced pipelines.",
     topics: ["Tokenization", "BPE", "Seq2Seq", "Embeddings"],
     fallbackLessons: 25,
     fallbackHours: 20,
   },
-  9: {
+  6: {
     tier: "Intermediate",
     description:
-      "Spectrogram analysis, Whisper ASR, CTC loss, and speech generation with Bark/XTTS.",
+      "Hear, understand, speak: spectrogram analysis, Whisper ASR, CTC loss, diarization, and speech generation with Bark/XTTS.",
     topics: ["Whisper", "ASR", "Spectrograms", "TTS"],
     fallbackLessons: 25,
     fallbackHours: 14,
   },
+  7: {
+    tier: "Intermediate",
+    description:
+      "The architecture that changed everything: mathematical self-attention, multi-head attention, rotary positional embeddings (RoPE), KV cache, and transformers built from scratch.",
+    topics: ["Self-Attention", "RoPE", "KV Cache", "FlashAttention"],
+    fallbackLessons: 25,
+    fallbackHours: 32,
+  },
+  8: {
+    tier: "Intermediate",
+    description:
+      "Create images, video, audio, and 3D: VAEs, GANs, normalizing flows, and diffusion models from the denoising math up to production generation pipelines.",
+    topics: ["Diffusion", "GANs", "VAEs", "Stable Diffusion"],
+    fallbackLessons: 25,
+    fallbackHours: 24,
+  },
+  9: {
+    tier: "Intermediate",
+    description:
+      "Agents that learn by doing: MDPs, Q-learning, policy gradients, PPO, and the RLHF foundation underneath modern LLM alignment.",
+    topics: ["MDPs", "Q-Learning", "Policy Gradients", "RLHF"],
+    fallbackLessons: 25,
+    fallbackHours: 22,
+  },
   10: {
     tier: "Advanced",
     description:
-      "Mathematical self-attention, multi-head attention, rotary positional embeddings (RoPE), KV cache.",
-    topics: ["Multi-Head Attention", "RoPE", "KV Cache", "FlashAttention"],
+      "Build, train, and understand large language models: tokenizers, pre-training runs, scaling laws, and fine-tuning, end to end from raw math.",
+    topics: ["Pre-training", "Tokenizer", "Scaling Laws", "GPT"],
     fallbackLessons: 25,
-    fallbackHours: 32,
+    fallbackHours: 30,
   },
   11: {
     tier: "Advanced",
     description:
-      "In-context learning, function calling, JSON schemas, structured outputs, and LLM-as-a-judge evals.",
-    topics: ["Structured Outputs", "Prompt Systems", "Evals", "Guardrails"],
+      "Put LLMs to work in production: in-context learning, prompt systems, structured outputs, RAG with vector search and rerankers, and LLM-as-a-judge evals.",
+    topics: ["RAG", "Structured Outputs", "Evals", "Prompt Systems"],
     fallbackLessons: 25,
     fallbackHours: 26,
   },
   12: {
     tier: "Advanced",
     description:
-      "Vector search, HNSW indices, semantic chunking, BM25 hybrid search, and cross-encoder rerankers.",
-    topics: ["Vector Databases", "Hybrid Search", "Rerankers", "GraphRAG"],
+      "Models that see, hear, read, and reason across modalities: vision-language models, image-text alignment, audio-video understanding, and omni-modality APIs.",
+    topics: ["VLMs", "Image-Text Alignment", "Omni Models", "Multimodal RAG"],
     fallbackLessons: 25,
-    fallbackHours: 30,
+    fallbackHours: 22,
   },
   13: {
     tier: "Advanced",
     description:
-      "LoRA, QLoRA, DPO (Direct Preference Optimization), SFT, Unsloth, and dataset curation.",
-    topics: ["LoRA / QLoRA", "DPO", "Unsloth", "Dataset Cleaning"],
+      "The interfaces between AI and the real world: function calling, tool schemas, Model Context Protocol (MCP), and interoperable agent-to-agent protocols.",
+    topics: ["Function Calling", "MCP", "Tool Schemas", "A2A"],
     fallbackLessons: 25,
-    fallbackHours: 28,
+    fallbackHours: 20,
   },
   14: {
     tier: "Advanced",
     description:
-      "ReAct loops, plan-and-solve, stateful LangGraph, tool-calling agents, and Model Context Protocol (MCP).",
-    topics: ["ReAct Loop", "LangGraph", "MCP Protocol", "Multi-Agent"],
+      "Build agents from first principles: ReAct loops, plan-and-solve, stateful LangGraph workflows, tool-calling runtimes, and agent memory.",
+    topics: ["ReAct Loop", "LangGraph", "Agent Runtimes", "Memory"],
     fallbackLessons: 25,
     fallbackHours: 32,
   },
   15: {
     tier: "Mastery",
     description:
-      "Quantization (AWQ, GPTQ, GGUF), llama.cpp, vLLM, TensorRT-LLM, speculative decoding.",
-    topics: ["vLLM", "Quantization", "llama.cpp", "Speculative Decoding"],
+      "Agents that run without human intervention, safely: closed-loop autonomy, computer-use agents, guardrails, oversight, and supervised release.",
+    topics: ["Autonomy", "Guardrails", "Computer Use", "Oversight"],
     fallbackLessons: 25,
     fallbackHours: 24,
   },
   16: {
     tier: "Mastery",
     description:
-      "Kubernetes orchestration, Triton Inference Server, Prometheus monitoring, rate limiting, and observability.",
-    topics: ["Kubernetes", "Triton Server", "OpenTelemetry", "CI/CD"],
+      "Coordination, emergence, and collective intelligence: delegation topologies, shared memory, communication protocols, and swarm-scale agent systems.",
+    topics: ["Swarms", "Delegation", "Shared Memory", "Emergence"],
     fallbackLessons: 25,
-    fallbackHours: 30,
+    fallbackHours: 26,
   },
   17: {
     tier: "Mastery",
     description:
-      "Prompt injection defenses, jailbreak mitigations, red-teaming harnesses, and privacy preservation.",
-    topics: ["Prompt Injection", "Red Teaming", "Differential Privacy", "OWASP AI"],
+      "Ship AI to the real world: quantization (AWQ, GPTQ, GGUF), vLLM and TensorRT-LLM serving, Kubernetes, Triton, monitoring, and cost optimization.",
+    topics: ["vLLM", "Quantization", "Kubernetes", "Observability"],
     fallbackLessons: 25,
-    fallbackHours: 18,
+    fallbackHours: 30,
   },
   18: {
     tier: "Mastery",
     description:
-      "Healthcare AI, Financial modeling, Code generation engines, and Autonomous developer agents.",
-    topics: ["Code Agents", "Healthcare AI", "Financial LLMs", "Synthetics"],
+      "Build AI that helps humanity: prompt injection defenses, jailbreak mitigations, red-teaming harnesses, alignment, and privacy preservation.",
+    topics: ["Prompt Injection", "Red Teaming", "Alignment", "Privacy"],
     fallbackLessons: 25,
-    fallbackHours: 20,
+    fallbackHours: 18,
   },
   19: {
     tier: "Mastery",
     description:
-      "Architect and deploy an enterprise-grade AI system with evaluation pipelines, observability, and docs.",
-    topics: ["Full System Design", "SLA Guarantees", "Benchmarking", "Deployment"],
+      "Prove everything you learned: architect and deploy portfolio-grade AI systems with evaluation pipelines, observability, and docs.",
+    topics: ["Full System Design", "Benchmarking", "Deployment", "Documentation"],
     fallbackLessons: 25,
     fallbackHours: 40,
   },

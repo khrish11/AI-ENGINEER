@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AuthProvider } from "@/components/auth-provider";
+import { SyncCoordinator } from "@/components/sync-coordinator";
 import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 
 const inter = Inter({
@@ -31,13 +31,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${jetbrains.variable} font-sans`}>
         <ThemeProvider>
-          <AuthProvider>
-            <ServiceWorkerRegistration />
-            <a href="#main-content" className="skip-to-content">
-              Skip to main content
-            </a>
-            {children}
-          </AuthProvider>
+          {/* SessionProvider intentionally not mounted: no client code consumes
+              useSession(), and Auth.js v5-beta's provider drives the repeated
+              /api/auth/session polling behind BUG-05. signIn/signOut work
+              without it; server-side session checks are unchanged. */}
+          <SyncCoordinator />
+          <ServiceWorkerRegistration />
+          <a href="#main-content" className="skip-to-content">
+            Skip to main content
+          </a>
+          {children}
         </ThemeProvider>
       </body>
     </html>

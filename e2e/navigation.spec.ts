@@ -43,7 +43,13 @@ test.describe("Navigation", () => {
     const html = page.locator("html");
     const initialTheme = await html.getAttribute("class");
 
-    await page.locator('button[aria-label*="Switch to"]').click();
+    // WebKit-specific: the button may not be immediately visible due to hydration timing
+    await expect(async () => {
+      const button = page.locator('button[aria-label*="Switch to"]');
+      await expect(button).toBeVisible();
+      await button.click();
+    }).toPass({ timeout: 30_000 });
+
     const newTheme = await html.getAttribute("class");
 
     expect(initialTheme).not.toBe(newTheme);

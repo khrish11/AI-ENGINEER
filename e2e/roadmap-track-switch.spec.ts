@@ -16,7 +16,12 @@ test.describe("Roadmap journey — Track", () => {
     await expect(main.getByText("B vs A required hours")).toBeVisible();
 
     // 3. Switch track.
-    await page.getByTestId("switch-track-mlops").click();
+    // Scope to the live main tree: under full-suite load the router keeps a stale
+    // display:none offscreen copy of the catalog mounted briefly after the compare
+    // selects update, and an unscoped getByTestId then hits strict mode on 2 nodes
+    // (the stale copy renders the button disabled while its store is still loading).
+    // getByRole("main") excludes that hidden subtree, so we target the real control.
+    await main.getByTestId("switch-track-mlops").click();
 
     // 4. Preview effect.
     const preview = page.getByRole("dialog", { name: /Switch to MLOps/ });
@@ -24,11 +29,11 @@ test.describe("Roadmap journey — Track", () => {
     await expect(preview.getByText("Your completed history is preserved")).toBeVisible();
 
     // 5. Confirm change.
-    await page.getByTestId("confirm-switch-track").click();
-    await page.getByTestId("confirm-switch-track").waitFor({ state: "hidden", timeout: 20_000 });
+    await preview.getByTestId("confirm-switch-track").click();
+    await preview.getByTestId("confirm-switch-track").waitFor({ state: "hidden", timeout: 20_000 });
 
     // The MLOps card now shows "Current" (its switch button is disabled).
-    await expect(page.getByTestId("switch-track-mlops")).toBeDisabled();
+    await expect(main.getByTestId("switch-track-mlops")).toBeDisabled();
     await expect(page.locator("label").filter({ hasText: "MLOps" }).first()).toBeVisible();
   });
 });

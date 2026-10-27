@@ -44,9 +44,17 @@ export async function generateRoadmapViaOnboarding(
   await page.getByRole("button", { name: "Continue" }).click();
 
   // Step 7 — Experience: skip placement, generate directly.
-  await page.getByTestId("generate-roadmap").click();
-
-  await page.waitForURL(/\/roadmap/, { timeout: 30_000 });
+  // The generate button transitions through a loading/working state after the
+  // prior Continue. Under full-suite CPU contention a single immediate click can
+  // land mid-re-render and be lost, stranding the page before /roadmap. Retry the
+  // click + navigation as one deterministic unit (generate is idempotent for the
+  // disposable e2e user) without weakening the Week-heading assertion below.
+  const generate = page.getByTestId("generate-roadmap");
+  await expect(generate).toBeEnabled({ timeout: 10_000 });
+  await expect(async () => {
+    await generate.click({ timeout: 8_000 });
+    await page.waitForURL(/\/roadmap/, { timeout: 10_000 });
+  }).toPass({ timeout: 60_000 });
   // The current-week card shows a "Week N" heading whose N depends on the start date.
   await expect(
     page.getByRole("heading", { level: 3, name: /^Week \d+$/ })
@@ -61,6 +69,13 @@ export async function generateRoadmapViaOnboarding(
 export async function completeFirstRoadmapItem(page: Page): Promise<void> {
   await page.getByTestId("start-item").first().click();
   await expect(page.getByTestId("mark-reading-complete")).toBeVisible({ timeout: 30_000 });
+  // Gate on the controls' own hydration marker (the sync coordinator now also
+  // fetches /api/auth/status, so visibility alone no longer means handlers).
+  // The marker is the strict contract (mounted + auth + progress read settled), so
+  // its budget must cover WebKit's lesson-page hydration cost.
+  await expect(
+    page.getByTestId("mark-reading-complete").locator("xpath=ancestor::*[@data-progress-hydrated]")
+  ).toBeVisible({ timeout: 60_000 });
   await page.getByTestId("mark-reading-complete").click();
   for (const testId of [
     "mark-lesson-complete",

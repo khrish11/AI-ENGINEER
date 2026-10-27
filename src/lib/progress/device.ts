@@ -52,6 +52,7 @@ export async function ensureLocalProfile(
     email: null,
     isAuthenticated: false,
     lastSyncAt: null,
+    lastMergedEmail: null,
     createdAt: now,
     updatedAt: now,
     localRevision: 1,
@@ -79,7 +80,24 @@ export async function markGuest(): Promise<LocalProfile> {
   const deviceId = await getOrCreateDeviceId();
   return ensureLocalProfile(deviceId, {
     isAuthenticated: false,
+    // Drop the cloud-restore marker so the next sign-in (same or a different
+    // account) is free to run a fresh explicit merge for its own session.
+    lastMergedEmail: null,
   });
+}
+
+/**
+ * Record that this device has restored the given account's cloud snapshot via
+ * an explicit merge. Gates repeat downloads (idempotency + bounded traffic)
+ * without re-introducing the racy guest->authenticated pull trigger.
+ */
+export async function markCloudSnapshotPulled(email: string | null): Promise<void> {
+  const profile = await getLocalProfile();
+  if (!profile) {
+    await ensureLocalProfile(undefined, { lastMergedEmail: email });
+    return;
+  }
+  await db.localProfile.update(LOCAL_PROFILE_ID, { lastMergedEmail: email });
 }
 
 export async function updateLastSync(): Promise<void> {

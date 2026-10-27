@@ -23,10 +23,18 @@ export class SyncQueue {
     const now = nowIso();
 
     if (existing && existing.operation !== "delete") {
+      // Re-mutating a queued row turns over its mutationId: the row identity
+      // now represents a *different* pending mutation than any batch that may
+      // already be in flight. flushSyncQueue only acknowledges rows whose
+      // mutationId still matches what it sent, so a newer mutation (e.g. a
+      // delete coalesced into a create that is mid-upload) is never dropped by
+      // that in-flight create's acknowledgement.
       await db.syncQueue.update(existing.id, {
+        mutationId: newId(),
         operation: input.operation,
         payload: input.payload,
         baseRevision: input.baseRevision,
+        retryCount: 0,
         updatedAt: now,
         syncStatus: "pending",
       });
@@ -76,6 +84,25 @@ export class SyncQueue {
 
   async acknowledgeMany(ids: string[]): Promise<void> {
     await db.syncQueue.bulkDelete(ids);
+  }
+
+  /**
+   * Acknowledge only the mutations a batch actually committed. A row is
+   * deleted only when its stored mutationId still equals the one that was
+   * sent; if a newer mutation was coalesced into the same row while the
+   * request was in flight, its mutationId turned over and the row is left
+   * pending for the next flush. This is what keeps a mid-flight create's
+   * acknowledgement from silently discarding a subsequent delete.
+   */
+  async acknowledgeCommitted(
+    sent: Array<{ id: string; mutationId: string }>
+  ): Promise<void> {
+    if (sent.length === 0) return;
+    const current = await db.syncQueue.bulkGet(sent.map((s) => s.id));
+    const deletable = sent
+      .filter((s, i) => current[i]?.mutationId === s.mutationId)
+      .map((s) => s.id);
+    if (deletable.length > 0) await db.syncQueue.bulkDelete(deletable);
   }
 
   async clear(): Promise<void> {

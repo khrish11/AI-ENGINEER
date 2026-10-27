@@ -15,6 +15,11 @@ export default defineConfig({
   // Next.js dev compiles routes on demand; a single worker keeps first-visit
   // compilation from starving parallel page loads.
   workers: 1,
+  // Per-test budget. The default 30s is too tight for webkit document
+  // hydration + the background sync coordinator flush on a constrained
+  // single-worker host; 60s gives the slowest supported engine real headroom
+  // without relaxing any assertion or enabling retries.
+  timeout: 60_000,
   reporter: "html",
   globalSetup: "./e2e/global-setup.ts",
   use: {

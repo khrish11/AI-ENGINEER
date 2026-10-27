@@ -8,6 +8,12 @@ import { test, expect, type Page } from "@playwright/test";
  * the analytics pipeline reads exactly the data the production UI produces.
  */
 
+// The review journey gates on the progress controls' strict hydration marker
+// (mounted + auth + lesson-progress read). WebKit's client hydration cost for a
+// lesson page is measured in tens of seconds, so the test budget is sized to the
+// slowest supported engine; assertions stay exactly as written.
+test.describe.configure({ timeout: 180_000 });
+
 async function seedStudySession(page: Page, startedAt: string, durationSeconds: number) {
   await page.evaluate(
     ([start, seconds]) => {
@@ -176,6 +182,10 @@ test.describe("Analytics journey (§50)", () => {
   test("real activity appears in /analytics with no placeholder metrics", async ({ page, context }) => {
     // Generate real learner activity: complete a lesson in the workspace.
     await page.goto("/curriculum/00-setup-and-tooling/01-dev-environment");
+    // Wait for the controls' hydration marker before clicking: the global sync
+    // coordinator also fetches /api/auth/status now, so SSR visibility alone no
+    // longer proves the buttons have handlers attached.
+    await expect(page.getByTestId("mark-reading-complete").locator("xpath=ancestor::*[@data-progress-hydrated]")).toBeVisible({ timeout: 60_000 });
     await page.getByTestId("mark-reading-complete").click();
     await expect(page.getByTestId("mark-reading-complete")).toBeVisible();
 

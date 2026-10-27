@@ -57,8 +57,15 @@ test.describe("Project Studio", () => {
     await page.goto("/projects/supervised-learning-system");
     await expect(page.getByRole("heading", { name: "Evaluation rubric" })).toBeVisible();
 
-    // Save before scoring → accessible error summary, not a silent failure
-    await page.locator('[data-testid="rubric-save"]:visible').first().click();
+    // Save before scoring → accessible error summary, not a silent failure.
+    // The rubric panel is SSR-rendered but its submit handler attaches only after
+    // React hydrates; under full-suite contention a first click can land pre-hydration
+    // and be silently lost, so retry click+observe as one unit. The substantive
+    // assertion below (error text) is unchanged.
+    await expect(async () => {
+      await page.locator('[data-testid="rubric-save"]:visible').first().click({ timeout: 5_000 });
+      await expect(page.getByTestId("rubric-error")).toBeVisible({ timeout: 2_000 });
+    }).toPass({ timeout: 30_000 });
     await expect(page.getByTestId("rubric-error")).toContainText(/score every category/i);
 
     // Score every rubric category

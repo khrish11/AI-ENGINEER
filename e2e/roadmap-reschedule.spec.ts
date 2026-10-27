@@ -2,7 +2,10 @@ import { test, expect } from "@playwright/test";
 import { generateRoadmapViaOnboarding, completeFirstRoadmapItem } from "./roadmap-helpers";
 
 test.describe("Roadmap journey — Rescheduling", () => {
-  test.setTimeout(120_000);
+  // Budget covers the strict progress-controls hydration marker (see
+  // roadmap-helpers) on WebKit, where a lesson page's client hydration is
+  // measured in tens of seconds. Assertions are unchanged.
+  test.setTimeout(240_000);
 
   test("reschedule keeps completed history and moves remaining work", async ({ page }) => {
     // Start 10 days in the past so unfinished week-1 items become overdue.

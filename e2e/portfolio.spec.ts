@@ -14,6 +14,13 @@ async function authStatus(page: import("@playwright/test").Page) {
 }
 
 test.describe("Portfolio (§52)", () => {
+  // Guest teardown closes a Firefox context carrying service-worker + IndexedDB
+  // state; under full-suite machine contention that teardown alone can exceed the
+  // 30s default and fail the test after all assertions passed (observed in the
+  // 35-minute contended run vs clean 6-minute runs). Same budget progress.spec.ts
+  // already uses; assertions are unchanged.
+  test.describe.configure({ timeout: 120_000 });
+
   test("being unpublished means the public route is unavailable (no existence leak)", async ({ page }) => {
     const response = await page.request.get("/api/portfolio/public/unpublished-slug");
     expect(response.status()).toBe(404);

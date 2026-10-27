@@ -19,10 +19,13 @@ export function MarkdownViewer({ content }: MarkdownViewerProps) {
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}
         components={{
+          // BUG-09: lesson markdown repeats the title as a content `#` heading,
+          // producing a second visible <h1>. Render markdown h1s as h2 so the
+          // page keeps exactly one level-1 heading (the workspace header).
           h1: ({ children }) => (
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-8 mb-4 text-foreground pb-2 border-b border-border">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-8 mb-4 text-foreground pb-2 border-b border-border">
               {children}
-            </h1>
+            </h2>
           ),
           h2: ({ children }) => (
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight mt-6 mb-3 text-foreground">

@@ -43,7 +43,7 @@ export function LessonProgressControls({
     () => ({ lessonTitle: title, lessonHref: href, phaseSlug, phaseNumber }),
     [title, href, phaseSlug, phaseNumber]
   );
-  const { progress, evaluation, markReadingComplete, upsert } = useLessonProgress(
+  const { progress, evaluation, loading: progressLoading, markReadingComplete, upsert } = useLessonProgress(
     lessonId,
     availability,
     metadata
@@ -52,26 +52,44 @@ export function LessonProgressControls({
   useStudySession({ lessonId });
   const bookmarked = bookmarks.some((b) => b.lessonId === lessonId);
 
-  // Show login prompt for guest users when trying to save progress
+  // Hydration + readiness signal for tests/tooling: SSR markup renders these
+  // buttons before React attaches handlers, and auth status resolves a beat
+  // later. Expose the marker only once the component is mounted, the auth
+  // status has settled, AND the lesson's own progress record read has settled,
+  // so an outside observer never sees a "ready" control whose label/state is
+  // still the pre-read default. Without the progress read in the signal, a
+  // restored (cloud-merged) lesson could briefly present as not-complete on a
+  // slow engine, which is what raced the cross-device restore assertion.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const ready = mounted && !loading && !progressLoading;
+
+  function runAction(action: () => void): void {
+    if (!authStatus.authenticated) {
+      // Redirect to settings page to sign in (existing guest behaviour).
+      window.location.href = "/settings";
+      return;
+    }
+    action();
+  }
+
+  // Show login prompt for guest users when trying to save progress. A click is
+  // only acted on once the session is known; while `loading` the buttons are
+  // inert (the readiness marker is not yet set), matching the read-only state.
   const handleProgressAction = React.useCallback(
     (action: () => void) => {
-      if (loading) {
-        // Auth status still in flight — never treat a signed-in user as a guest
-        // (clicking again after resolution is the intended retry path).
-        return;
-      }
-      if (!authStatus.authenticated) {
-        // Redirect to settings page to sign in
-        window.location.href = "/settings";
-        return;
-      }
-      action();
+      if (loading) return;
+      runAction(action);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [authStatus.authenticated, loading]
   );
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
+    <div
+      data-progress-hydrated={ready ? "true" : undefined}
+      className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border"
+    >
       {!loading && !authStatus.authenticated && (
         <div className="w-full flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs mb-2">
           <LogIn className="w-4 h-4" />
@@ -97,6 +115,7 @@ export function LessonProgressControls({
         {progress?.needsReview && <Badge variant="warning">Needs review</Badge>}
         <Button
           data-testid="mark-reading-complete"
+          type="button"
           onClick={() => handleProgressAction(() => void markReadingComplete())}
           variant={progress?.readingComplete ? "secondary" : "outline"}
           size="sm"
@@ -108,6 +127,7 @@ export function LessonProgressControls({
         {evaluation?.canMarkComplete && progress?.status !== "completed" && progress?.status !== "mastered" && (
           <Button
             data-testid="mark-lesson-complete"
+            type="button"
             size="sm"
             onClick={() => handleProgressAction(() => void upsert({ status: "completed" }))}
           >
@@ -117,6 +137,7 @@ export function LessonProgressControls({
         {availability.hasResources && !progress?.requiredResourcesComplete && (
           <Button
             data-testid="mark-resources-complete"
+            type="button"
             size="sm"
             variant="outline"
             className="gap-1"
@@ -128,6 +149,7 @@ export function LessonProgressControls({
         {availability.hasQuiz && !progress?.practiceComplete && (
           <Button
             data-testid="mark-practice-complete"
+            type="button"
             size="sm"
             variant="outline"
             className="gap-1"
@@ -139,6 +161,7 @@ export function LessonProgressControls({
         {availability.hasProject && !progress?.projectComplete && (
           <Button
             data-testid="mark-project-complete"
+            type="button"
             size="sm"
             variant="outline"
             className="gap-1"
@@ -149,6 +172,7 @@ export function LessonProgressControls({
         )}
         <Button
           data-testid="toggle-needs-review"
+          type="button"
           size="sm"
           variant="ghost"
           className="gap-1"
@@ -163,6 +187,7 @@ export function LessonProgressControls({
         </Button>
         <Button
           data-testid="bookmark-lesson"
+          type="button"
           onClick={() =>
             handleProgressAction(() =>
               void toggleBookmark({
@@ -185,7 +210,7 @@ export function LessonProgressControls({
         </Button>
       </div>
       <Link href={`/curriculum/${phaseSlug}`}>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" type="button">
           Back to phase
         </Button>
       </Link>

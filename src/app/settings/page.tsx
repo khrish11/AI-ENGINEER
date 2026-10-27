@@ -27,10 +27,10 @@ import {
   getOrCreateDeviceId,
   getLocalProfile,
   shortenDeviceId,
-  markAuthenticated,
   markGuest,
 } from "@/lib/progress/device";
-import { mergeOnSignIn } from "@/lib/progress/sync/client";
+import { ensureProfileReconciled } from "@/lib/progress/sync/coordinator";
+import { fetchAuthStatus, type ClientAuthStatus } from "@/lib/auth/client-status";
 import type { MergeSummary } from "@/lib/progress/merge";
 import { useSyncStatus } from "@/hooks/useSyncStatus";
 import { useConflicts } from "@/hooks/useConflicts";
@@ -51,13 +51,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-interface AuthStatus {
-  configured: boolean;
-  providers: string[];
-  developmentHint: string | null;
-  authenticated: boolean;
-  user: { id: string; name: string | null; email: string | null } | null;
-}
+type AuthStatus = ClientAuthStatus;
 
 const EMPTY_AUTH: AuthStatus = {
   configured: false,
@@ -85,6 +79,7 @@ export default function SettingsPage() {
   const [mounted, setMounted] = React.useState(false);
   const [deviceId, setDeviceId] = React.useState<string | null>(null);
   const [authStatus, setAuthStatus] = React.useState<AuthStatus>(EMPTY_AUTH);
+  const [authStatusSettled, setAuthStatusSettled] = React.useState(false);
   const [profileAuthenticated, setProfileAuthenticated] = React.useState(false);
   const [exportNotice, setExportNotice] = React.useState(false);
   const [importPreviewState, setImportPreviewState] = React.useState<ImportPreview | null>(null);
@@ -97,9 +92,8 @@ export default function SettingsPage() {
   const [error, setError] = React.useState<string | null>(null);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const mergeAttempted = React.useRef(false);
 
-  const { status, pendingCount, conflictCount, lastSuccessfulSync, refresh: refreshSync, syncNow } =
+  const { status, pendingCount, conflictCount, lastSuccessfulSync, lastError, refresh: refreshSync, syncNow } =
     useSyncStatus();
   const { conflicts, resolve: resolveConflict, refetch: refreshConflicts } = useConflicts();
 
@@ -113,47 +107,29 @@ export default function SettingsPage() {
   }, []);
 
   const loadAuthStatus = React.useCallback(async () => {
-    try {
-      const response = await fetch("/api/auth/status", { cache: "no-store" });
-      const json = (await response.json()) as AuthStatus;
-      setAuthStatus(json);
-      return json;
-    } catch {
-      setAuthStatus(EMPTY_AUTH);
-      return EMPTY_AUTH;
-    }
+    const json = await fetchAuthStatus();
+    setAuthStatus(json);
+    setAuthStatusSettled(true);
+    return json;
   }, []);
 
   React.useEffect(() => {
     setMounted(true);
     void (async () => {
       await refreshIdentity();
-      const auth = await loadAuthStatus();
-      const profile = await getLocalProfile();
-
-      if (auth.authenticated && !profile?.isAuthenticated) {
-        // First sign-in on this device (or fresh browser with no local
-        // profile yet): keep guest data, merge cloud state.
-        await markAuthenticated(auth.user?.email ?? null, auth.user?.name ?? null);
-        setProfileAuthenticated(true);
-        if (!mergeAttempted.current) {
-          mergeAttempted.current = true;
-          try {
-            const summary = await mergeOnSignIn();
-            if (!("skipped" in summary)) setMergeSummary(summary);
-          } catch (err) {
-            setError(err instanceof Error ? err.message : "Initial sync failed");
-          }
-        }
-        await refreshIdentity();
-        await refreshSync();
-        await refreshConflicts();
-      } else if (!auth.authenticated && profile?.isAuthenticated) {
-        await markGuest();
-        setProfileAuthenticated(false);
-      }
+      // Profile <-> session reconciliation and the guest->account merge live in
+      // the global sync coordinator (shared with the root-layout host). The
+      // settings page is the explicit sign-in surface, so it forces the
+      // cloud-snapshot merge even when this device has no local rows yet.
+      const result = await ensureProfileReconciled({ forceMerge: true });
+      setAuthStatus(result.status);
+      setAuthStatusSettled(true);
+      if (result.summary) setMergeSummary(result.summary);
+      await refreshIdentity();
+      await refreshSync();
+      await refreshConflicts();
     })();
-  }, [loadAuthStatus, refreshConflicts, refreshIdentity, refreshSync]);
+  }, [refreshConflicts, refreshIdentity, refreshSync]);
 
   const handleExport = async () => {
     setBusy(true);
@@ -427,7 +403,7 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {!authStatus.configured && (
+              {authStatusSettled && !authStatus.configured && (
                 <p
                   data-testid="auth-config-hint"
                   className="text-xs text-muted-foreground rounded-lg border border-border bg-surface p-3"
@@ -539,6 +515,13 @@ export default function SettingsPage() {
               {!profileAuthenticated && (
                 <p className="text-xs text-muted-foreground">
                   Offline changes are queued on this device and will upload after you sign in.
+                </p>
+              )}
+
+              {lastError && (
+                <p className="text-xs text-status-error flex items-center gap-1.5" data-testid="sync-error-message">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                  Last sync attempt failed: {lastError}. Retrying automatically.
                 </p>
               )}
 

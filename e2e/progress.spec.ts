@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 
 const LESSON_URL = "/curriculum/00-setup-and-tooling/01-dev-environment";
 
-test.describe.configure({ timeout: 120_000 });
+test.describe.configure({ timeout: 240_000 });
 
 async function openLesson(page: Page, url: string = LESSON_URL) {
   // Register the hydration barrier before navigation. /api/auth/status is fetched
@@ -18,11 +18,36 @@ async function openLesson(page: Page, url: string = LESSON_URL) {
     timeout: 30_000,
   });
   await hydrated;
+  // The global sync coordinator now also fetches /api/auth/status on mount, so
+  // the response barrier alone no longer proves the controls have handlers.
+  // Wait for the controls' own hydration marker before any click lands.
+  // The marker is a strict contract: mounted + auth settled + the lesson's
+  // progress read settled. Its duration is therefore the page's full client
+  // hydration, which on WebKit (long markdown + KaTeX render, single-worker
+  // host) measures 5-35s versus 1-2s on Chromium. Budget sized to the slowest
+  // supported engine; the assertion itself is unchanged.
+  await expect(page.getByRole("main").locator("[data-progress-hydrated]")).toBeVisible({
+    timeout: 90_000,
+  });
 }
 
 async function waitForAutosave(page: Page) {
   // The notes editor autosaves on an 800ms debounce.
   await page.waitForTimeout(1400);
+}
+
+async function gotoSettingsHydrated(page: Page) {
+  // The settings client fetches /api/auth/status only AFTER React hydrates. Two of
+  // this file's checks race that: auth-config-hint is visible until configured=true
+  // resolves, and the export/reset handlers attach only post-hydration. Register the
+  // barrier before navigation so we always assert the settled, hydrated state rather
+  // than a transient pre-hydration frame (which flaked under full-suite contention).
+  const hydrated = page.waitForResponse(
+    (res) => res.url().includes("/api/auth/status"),
+    { timeout: 30_000 },
+  );
+  await page.goto("/settings");
+  await hydrated;
 }
 
 test.describe("Guest learner persistence", () => {
@@ -84,9 +109,24 @@ test.describe("Saved items", () => {
     await page.getByRole("button", { name: /^Lessons/ }).click();
     await expect(page.getByTestId("saved-item")).toHaveCount(1);
 
+    // The coordinator now flushes in the background, so removal also produces
+    // a real delete mutation on the wire. Wait for the server to acknowledge
+    // it before reloading: reloading mid-transaction (or mid-flush) races the
+    // IndexedDB commit and can resurface the optimistic UI state.
+    const removalSynced = page.waitForResponse((res) => {
+      if (!res.url().includes("/api/sync/v1") || res.request().method() !== "POST") return false;
+      if (res.status() !== 200) return false;
+      try {
+        return String(res.request().postData()).includes('"operation":"delete"');
+      } catch {
+        return false;
+      }
+    }, { timeout: 30_000 });
+
     await page.getByTestId("remove-bookmark").click();
     await expect(page.getByTestId("saved-item")).toHaveCount(0);
     await expect(page.getByText(/No saved items yet/)).toBeVisible();
+    await removalSynced;
 
     await page.reload();
     await expect(page.getByText(/No saved items yet/)).toBeVisible();
@@ -100,7 +140,8 @@ test.describe("Backup roundtrip", () => {
     await page.getByTestId("bookmark-lesson").first().click();
     await expect(page.getByRole("button", { name: "Bookmarked", exact: true }).first()).toBeVisible();
 
-    await page.goto("/settings");
+    await gotoSettingsHydrated(page);
+    await expect(page.getByTestId("export-progress")).toBeEnabled();
     const downloadPromise = page.waitForEvent("download");
     await page.locator('[data-testid="export-progress"]:visible').first().click();
     const download = await downloadPromise;
@@ -136,9 +177,12 @@ test.describe("Offline behavior", () => {
     }).toPass({ timeout: 30_000 });
     await expect(page.getByRole("button", { name: "Reading complete", exact: true }).first()).toBeVisible();
 
-    // Restore the network, then confirm the queued local state survived.
+    // Restore the network. The coordinator now flushes the queued mutation
+    // for real (BUG-02 fix), so the badge may transiently read "Syncing" or
+    // "Pending sync" before draining to "Synced". Poll to the settled state
+    // with time for the round-trip instead of racing it.
     await context.setOffline(false);
-    await expect(page.getByTestId("sync-status")).toHaveText(/Local only|Synced/);
+    await expect(page.getByTestId("sync-status")).toHaveText(/Local only|Synced/, { timeout: 30_000 });
     await page.reload();
     await expect(page.getByRole("button", { name: "Reading complete", exact: true }).first()).toBeVisible();
   });
@@ -151,7 +195,7 @@ test.describe("Authentication", () => {
   );
 
   test("shows configured providers on settings", async ({ page }) => {
-    await page.goto("/settings");
+    await gotoSettingsHydrated(page);
     await expect(page.getByTestId("auth-config-hint")).toBeHidden();
   });
 });

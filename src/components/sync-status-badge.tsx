@@ -6,6 +6,7 @@ const LABELS: Record<string, string> = {
   offline: "Offline",
   local_only: "Local only",
   syncing: "Syncing",
+  pending: "Pending sync",
   synced: "Synced",
   conflict: "Conflict",
   sync_error: "Sync error",
@@ -24,7 +25,7 @@ export function SyncStatusBadge() {
             ? "h-2 w-2 rounded-full bg-status-success"
             : status === "offline" || status === "sync_error"
               ? "h-2 w-2 rounded-full bg-status-error"
-              : status === "conflict"
+              : status === "conflict" || status === "pending"
                 ? "h-2 w-2 rounded-full bg-status-warning"
                 : "h-2 w-2 rounded-full bg-accent-cyan"
         }

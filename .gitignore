@@ -64,6 +64,7 @@ playwright/.auth/
 # Temporary files
 *.tmp
 *.temp
+scripts/tmp-*.log
 
 # Local tooling metadata
 .freebuff/

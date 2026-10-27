@@ -157,7 +157,7 @@ export function CurriculumExplorerClient({
         </div>
 
         {/* Tier buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" role="group" aria-label="Filter by tier">
           {["all", "foundations", "intermediate", "advanced", "mastery"].map((tier) => (
             <Button
               key={tier}
@@ -165,6 +165,8 @@ export function CurriculumExplorerClient({
               size="sm"
               onClick={() => setSelectedTier(tier)}
               className="capitalize text-xs whitespace-nowrap h-9"
+              type="button"
+              aria-pressed={selectedTier === tier}
             >
               {tier}
             </Button>
@@ -283,19 +285,29 @@ export function CurriculumExplorerClient({
                         ~{phase.estimatedHours} hrs
                       </span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-accent-cyan transition-all"
-                        style={{
-                          width: `${Math.min(
-                            100,
-                            phase.lessonCount > 0
-                              ? Math.round((counts.completed / phase.lessonCount) * 100)
-                              : 0
-                          )}%`,
-                        }}
-                      />
-                    </div>
+                    {(() => {
+                      const percent = Math.min(
+                        100,
+                        phase.lessonCount > 0
+                          ? Math.round((counts.completed / phase.lessonCount) * 100)
+                          : 0
+                      );
+                      return (
+                        <div
+                          className="h-1.5 w-full rounded-full bg-muted overflow-hidden"
+                          role="progressbar"
+                          aria-valuenow={percent}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          aria-label={`Phase ${phase.number} lesson progress`}
+                        >
+                          <div
+                            className="h-full rounded-full bg-accent-cyan transition-all"
+                            style={{ width: `${percent}%` }}
+                          />
+                        </div>
+                      );
+                    })()}
                   </div>
                 </CardContent>
 

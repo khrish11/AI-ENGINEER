@@ -19,6 +19,13 @@ export interface LocalProfile extends LocalBase {
   email: string | null;
   isAuthenticated: boolean;
   lastSyncAt: string | null;
+  // The account whose cloud snapshot this device has already restored through
+  // an *explicit* merge (Settings sign-in / Sync now). It decouples the
+  // cross-device restore pull from the guest->authenticated transition so a
+  // passive profile promotion can't strand an explicit merge, while keeping
+  // the download scoped to the currently signed-in account (never a passive
+  // background fetch of another session's history).
+  lastMergedEmail?: string | null;
 }
 
 export interface LessonProgress extends LocalBase {
