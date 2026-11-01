@@ -15,6 +15,7 @@ const settings: RoadmapSettings = {
   manuallyIncluded: [],
   manuallyExcluded: [],
   manualWeekAssignments: {},
+  knownOccurrenceIds: [],
 };
 
 function build() {

@@ -103,6 +103,7 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
   const completedCanonicalKeys = new Set(input.completedCanonicalLessonKeys ?? []);
   const manuallyIncluded = new Set(input.manuallyIncluded ?? []);
   const manuallyExcluded = new Set(input.manuallyExcluded ?? []);
+  const known = new Set(input.knownOccurrenceIds ?? []);
   const includeOptional = input.includeOptionalTopics ?? false;
 
   const selected = new Set<string>();
@@ -118,14 +119,27 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
       continue;
     }
     const importance = im(occurrence, input.trackId);
+    const forcedIn = manuallyIncluded.has(occurrence.occurrenceId);
+    // Knowledge-aware exclusion: a topic the learner declared they already know
+    // is kept out of the mandatory plan unless they explicitly re-included it.
+    // This is the onboarding placement path (placement.skimOccurrenceIds).
+    if (!forcedIn && known.has(occurrence.occurrenceId)) {
+      skipped.push({
+        occurrenceId: occurrence.occurrenceId,
+        importance,
+        reason: "You already know this — kept out of your plan.",
+      });
+      continue;
+    }
     const includedByDefault =
       importance === "core" || importance === "important" || (importance === "optional" && includeOptional);
-    if (includedByDefault || manuallyIncluded.has(occurrence.occurrenceId)) {
+    if (includedByDefault || forcedIn) {
       selected.add(occurrence.occurrenceId);
     }
   }
 
-  // Prerequisite closure: everything a selected lesson needs is included.
+  // Prerequisite closure: everything a selected lesson needs is included,
+  // except work the learner already knows (a known prerequisite is satisfied).
   let changed = true;
   while (changed) {
     changed = false;
@@ -133,7 +147,11 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
       const node = occurrences[occurrenceIndex.get(id) ?? -1];
       if (!node) continue;
       for (const prerequisite of node.prerequisites) {
-        if (!selected.has(prerequisite) && !manuallyExcluded.has(prerequisite)) {
+        if (
+          !selected.has(prerequisite) &&
+          !manuallyExcluded.has(prerequisite) &&
+          !known.has(prerequisite)
+        ) {
           selected.add(prerequisite);
           changed = true;
         }

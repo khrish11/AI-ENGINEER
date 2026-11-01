@@ -116,4 +116,28 @@ describe("roadmap persistence (guest mode)", () => {
     expect(loaded.settings).toBeNull();
     expect(loaded.overrides.excluded).toEqual([]);
   });
+
+  it("persists known topics and keeps them out across reload and reschedule", async () => {
+    const known = ["00-setup-and-tooling/05-jupyter-notebooks"];
+    const { store } = await generateAndSave(
+      emptyStore(),
+      { ...settings, knownOccurrenceIds: known },
+      { completed: [] }
+    );
+    expect(store.settings!.knownOccurrenceIds).toEqual(known);
+    const scheduled = store.plan!.weeks.flatMap((week) => week.items.map((item) => item.occurrenceId));
+    expect(scheduled).not.toContain(known[0]);
+
+    // A reload keeps the declared knowledge and the exclusion.
+    const loaded = await loadRoadmapStore();
+    expect(loaded.settings!.knownOccurrenceIds).toEqual(known);
+
+    // Rescheduling regenerates from today forward; the known topic stays out.
+    const rescheduled = await rescheduleAndSave(loaded, { completed: [] }, { hoursPerWeek: 16 });
+    const after = rescheduled.store.plan!.weeks.flatMap((week) =>
+      week.items.map((item) => item.occurrenceId)
+    );
+    expect(after).not.toContain(known[0]);
+    expect(rescheduled.store.settings!.knownOccurrenceIds).toEqual(known);
+  });
 });

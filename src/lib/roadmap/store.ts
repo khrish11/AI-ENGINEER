@@ -40,6 +40,7 @@ export function defaultSettings(): RoadmapSettings {
     manuallyIncluded: [],
     manuallyExcluded: [],
     manualWeekAssignments: {},
+    knownOccurrenceIds: [],
   };
 }
 
@@ -73,6 +74,7 @@ export function buildSettings(
     manuallyIncluded: changes.manuallyIncluded ?? base.manuallyIncluded,
     manuallyExcluded: changes.manuallyExcluded ?? base.manuallyExcluded,
     manualWeekAssignments: changes.manualWeekAssignments ?? base.manualWeekAssignments,
+    knownOccurrenceIds: changes.knownOccurrenceIds ?? base.knownOccurrenceIds,
   };
 }
 
@@ -94,6 +96,7 @@ export function generateForSettings(
     manuallyIncluded: settings.manuallyIncluded,
     manuallyExcluded: settings.manuallyExcluded,
     manualWeekAssignments: settings.manualWeekAssignments,
+    knownOccurrenceIds: settings.knownOccurrenceIds,
   });
 }
 
@@ -103,6 +106,9 @@ export async function generateAndSave(
   completion: CompletionInput
 ): Promise<{ store: RoadmapStore; result: GenerationResult }> {
   const result = generateForSettings(settings, completion);
+  const knownSkipped = result.plan.skipped.filter(
+    (entry) => entry.reason === "You already know this — kept out of your plan."
+  ).length;
   const next: RoadmapStore = {
     ...store,
     settings,
@@ -117,7 +123,10 @@ export async function generateAndSave(
       {
         at: new Date().toISOString(),
         action: "generate",
-        summary: `Generated a ${result.plan.weeks.length}-week ${settings.trackId} plan at ${settings.availableHoursPerWeek}h/week.`,
+        summary:
+          `Generated a ${result.plan.weeks.length}-week ${settings.trackId} plan at ` +
+          `${settings.availableHoursPerWeek}h/week` +
+          (knownSkipped > 0 ? ` (${knownSkipped} topic${knownSkipped === 1 ? "" : "s"} skipped because you already know them).` : "."),
       },
     ].slice(-20),
   };

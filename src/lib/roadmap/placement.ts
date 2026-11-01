@@ -207,11 +207,48 @@ export function recommendPlacement(
     ...AI_SKILLS,
     ...profile.knownTopicSkillIds,
   ]);
+  const explicitlyKnown = new Set(profile.knownTopicSkillIds);
+
+  const explicitlyKnownAcrossCurriculum = (occurrence: (typeof occurrences)[number]) => {
+    if (occurrence.projectRelevant || occurrence.skillTags.length === 0) return false;
+    const knownTags = occurrence.skillTags.filter(
+      (skill) => explicitlyKnown.has(skill) && !reviewSkillIds.has(skill)
+    );
+    if (knownTags.length === 0) return false;
+
+    // Exact topic coverage is safe in any phase. This deliberately does not
+    // expand parent skills through SOURCE_BY_SKILL: knowing "transformers"
+    // must not imply advanced pretraining, inference, vision, or audio depth.
+    if (
+      occurrence.skillTags.every(
+        (skill) => explicitlyKnown.has(skill) && !reviewSkillIds.has(skill)
+      )
+    ) {
+      return true;
+    }
+
+    // Phase introductions can carry one historical prerequisite tag (for
+    // example RNNs on "Why Transformers"). When every gate skill for that
+    // phase was explicitly declared known, the introductory survey is covered;
+    // the prerequisite itself is still scheduled wherever the plan needs it.
+    const phaseSkills = PHASE_SKILLS[occurrence.phaseSlug] ?? [];
+    return (
+      occurrence.lessonSlug.startsWith("01-") &&
+      phaseSkills.length > 0 &&
+      phaseSkills.every(
+        (skill) => explicitlyKnown.has(skill) && !reviewSkillIds.has(skill)
+      )
+    );
+  };
 
   const skim = occurrences.filter((occurrence) => {
     if (occurrence.isAlias) return false;
+    // Explicitly known topics are safe to skim regardless of phase
+    if (explicitlyKnownAcrossCurriculum(occurrence)) return true;
+    if (occurrence.projectRelevant) return false;
     const phaseSkills = PHASE_SKILLS[occurrence.phaseSlug];
     if (!phaseSkills) return false;
+    // Phase filter applies only to proficiency-based skimming, not explicit knowledge
     if (PHASE_ORDER.indexOf(occurrence.phaseSlug) > PHASE_ORDER.indexOf(startPhase)) return false;
     const relevant = occurrence.skillTags.filter((skill) => assessable.has(skill));
     if (relevant.length === 0) return false;
@@ -220,9 +257,8 @@ export function recommendPlacement(
     );
   });
 
-  const skimIds = skim.slice(0, 60).map((occurrence) => occurrence.occurrenceId);
+  const skimIds = skim.map((occurrence) => occurrence.occurrenceId);
   const estimatedMinutesSaved = skim
-    .slice(0, 60)
     .reduce((sum, occurrence) => sum + (occurrence.estimatedMinutes ?? 0), 0);
 
   const reviewTopics = [...reviewSkillIds]

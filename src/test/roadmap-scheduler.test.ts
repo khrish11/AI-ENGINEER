@@ -291,3 +291,64 @@ describe("roadmap generation", () => {
     expect(occurrences.filter((entry) => entry.isAlias)).toHaveLength(0);
   });
 });
+
+describe("knowledge-aware selection", () => {
+  const scheduledIds = (plan: { weeks: { items: { occurrenceId: string }[] }[] }) =>
+    plan.weeks.flatMap((week) => week.items.map((item) => item.occurrenceId));
+
+  it("keeps topics the learner already knows out of the mandatory plan", () => {
+    const knownId = "00-setup-and-tooling/05-jupyter-notebooks";
+    const baseline = generateRoadmap(BASE_INPUT);
+    expect(scheduledIds(baseline.plan)).toContain(knownId); // scheduled by default
+
+    const withKnown = generateRoadmap({ ...BASE_INPUT, knownOccurrenceIds: [knownId] });
+    expect(scheduledIds(withKnown.plan)).not.toContain(knownId);
+    expect(
+      withKnown.plan.skipped.some(
+        (entry) => entry.occurrenceId === knownId && entry.reason.includes("already know")
+      )
+    ).toBe(true);
+    // Duration is recalculated from the remaining content only.
+    expect(withKnown.plan.summary.totalMinutes).toBeLessThan(baseline.plan.summary.totalMinutes);
+  });
+
+  it("treats a known prerequisite as satisfied and does not schedule it", () => {
+    const general: SchedulerInput = { ...BASE_INPUT, trackId: "general-ai" };
+    const prereq = "04-computer-vision/14-vision-transformers"; // optional: pulled only by closure
+    const dependent = "04-computer-vision/15-real-time-edge";
+
+    const baseline = generateRoadmap(general);
+    expect(scheduledIds(baseline.plan)).toContain(prereq); // closure added the prerequisite
+
+    const withKnown = generateRoadmap({ ...general, knownOccurrenceIds: [prereq] });
+    const ids = scheduledIds(withKnown.plan);
+    expect(ids).not.toContain(prereq);
+    expect(ids).toContain(dependent); // dependent stays; its known gap is not re-added
+  });
+
+  it("honours an explicit re-include over the known exclusion", () => {
+    const knownId = "00-setup-and-tooling/05-jupyter-notebooks";
+    const result = generateRoadmap({
+      ...BASE_INPUT,
+      knownOccurrenceIds: [knownId],
+      manuallyIncluded: [knownId],
+    });
+    expect(scheduledIds(result.plan)).toContain(knownId);
+  });
+
+  it("removes only the known topic, leaving related content intact", () => {
+    const knownId = "00-setup-and-tooling/06-python-environments";
+    const withKnown = generateRoadmap({ ...BASE_INPUT, knownOccurrenceIds: [knownId] });
+    const ids = new Set(scheduledIds(withKnown.plan));
+    expect(ids.has(knownId)).toBe(false);
+    // Its dependent stays scheduled even though its prerequisite is known.
+    expect(ids.has("00-setup-and-tooling/07-docker-for-ai")).toBe(true);
+  });
+
+  it("is deterministic for identical known inputs", () => {
+    const known = ["00-setup-and-tooling/05-jupyter-notebooks", "00-setup-and-tooling/06-python-environments"];
+    const first = generateRoadmap({ ...BASE_INPUT, knownOccurrenceIds: known });
+    const second = generateRoadmap({ ...BASE_INPUT, knownOccurrenceIds: known });
+    expect(JSON.stringify(first.plan)).toBe(JSON.stringify(second.plan));
+  });
+});

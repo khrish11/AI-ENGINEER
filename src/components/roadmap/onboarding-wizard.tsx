@@ -204,6 +204,7 @@ export function OnboardingWizard() {
       manuallyIncluded: [],
       manuallyExcluded: [],
       manualWeekAssignments: {},
+      knownOccurrenceIds: [],
     }),
     [trackId, hoursPerWeek, startDate, targetDate, studyDays, bufferPreference, includeOptional]
   );
@@ -268,7 +269,7 @@ export function OnboardingWizard() {
       const finalPlacement = placement ?? recommendPlacement(profile);
       await actions.saveProfile(profile);
       await actions.savePlacement(finalPlacement);
-      await actions.generate(settings);
+      await actions.generate({ ...settings, knownOccurrenceIds: finalPlacement.skimOccurrenceIds });
       router.push("/roadmap");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Could not generate your roadmap.");

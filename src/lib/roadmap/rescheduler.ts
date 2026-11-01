@@ -46,6 +46,7 @@ export function rescheduleRoadmap(input: RescheduleInput): RescheduleResult {
     manuallyIncluded: settings.manuallyIncluded,
     manuallyExcluded: [...new Set([...settings.manuallyExcluded, ...dropped])],
     manualWeekAssignments: settings.manualWeekAssignments,
+    knownOccurrenceIds: settings.knownOccurrenceIds,
   });
 
   const offset = preservedWeeks.length;

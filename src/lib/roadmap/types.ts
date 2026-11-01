@@ -208,6 +208,9 @@ export const RoadmapSettingsSchema = z.object({
   manuallyIncluded: z.array(z.string()).default([]),
   manuallyExcluded: z.array(z.string()).default([]),
   manualWeekAssignments: z.record(z.string(), z.number().int().nonnegative()).default({}),
+  // Canonical occurrence ids the learner declared as already known during
+  // onboarding placement. These are kept out of the mandatory plan.
+  knownOccurrenceIds: z.array(z.string()).default([]),
 });
 
 export type RoadmapSettings = z.infer<typeof RoadmapSettingsSchema>;
@@ -338,6 +341,7 @@ export interface SchedulerInput {
   manuallyIncluded?: string[];
   manuallyExcluded?: string[];
   manualWeekAssignments?: Record<string, number>;
+  knownOccurrenceIds?: string[];
   maxWeeks?: number;
 }
 
