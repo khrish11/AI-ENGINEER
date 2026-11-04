@@ -9,6 +9,7 @@ import { analyzeCapacity } from "./capacity";
 import { weekEnd, weekStart } from "./dates";
 import { buildGraph, priorityComparator, topologicalSort, type RoadmapGraph } from "./graph";
 import { selectedCapstoneIds } from "./capstones";
+import { CapstoneSelectionSchema } from "./types";
 import type {
   CapacityAnalysis,
   Importance,
@@ -106,8 +107,9 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
   const manuallyExcluded = new Set(input.manuallyExcluded ?? []);
   const known = new Set(input.knownOccurrenceIds ?? []);
   const includeOptional = input.includeOptionalTopics ?? false;
-  const selectiveCapstones = input.capstoneSelection
-    ? selectedCapstoneIds(input.capstoneSelection)
+  const parsedCapstoneSelection = CapstoneSelectionSchema.safeParse(input.capstoneSelection);
+  const selectiveCapstones = parsedCapstoneSelection.success
+    ? selectedCapstoneIds(parsedCapstoneSelection.data)
     : null;
 
   const selected = new Set<string>();

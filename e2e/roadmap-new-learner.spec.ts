@@ -26,7 +26,7 @@ test.describe("Roadmap journey — New learner", () => {
 
     // 6. Continue past placement and select one product plus one deep-build track.
     await page.getByRole("button", { name: "Continue" }).click();
-    await expect(page.getByTestId("capstone-workload-preview")).toContainText("Direct capstone work");
+    await expect(page.getByTestId("capstone-workload-preview")).toContainText("Your roadmap preview");
     await page.locator("label").filter({ hasText: "Real-Time Voice Assistant" }).click();
     await page.locator("label").filter({ hasText: "Advanced RAG" }).click();
 
@@ -45,9 +45,31 @@ test.describe("Roadmap journey — New learner", () => {
     for (let step = 0; step < 7; step++) {
       await page.getByRole("button", { name: "Continue" }).click();
     }
+    const preview = page.getByTestId("capstone-workload-preview");
+    await expect(page.getByTestId("preview-core-count")).toHaveText("4");
+    await expect(page.getByTestId("preview-optional-count")).toHaveText("0 of 81");
+    await expect(page.getByTestId("preview-prerequisite-delta")).toHaveText("0 · 0h");
+
+    await page.getByText("Project details", { exact: true }).first().click();
+    await expect(page.getByText("Curriculum description is not available in roadmap metadata.").first()).toBeVisible();
+
+    const initialWorkload = await page.getByTestId("preview-total-workload").textContent();
     await page.locator("label").filter({ hasText: "Real-Time Voice Assistant" }).click();
+    await expect(page.getByTestId("preview-optional-count")).toHaveText("1 of 81");
+    await expect(page.getByTestId("preview-selection-counts")).toHaveText("1 standalone · 0 tracks");
+    await expect(page.getByTestId("preview-total-workload")).not.toHaveText(initialWorkload ?? "");
+
+    await page.getByText("Advanced RAG", { exact: true }).click();
+    await expect(page.getByTestId("preview-optional-count")).toHaveText("7 of 81");
+    await expect(page.getByTestId("preview-prerequisite-delta")).toHaveText("10 · 15h");
+
     await page.getByText("Safety harness", { exact: true }).click();
-    await expect(page.getByTestId("capstone-workload-preview")).toContainText(/lessons .* weeks/);
+    await expect(page.getByTestId("preview-optional-count")).toHaveText("13 of 81");
+    await expect(page.getByTestId("preview-prerequisite-delta")).toHaveText("10 · 15h");
+    await page.getByText("Safety harness", { exact: true }).click();
+    await expect(page.getByTestId("preview-optional-count")).toHaveText("7 of 81");
+    await expect(preview).toContainText("Preliminary estimate");
+
     await page.getByTestId("generate-roadmap").click();
     await page.waitForURL(/\/roadmap/);
     await page.reload();
@@ -67,7 +89,8 @@ test.describe("Roadmap journey — New learner", () => {
       })
     );
     expect(selection.products).toContain("19-capstone-projects/03-realtime-voice-assistant");
-    expect(selection.tracks).toContain("safety");
+    expect(selection.tracks).toContain("advanced-rag");
+    expect(selection.tracks).not.toContain("safety");
   });
 
   test("guest roadmap survives a reload", async ({ page }) => {

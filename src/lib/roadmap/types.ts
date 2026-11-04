@@ -199,7 +199,15 @@ export const CapstoneSelectionSchema = z.object({
   selectedTrackIds: z.array(z.string()).default([]),
 });
 
+export const UnsupportedCapstoneSelectionSchema = z
+  .object({
+    version: z.number().int().refine((version) => version !== 1),
+  })
+  .passthrough();
+
 export type CapstoneSelection = z.infer<typeof CapstoneSelectionSchema>;
+export type UnsupportedCapstoneSelection = z.infer<typeof UnsupportedCapstoneSelectionSchema>;
+export type AnyCapstoneSelection = CapstoneSelection | UnsupportedCapstoneSelection;
 
 // ---------------------------------------------------------------------------
 // Generation settings and plan
@@ -221,7 +229,9 @@ export const RoadmapSettingsSchema = z.object({
   // onboarding placement. These are kept out of the mandatory plan.
   knownOccurrenceIds: z.array(z.string()).default([]),
   // Missing means a legacy roadmap: retain the V1 all-important behavior.
-  capstoneSelection: CapstoneSelectionSchema.optional(),
+  capstoneSelection: z
+    .union([CapstoneSelectionSchema, UnsupportedCapstoneSelectionSchema])
+    .optional(),
 });
 
 export type RoadmapSettings = z.infer<typeof RoadmapSettingsSchema>;
@@ -353,7 +363,7 @@ export interface SchedulerInput {
   manuallyExcluded?: string[];
   manualWeekAssignments?: Record<string, number>;
   knownOccurrenceIds?: string[];
-  capstoneSelection?: CapstoneSelection;
+  capstoneSelection?: AnyCapstoneSelection;
   maxWeeks?: number;
 }
 

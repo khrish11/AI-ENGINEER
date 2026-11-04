@@ -34,7 +34,13 @@ export const CAPSTONE_TRACKS = TRACK_DEFINITIONS.map(([id, name, first, last]) =
   const items = occurrences.filter(
     (item) => item.phaseSlug === PHASE && lessonNumber(item) >= first && lessonNumber(item) <= last
   );
-  return { id, name, occurrenceIds: items.map((item) => item.occurrenceId), minutes: sumMinutes(items) };
+  return {
+    id,
+    name,
+    occurrenceIds: items.map((item) => item.occurrenceId),
+    minutes: sumMinutes(items),
+    skillTags: [...new Set(items.flatMap((item) => item.skillTags))].sort(),
+  };
 });
 
 export const REQUIRED_CAPSTONES = REQUIRED_CAPSTONE_IDS.map(requiredItem);
@@ -57,6 +63,23 @@ export function selectionMinutes(selection: CapstoneSelection): number {
     0
   );
 }
+
+export const CAPSTONE_OVERLAP_NOTICES: Record<string, string> = {
+  "19-capstone-projects/01-terminal-native-coding-agent":
+    "Overlaps with the Agent harness track in tool dispatch, evaluation, sandboxing, and observability.",
+  "19-capstone-projects/02-rag-over-codebase":
+    "Overlaps with the Advanced RAG track in retrieval and evaluation practice.",
+  "19-capstone-projects/08-production-rag-chatbot":
+    "Overlaps with the Advanced RAG track in retrieval, reranking, and RAG evaluation.",
+  "19-capstone-projects/11-llm-observability-dashboard":
+    "Overlaps with the Evaluation framework and Agent harness observability work.",
+  "agent-harness":
+    "Reinforces competencies also practiced by the required Terminal-Native Coding Agent.",
+  "advanced-rag":
+    "Reinforces competencies also practiced by the required RAG products.",
+  evaluation:
+    "Reinforces competencies also practiced by the required observability dashboard.",
+};
 
 function lessonNumber(item: OccurrenceMetadata): number {
   return Number(item.lessonSlug.slice(0, 2));

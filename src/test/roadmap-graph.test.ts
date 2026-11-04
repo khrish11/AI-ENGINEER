@@ -15,6 +15,7 @@ import {
   canonicalOccurrences,
 } from "@/lib/roadmap/config";
 import type { OccurrenceMetadata, TrackId, Importance } from "@/lib/roadmap/types";
+import { CAPSTONE_TRACKS, OPTIONAL_CAPSTONE_PRODUCTS, REQUIRED_CAPSTONE_IDS } from "@/lib/roadmap/capstones";
 
 const IMPORTANCE: Record<TrackId, Importance> = {
   "general-ai": "core",
@@ -161,5 +162,20 @@ describe("roadmap prerequisite graph", () => {
       occurrenceById.get("19-capstone-projects/76-collective-ops-from-scratch")
         ?.prerequisites
     ).not.toContain("19-capstone-projects/75-end-to-end-eval-runner");
+  });
+
+  it("matches the verified Phase 19 inventory and explicit-edge totals", () => {
+    const capstones = occurrences.filter((item) => item.phaseSlug === "19-capstone-projects");
+    const internalEdges = capstones.reduce(
+      (sum, item) =>
+        sum + item.prerequisites.filter((id) => id.startsWith("19-capstone-projects/")).length,
+      0
+    );
+    expect(capstones).toHaveLength(85);
+    expect(internalEdges).toBe(247);
+    expect(REQUIRED_CAPSTONE_IDS).toHaveLength(4);
+    expect(OPTIONAL_CAPSTONE_PRODUCTS).toHaveLength(13);
+    expect(CAPSTONE_TRACKS).toHaveLength(9);
+    expect(CAPSTONE_TRACKS.flatMap((track) => track.occurrenceIds)).toHaveLength(68);
   });
 });
