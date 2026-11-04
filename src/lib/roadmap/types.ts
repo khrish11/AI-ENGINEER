@@ -76,6 +76,7 @@ export const GraphConfigSchema = z.object({
   projectKeywords: z.array(z.string().min(1)).default([]),
   phaseSkills: z.record(z.string(), z.array(z.string())).default({}),
   phasePrerequisites: z.record(z.string(), z.array(z.string())).default({}),
+  phasesWithoutImplicitSequence: z.array(z.string()).default([]),
   extraEdges: z.record(z.string(), z.array(z.string())).default({}),
   occurrenceOverrides: z
     .record(

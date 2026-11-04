@@ -237,7 +237,11 @@ async function main() {
   for (const list of byPhase.values()) {
     list.sort((a, b) => lessonOrder(a.lessonSlug) - lessonOrder(b.lessonSlug));
     list.forEach((occurrence, index) => {
-      occurrence.prerequisites = index === 0 ? [] : [list[index - 1].occurrenceId];
+      const hasImplicitSequence = !graph.phasesWithoutImplicitSequence.includes(
+        occurrence.phaseSlug
+      );
+      occurrence.prerequisites =
+        !hasImplicitSequence || index === 0 ? [] : [list[index - 1].occurrenceId];
     });
   }
 
