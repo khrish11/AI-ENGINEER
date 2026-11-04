@@ -8,6 +8,7 @@ import {
 import { analyzeCapacity } from "./capacity";
 import { weekEnd, weekStart } from "./dates";
 import { buildGraph, priorityComparator, topologicalSort, type RoadmapGraph } from "./graph";
+import { selectedCapstoneIds } from "./capstones";
 import type {
   CapacityAnalysis,
   Importance,
@@ -105,6 +106,9 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
   const manuallyExcluded = new Set(input.manuallyExcluded ?? []);
   const known = new Set(input.knownOccurrenceIds ?? []);
   const includeOptional = input.includeOptionalTopics ?? false;
+  const selectiveCapstones = input.capstoneSelection
+    ? selectedCapstoneIds(input.capstoneSelection)
+    : null;
 
   const selected = new Set<string>();
   const skipped: SkippedOccurrence[] = [];
@@ -120,6 +124,19 @@ export function selectOccurrences(input: SchedulerInput): RoadmapSelection {
     }
     const importance = im(occurrence, input.trackId);
     const forcedIn = manuallyIncluded.has(occurrence.occurrenceId);
+    if (
+      selectiveCapstones &&
+      occurrence.phaseSlug === "19-capstone-projects" &&
+      !selectiveCapstones.has(occurrence.occurrenceId) &&
+      !forcedIn
+    ) {
+      skipped.push({
+        occurrenceId: occurrence.occurrenceId,
+        importance,
+        reason: "Not selected for this capstone plan.",
+      });
+      continue;
+    }
     // Knowledge-aware exclusion: a topic the learner declared they already know
     // is kept out of the mandatory plan unless they explicitly re-included it.
     // This is the onboarding placement path (placement.skimOccurrenceIds).

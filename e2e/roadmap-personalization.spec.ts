@@ -93,6 +93,8 @@ test.describe("Roadmap personalisation — knowledge-aware generation", () => {
     // Positive proof both declarations landed and React has settled.
     await expect(page.getByText("2 known topics")).toBeVisible({ timeout: 30_000 });
 
+    await page.getByRole("button", { name: "Continue" }).click();
+
     const generate = page.getByTestId("generate-roadmap");
     await expect(generate).toBeEnabled({ timeout: 10_000 });
     await generate.click();

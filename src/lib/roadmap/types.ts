@@ -193,6 +193,14 @@ export const PlacementResultSchema = z.object({
 
 export type PlacementResult = z.infer<typeof PlacementResultSchema>;
 
+export const CapstoneSelectionSchema = z.object({
+  version: z.literal(1),
+  selectedProductIds: z.array(z.string()).default([]),
+  selectedTrackIds: z.array(z.string()).default([]),
+});
+
+export type CapstoneSelection = z.infer<typeof CapstoneSelectionSchema>;
+
 // ---------------------------------------------------------------------------
 // Generation settings and plan
 // ---------------------------------------------------------------------------
@@ -212,6 +220,8 @@ export const RoadmapSettingsSchema = z.object({
   // Canonical occurrence ids the learner declared as already known during
   // onboarding placement. These are kept out of the mandatory plan.
   knownOccurrenceIds: z.array(z.string()).default([]),
+  // Missing means a legacy roadmap: retain the V1 all-important behavior.
+  capstoneSelection: CapstoneSelectionSchema.optional(),
 });
 
 export type RoadmapSettings = z.infer<typeof RoadmapSettingsSchema>;
@@ -343,6 +353,7 @@ export interface SchedulerInput {
   manuallyExcluded?: string[];
   manualWeekAssignments?: Record<string, number>;
   knownOccurrenceIds?: string[];
+  capstoneSelection?: CapstoneSelection;
   maxWeeks?: number;
 }
 

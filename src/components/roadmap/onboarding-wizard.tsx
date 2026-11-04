@@ -8,7 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { useRoadmap } from "@/hooks/useRoadmap";
-import { tracks, skillsByGroup } from "@/lib/roadmap/config";
+import { tracks, skillsByGroup, formatMinutes } from "@/lib/roadmap/config";
+import {
+  CAPSTONE_TRACKS,
+  OPTIONAL_CAPSTONE_PRODUCTS,
+  REQUIRED_CAPSTONES,
+  selectionMinutes,
+} from "@/lib/roadmap/capstones";
+import { generateForSettings } from "@/lib/roadmap/store";
 import { todayIso, formatLongDate } from "@/lib/roadmap/dates";
 import { recommendPlacement, phaseTitle } from "@/lib/roadmap/placement";
 import { trackStats } from "@/lib/roadmap/tracks";
@@ -37,6 +44,7 @@ const STEP_TITLES = [
   "Goal",
   "Schedule",
   "Experience",
+  "Capstone plan",
 ] as const;
 
 const BACKGROUND_LABELS: Record<(typeof BACKGROUNDS)[number], string> = {
@@ -172,6 +180,8 @@ export function OnboardingWizard() {
     React.useState<BufferPreference>("monthly");
   const [includeOptional, setIncludeOptional] = React.useState(false);
   const [knownTopics, setKnownTopics] = React.useState<string[]>([]);
+  const [selectedProductIds, setSelectedProductIds] = React.useState<string[]>([]);
+  const [selectedTrackIds, setSelectedTrackIds] = React.useState<string[]>([]);
 
   const [questions, setQuestions] = React.useState<PlacementQuestion[]>([]);
   const [answers, setAnswers] = React.useState<Record<string, number>>({});
@@ -205,9 +215,28 @@ export function OnboardingWizard() {
       manuallyExcluded: [],
       manualWeekAssignments: {},
       knownOccurrenceIds: [],
+      capstoneSelection: { version: 1, selectedProductIds, selectedTrackIds },
     }),
-    [trackId, hoursPerWeek, startDate, targetDate, studyDays, bufferPreference, includeOptional]
+    [
+      trackId,
+      hoursPerWeek,
+      startDate,
+      targetDate,
+      studyDays,
+      bufferPreference,
+      includeOptional,
+      selectedProductIds,
+      selectedTrackIds,
+    ]
   );
+
+  const preview = React.useMemo(() => {
+    const previewSettings = {
+      ...settings,
+      knownOccurrenceIds: placement?.skimOccurrenceIds ?? [],
+    };
+    return generateForSettings(previewSettings, { completed: [] }).plan;
+  }, [settings, placement]);
 
   const canContinue = React.useCallback(() => {
     switch (step) {
@@ -289,6 +318,15 @@ export function OnboardingWizard() {
       current.includes(skillId)
         ? current.filter((value) => value !== skillId)
         : [...current, skillId]
+    );
+  };
+
+  const toggleSelection = (
+    id: string,
+    setter: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    setter((current) =>
+      current.includes(id) ? current.filter((value) => value !== id) : [...current, id].sort()
     );
   };
 
@@ -637,6 +675,79 @@ export function OnboardingWizard() {
                     Placement: starts at {phaseTitle(placement.recommendedStartPhaseSlug)}
                   </p>
                 )}
+              </div>
+            </div>
+          )}
+
+          {step === 7 && (
+            <div className="space-y-6" data-testid="capstone-selection-step">
+              <div className="rounded-xl border border-accent-cyan/30 bg-accent-cyan/5 p-4">
+                <h3 className="text-sm font-semibold text-foreground">Required portfolio baseline</h3>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  These four projects stay in every new personalized roadmap.
+                </p>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {REQUIRED_CAPSTONES.map((item) => (
+                    <div key={item.occurrenceId} className="rounded-lg border border-border bg-card p-3">
+                      <p className="text-xs font-medium text-foreground">{item.title}</p>
+                      <p className="mt-1 text-[11px] text-muted-foreground">
+                        {formatMinutes(item.estimatedMinutes ?? 0)} · required
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <fieldset className="space-y-3">
+                <legend className="text-sm font-semibold text-foreground">Optional standalone products</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {OPTIONAL_CAPSTONE_PRODUCTS.map((item) => (
+                    <label key={item.occurrenceId} className="flex cursor-pointer gap-3 rounded-lg border border-border bg-surface p-3 text-xs">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 accent-cyan-500"
+                        checked={selectedProductIds.includes(item.occurrenceId)}
+                        onChange={() => toggleSelection(item.occurrenceId, setSelectedProductIds)}
+                      />
+                      <span>
+                        <span className="block font-medium text-foreground">{item.title}</span>
+                        <span className="text-muted-foreground">{formatMinutes(item.estimatedMinutes ?? 0)}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset className="space-y-3">
+                <legend className="text-sm font-semibold text-foreground">Deep-build tracks</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {CAPSTONE_TRACKS.map((track) => (
+                    <label key={track.id} className="flex cursor-pointer gap-3 rounded-lg border border-border bg-surface p-3 text-xs">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 accent-cyan-500"
+                        checked={selectedTrackIds.includes(track.id)}
+                        onChange={() => toggleSelection(track.id, setSelectedTrackIds)}
+                      />
+                      <span>
+                        <span className="block font-medium text-foreground">{track.name}</span>
+                        <span className="text-muted-foreground">
+                          {track.occurrenceIds.length} lessons · {formatMinutes(track.minutes)}
+                        </span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div className="rounded-xl border border-border bg-card p-4 text-sm" data-testid="capstone-workload-preview">
+                <p className="font-semibold text-foreground">Live workload preview</p>
+                <p className="mt-1 text-muted-foreground">
+                  {preview.summary.totalOccurrences} lessons · {formatMinutes(preview.summary.totalMinutes)} · {preview.weeks.length} weeks at {hoursPerWeek}h/week
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Direct capstone work: {formatMinutes(selectionMinutes(settings.capstoneSelection!))}. Required dependency work is included in the full estimate above.
+                </p>
               </div>
             </div>
           )}
