@@ -140,4 +140,37 @@ describe("roadmap persistence (guest mode)", () => {
     expect(after).not.toContain(known[0]);
     expect(rescheduled.store.settings!.knownOccurrenceIds).toEqual(known);
   });
+
+  it("persists a manual known-topic restoration through reload and local regeneration", async () => {
+    const known = ["07-transformers-deep-dive/01-why-transformers"];
+    const restoredSettings = {
+      ...settings,
+      knownOccurrenceIds: known,
+      manuallyIncluded: known,
+    };
+    const first = await generateAndSave(emptyStore(), restoredSettings, { completed: [] });
+    const firstIds = first.store.plan!.weeks.flatMap((week) =>
+      week.items.map((item) => item.occurrenceId)
+    );
+    expect(firstIds.filter((id) => id === known[0])).toHaveLength(1);
+
+    const loaded = await loadRoadmapStore();
+    expect(loaded.settings?.knownOccurrenceIds).toEqual(known);
+    expect(loaded.settings?.manuallyIncluded).toEqual(known);
+
+    const regenerated = await generateAndSave(loaded, loaded.settings!, { completed: [] });
+    const regeneratedIds = regenerated.store.plan!.weeks.flatMap((week) =>
+      week.items.map((item) => item.occurrenceId)
+    );
+    expect(regeneratedIds.filter((id) => id === known[0])).toHaveLength(1);
+    expect(regenerated.store.settings?.knownOccurrenceIds).toEqual(known);
+    expect(regenerated.store.settings?.manuallyIncluded).toEqual(known);
+
+    const queued = await db.syncQueue.where("entityType").equals("roadmap_state").first();
+    const payload = queued?.payload as
+      | { state?: { settings?: { knownOccurrenceIds?: string[]; manuallyIncluded?: string[] } } }
+      | undefined;
+    expect(payload?.state?.settings?.knownOccurrenceIds).toEqual(known);
+    expect(payload?.state?.settings?.manuallyIncluded).toEqual(known);
+  });
 });

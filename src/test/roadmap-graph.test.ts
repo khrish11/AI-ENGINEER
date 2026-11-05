@@ -15,6 +15,7 @@ import {
   canonicalOccurrences,
 } from "@/lib/roadmap/config";
 import type { OccurrenceMetadata, TrackId, Importance } from "@/lib/roadmap/types";
+import { CAPSTONE_TRACKS, OPTIONAL_CAPSTONE_PRODUCTS, REQUIRED_CAPSTONE_IDS } from "@/lib/roadmap/capstones";
 
 const IMPORTANCE: Record<TrackId, Importance> = {
   "general-ai": "core",
@@ -127,5 +128,54 @@ describe("roadmap prerequisite graph", () => {
     const lesson = occurrenceById.get("04-computer-vision/14-vision-transformers");
     expect(lesson?.canonicalLessonKey).toBe("04-computer-vision/14-vision-transformers");
     expect(lesson?.prerequisites).toEqual(["04-computer-vision/13-3d-vision-nerf"]);
+  });
+
+  it("treats the 17 Phase 19 product capstones as independent choices", () => {
+    const products = occurrences.filter(
+      (occurrence) =>
+        occurrence.phaseSlug === "19-capstone-projects" &&
+        Number(occurrence.lessonSlug.slice(0, 2)) <= 17
+    );
+
+    expect(products).toHaveLength(17);
+    expect(products.every((occurrence) => occurrence.prerequisites.length === 0)).toBe(true);
+  });
+
+  it("uses documented Phase 19 branch dependencies instead of a global serial chain", () => {
+    expect(
+      occurrenceById.get("19-capstone-projects/25-verification-gates-observation-budget")
+        ?.prerequisites
+    ).toEqual([
+      "19-capstone-projects/20-agent-harness-loop-contract",
+      "19-capstone-projects/21-tool-registry-schema-validation",
+      "19-capstone-projects/22-jsonrpc-stdio-transport",
+      "19-capstone-projects/23-function-call-dispatcher",
+      "19-capstone-projects/24-plan-execute-control-flow",
+    ]);
+    expect(
+      occurrenceById.get("19-capstone-projects/50-hypothesis-generator")?.prerequisites
+    ).toEqual(["19-capstone-projects/29-end-to-end-coding-task-demo"]);
+    expect(
+      occurrenceById.get("19-capstone-projects/58-vision-encoder-patches")?.prerequisites
+    ).toEqual(["19-capstone-projects/37-loading-pretrained-weights"]);
+    expect(
+      occurrenceById.get("19-capstone-projects/76-collective-ops-from-scratch")
+        ?.prerequisites
+    ).not.toContain("19-capstone-projects/75-end-to-end-eval-runner");
+  });
+
+  it("matches the verified Phase 19 inventory and explicit-edge totals", () => {
+    const capstones = occurrences.filter((item) => item.phaseSlug === "19-capstone-projects");
+    const internalEdges = capstones.reduce(
+      (sum, item) =>
+        sum + item.prerequisites.filter((id) => id.startsWith("19-capstone-projects/")).length,
+      0
+    );
+    expect(capstones).toHaveLength(85);
+    expect(internalEdges).toBe(247);
+    expect(REQUIRED_CAPSTONE_IDS).toHaveLength(4);
+    expect(OPTIONAL_CAPSTONE_PRODUCTS).toHaveLength(13);
+    expect(CAPSTONE_TRACKS).toHaveLength(9);
+    expect(CAPSTONE_TRACKS.flatMap((track) => track.occurrenceIds)).toHaveLength(68);
   });
 });

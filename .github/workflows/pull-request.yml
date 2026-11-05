@@ -12,13 +12,41 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: ai_engineer_os
+          POSTGRES_PASSWORD: local_dev_password
+          POSTGRES_DB: ai_engineer_os_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ai_engineer_os -d ai_engineer_os_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_test
+      CURRICULUM_LOCAL_PATH: ./upstream/ai-engineering-from-scratch
+      CURRICULUM_PINNED_SHA: c81651a83aff5f7bf307ffe4392f0d97f3b27ad6
     steps:
       - uses: actions/checkout@v4
+      - name: Check out pinned curriculum
+        uses: actions/checkout@v4
+        with:
+          repository: rohitg00/ai-engineering-from-scratch
+          ref: c81651a83aff5f7bf307ffe4392f0d97f3b27ad6
+          path: upstream/ai-engineering-from-scratch
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
+      - name: Initialize isolated test database
+        run: |
+          npm run db:migrate
+          npm run curriculum:import
       - run: npm run validate
       - run: npm run build
 
@@ -26,15 +54,58 @@ jobs:
     runs-on: ubuntu-latest
     needs: validate
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: ai_engineer_os
+          POSTGRES_PASSWORD: local_dev_password
+          POSTGRES_DB: ai_engineer_os_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ai_engineer_os -d ai_engineer_os_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_e2e
+      CURRICULUM_LOCAL_PATH: ./upstream/ai-engineering-from-scratch
+      CURRICULUM_PINNED_SHA: c81651a83aff5f7bf307ffe4392f0d97f3b27ad6
+      AUTH_GOOGLE_ID: e2e-dummy.apps.googleusercontent.com
+      AUTH_GOOGLE_SECRET: e2e-dummy-secret
+      AUTH_URL: http://localhost:3300
+      AUTH_TRUST_HOST: "true"
+      E2E_PORT: "3300"
+      PORT: "3300"
+      HOSTNAME: localhost
     steps:
       - uses: actions/checkout@v4
+      - name: Check out pinned curriculum
+        uses: actions/checkout@v4
+        with:
+          repository: rohitg00/ai-engineering-from-scratch
+          ref: c81651a83aff5f7bf307ffe4392f0d97f3b27ad6
+          path: upstream/ai-engineering-from-scratch
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
+      - name: Generate disposable E2E auth secret
+        shell: bash
+        run: |
+          secret="$(openssl rand -base64 32)"
+          echo "::add-mask::$secret"
+          echo "E2E_AUTH_SECRET=$secret" >> "$GITHUB_ENV"
+          echo "AUTH_SECRET=$secret" >> "$GITHUB_ENV"
+      - name: Initialize isolated E2E database
+        run: |
+          npm run db:migrate
+          npm run curriculum:import
+          npm run resources:import
       - run: npx playwright install --with-deps chromium
       - run: npm run build
-      - run: npx playwright test
+      - run: npx playwright test --project=chromium --project=chromium-mobile
         env:
           CI: "1"

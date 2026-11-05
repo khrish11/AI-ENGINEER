@@ -181,9 +181,10 @@ export interface SchemaIssue {
 }
 
 /**
- * Zod reports a discriminated failure as a single `invalid_union` with the
- * real messages hidden inside `unionErrors`. Flatten recursively, keeping the
- * branch that is closest to valid so contributors get actionable paths.
+ * Zod reports a union failure as a single `invalid_union` with the real
+ * messages nested by branch. Normalize the Zod 3 and Zod 4 representations,
+ * keeping the branch that is closest to valid so contributors get actionable
+ * paths during the runtime migration.
  */
 function flattenIssues(
   issues: z.ZodIssue[],
@@ -191,14 +192,15 @@ function flattenIssues(
   out: SchemaIssue[] = []
 ): SchemaIssue[] {
   for (const issue of issues) {
-    const unionErrors = (
-      issue as { unionErrors?: { issues: z.ZodIssue[] }[] }
-    ).unionErrors;
-    if (issue.code === "invalid_union" && unionErrors && unionErrors.length > 0) {
-      const best = unionErrors.reduce((a, b) =>
-        b.issues.length < a.issues.length ? b : a
-      );
-      flattenIssues(best.issues, file, out);
+    const unionIssue = issue as z.ZodIssue & {
+      errors?: z.ZodIssue[][];
+      unionErrors?: { issues: z.ZodIssue[] }[];
+    };
+    const unionBranches =
+      unionIssue.errors ?? unionIssue.unionErrors?.map((error) => error.issues);
+    if (issue.code === "invalid_union" && unionBranches && unionBranches.length > 0) {
+      const best = unionBranches.reduce((a, b) => (b.length < a.length ? b : a));
+      flattenIssues(best, file, out);
     } else {
       out.push({
         file,

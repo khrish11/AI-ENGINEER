@@ -2,7 +2,7 @@
   "version": 1,
   "generatedFrom": {
     "phases": 20,
-    "canonicalLessons": 541,
+    "canonicalLessons": 542,
     "occurrences": 542,
     "activeCommit": "c81651a83aff5f7bf307ffe4392f0d97f3b27ad6"
   },
@@ -2678,7 +2678,7 @@
       "phaseSlug": "04-computer-vision",
       "lessonSlug": "14-vision-transformers",
       "title": "Vision Transformers (ViT)",
-      "difficulty": "intermediate",
+      "difficulty": "beginner",
       "estimatedMinutes": 45,
       "estimateSource": "upstream",
       "skillTags": [
@@ -15120,9 +15120,7 @@
         "rag": "core",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/01-terminal-native-coding-agent"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15155,9 +15153,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/02-rag-over-codebase"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15191,9 +15187,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/03-realtime-voice-assistant"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15224,9 +15218,7 @@
         "rag": "important",
         "research": "core"
       },
-      "prerequisites": [
-        "19-capstone-projects/04-multimodal-document-qa"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15258,9 +15250,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/05-autonomous-research-agent"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15293,9 +15283,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/06-devops-troubleshooting-agent"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15328,9 +15316,7 @@
         "rag": "core",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/07-end-to-end-fine-tuning-pipeline"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15362,9 +15348,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/08-production-rag-chatbot"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15396,9 +15380,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/09-code-migration-agent"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15430,9 +15412,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/10-multi-agent-software-team"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15465,9 +15445,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/11-llm-observability-dashboard"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15500,9 +15478,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/12-video-understanding-pipeline"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15534,9 +15510,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/13-mcp-server-with-registry"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15568,9 +15542,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/14-speculative-decoding-server"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15602,9 +15574,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/15-constitutional-safety-harness"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15637,9 +15607,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/16-github-issue-to-pr-agent"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15670,9 +15638,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/17-personal-ai-tutor"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15704,9 +15670,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/20-agent-harness-loop-contract"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15737,9 +15701,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/21-tool-registry-schema-validation"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15771,9 +15733,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/22-jsonrpc-stdio-transport"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15805,9 +15765,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/23-function-call-dispatcher"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -15840,6 +15798,10 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/20-agent-harness-loop-contract",
+        "19-capstone-projects/21-tool-registry-schema-validation",
+        "19-capstone-projects/22-jsonrpc-stdio-transport",
+        "19-capstone-projects/23-function-call-dispatcher",
         "19-capstone-projects/24-plan-execute-control-flow"
       ],
       "recommendedBefore": [
@@ -15907,6 +15869,7 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/25-verification-gates-observation-budget",
         "19-capstone-projects/26-sandbox-runner-denylist"
       ],
       "recommendedBefore": [
@@ -15942,6 +15905,8 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
         "19-capstone-projects/27-eval-harness-fixture-tasks"
       ],
       "recommendedBefore": [
@@ -15975,6 +15940,9 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
         "19-capstone-projects/28-observability-otel-traces"
       ],
       "recommendedBefore": [
@@ -16008,9 +15976,7 @@
         "rag": "important",
         "research": "important"
       },
-      "prerequisites": [
-        "19-capstone-projects/29-end-to-end-coding-task-demo"
-      ],
+      "prerequisites": [],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
         "14-agent-engineering/54-build-the-feedback-ratchet",
@@ -16077,6 +16043,7 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
         "19-capstone-projects/31-tokenized-dataset-sliding-window"
       ],
       "recommendedBefore": [
@@ -16111,6 +16078,8 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
         "19-capstone-projects/32-token-positional-embeddings"
       ],
       "recommendedBefore": [
@@ -16145,6 +16114,9 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
         "19-capstone-projects/33-multihead-self-attention"
       ],
       "recommendedBefore": [
@@ -16179,6 +16151,10 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
         "19-capstone-projects/34-transformer-block"
       ],
       "recommendedBefore": [
@@ -16214,6 +16190,11 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
         "19-capstone-projects/35-gpt-model-assembly"
       ],
       "recommendedBefore": [
@@ -16247,6 +16228,12 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
         "19-capstone-projects/36-training-loop-eval"
       ],
       "recommendedBefore": [
@@ -16282,6 +16269,13 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
+        "19-capstone-projects/36-training-loop-eval",
         "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
@@ -16316,7 +16310,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/38-classifier-finetuning"
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
+        "19-capstone-projects/36-training-loop-eval",
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16352,7 +16353,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/39-instruction-tuning-sft"
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
+        "19-capstone-projects/36-training-loop-eval",
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16388,7 +16396,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/40-dpo-from-scratch"
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
+        "19-capstone-projects/36-training-loop-eval",
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16421,7 +16436,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/41-eval-pipeline"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16455,7 +16470,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/42-large-corpus-downloader"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16488,7 +16503,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/43-hdf5-tokenized-corpus"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16523,7 +16538,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/44-cosine-lr-warmup"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16557,6 +16572,9 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
         "19-capstone-projects/45-gradient-clipping-amp"
       ],
       "recommendedBefore": [
@@ -16591,7 +16609,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/46-gradient-accumulation"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16625,7 +16646,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/47-checkpoint-save-resume"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16660,7 +16684,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/48-distributed-fsdp-ddp"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16693,7 +16720,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/49-lm-eval-harness"
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16727,7 +16754,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/50-hypothesis-generator"
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16760,7 +16787,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/51-literature-retrieval"
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16793,7 +16820,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/52-experiment-runner"
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16826,6 +16853,9 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/50-hypothesis-generator",
+        "19-capstone-projects/51-literature-retrieval",
+        "19-capstone-projects/52-experiment-runner",
         "19-capstone-projects/53-result-evaluator"
       ],
       "recommendedBefore": [
@@ -16859,7 +16889,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/54-paper-writer"
+        "19-capstone-projects/50-hypothesis-generator",
+        "19-capstone-projects/51-literature-retrieval",
+        "19-capstone-projects/52-experiment-runner",
+        "19-capstone-projects/53-result-evaluator"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16892,7 +16925,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/55-critic-loop"
+        "19-capstone-projects/50-hypothesis-generator",
+        "19-capstone-projects/51-literature-retrieval",
+        "19-capstone-projects/52-experiment-runner",
+        "19-capstone-projects/53-result-evaluator"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16925,7 +16961,10 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/56-iteration-scheduler"
+        "19-capstone-projects/50-hypothesis-generator",
+        "19-capstone-projects/51-literature-retrieval",
+        "19-capstone-projects/52-experiment-runner",
+        "19-capstone-projects/53-result-evaluator"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16959,7 +16998,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/57-end-to-end-research-demo"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -16994,7 +17033,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/58-vision-encoder-patches"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17028,7 +17067,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/59-vit-transformer"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17062,7 +17101,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/60-projection-layer-modality-align"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17098,7 +17137,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/61-cross-attention-fusion"
+        "19-capstone-projects/37-loading-pretrained-weights"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17134,6 +17173,10 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/58-vision-encoder-patches",
+        "19-capstone-projects/59-vit-transformer",
+        "19-capstone-projects/60-projection-layer-modality-align",
+        "19-capstone-projects/61-cross-attention-fusion",
         "19-capstone-projects/62-vision-language-pretraining"
       ],
       "recommendedBefore": [
@@ -17168,7 +17211,7 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/63-multimodal-eval"
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17205,6 +17248,7 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/29-end-to-end-coding-task-demo",
         "19-capstone-projects/64-chunking-strategies-advanced"
       ],
       "recommendedBefore": [
@@ -17239,6 +17283,7 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/29-end-to-end-coding-task-demo",
         "19-capstone-projects/65-hybrid-retrieval-bm25-dense"
       ],
       "recommendedBefore": [
@@ -17272,7 +17317,9 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/66-reranker-cross-encoder"
+        "19-capstone-projects/29-end-to-end-coding-task-demo",
+        "19-capstone-projects/64-chunking-strategies-advanced",
+        "19-capstone-projects/65-hybrid-retrieval-bm25-dense"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17309,6 +17356,10 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/29-end-to-end-coding-task-demo",
+        "19-capstone-projects/64-chunking-strategies-advanced",
+        "19-capstone-projects/65-hybrid-retrieval-bm25-dense",
+        "19-capstone-projects/66-reranker-cross-encoder",
         "19-capstone-projects/67-query-rewriting-hyde"
       ],
       "recommendedBefore": [
@@ -17343,6 +17394,11 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/29-end-to-end-coding-task-demo",
+        "19-capstone-projects/64-chunking-strategies-advanced",
+        "19-capstone-projects/65-hybrid-retrieval-bm25-dense",
+        "19-capstone-projects/66-reranker-cross-encoder",
+        "19-capstone-projects/67-query-rewriting-hyde",
         "19-capstone-projects/68-rag-eval-precision-recall"
       ],
       "recommendedBefore": [
@@ -17376,7 +17432,18 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/69-end-to-end-rag-system"
+        "19-capstone-projects/30-bpe-tokenizer-from-scratch",
+        "19-capstone-projects/31-tokenized-dataset-sliding-window",
+        "19-capstone-projects/32-token-positional-embeddings",
+        "19-capstone-projects/33-multihead-self-attention",
+        "19-capstone-projects/34-transformer-block",
+        "19-capstone-projects/35-gpt-model-assembly",
+        "19-capstone-projects/36-training-loop-eval",
+        "19-capstone-projects/37-loading-pretrained-weights",
+        "19-capstone-projects/38-classifier-finetuning",
+        "19-capstone-projects/39-instruction-tuning-sft",
+        "19-capstone-projects/40-dpo-from-scratch",
+        "19-capstone-projects/41-eval-pipeline"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17444,6 +17511,7 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/70-task-spec-format",
         "19-capstone-projects/71-classical-metrics"
       ],
       "recommendedBefore": [
@@ -17477,7 +17545,8 @@
         "research": "core"
       },
       "prerequisites": [
-        "19-capstone-projects/72-code-exec-metric"
+        "19-capstone-projects/70-task-spec-format",
+        "19-capstone-projects/71-classical-metrics"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17510,6 +17579,8 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/70-task-spec-format",
+        "19-capstone-projects/71-classical-metrics",
         "19-capstone-projects/73-perplexity-calibration"
       ],
       "recommendedBefore": [
@@ -17543,6 +17614,10 @@
         "research": "important"
       },
       "prerequisites": [
+        "19-capstone-projects/70-task-spec-format",
+        "19-capstone-projects/71-classical-metrics",
+        "19-capstone-projects/72-code-exec-metric",
+        "19-capstone-projects/73-perplexity-calibration",
         "19-capstone-projects/74-leaderboard-aggregation"
       ],
       "recommendedBefore": [
@@ -17576,7 +17651,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/75-end-to-end-eval-runner"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17609,7 +17691,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/76-collective-ops-from-scratch"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17644,7 +17733,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/77-data-parallel-ddp"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17678,7 +17774,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/78-zero-parameter-sharding"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17712,7 +17815,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/79-pipeline-parallel"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17746,7 +17856,14 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/80-checkpoint-sharded-resume"
+        "19-capstone-projects/42-large-corpus-downloader",
+        "19-capstone-projects/43-hdf5-tokenized-corpus",
+        "19-capstone-projects/44-cosine-lr-warmup",
+        "19-capstone-projects/45-gradient-clipping-amp",
+        "19-capstone-projects/46-gradient-accumulation",
+        "19-capstone-projects/47-checkpoint-save-resume",
+        "19-capstone-projects/48-distributed-fsdp-ddp",
+        "19-capstone-projects/49-lm-eval-harness"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17780,7 +17897,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/81-end-to-end-distributed-train"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17815,7 +17936,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/82-jailbreak-taxonomy"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17850,7 +17975,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/83-prompt-injection-detector"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17884,7 +18013,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/84-refusal-evaluation"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17917,7 +18050,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/85-content-classifier-integration"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",
@@ -17950,7 +18087,11 @@
         "research": "important"
       },
       "prerequisites": [
-        "19-capstone-projects/86-constitutional-rules-engine"
+        "19-capstone-projects/25-verification-gates-observation-budget",
+        "19-capstone-projects/26-sandbox-runner-denylist",
+        "19-capstone-projects/27-eval-harness-fixture-tasks",
+        "19-capstone-projects/28-observability-otel-traces",
+        "19-capstone-projects/29-end-to-end-coding-task-demo"
       ],
       "recommendedBefore": [
         "11-llm-engineering/17-agent-framework-tradeoffs",

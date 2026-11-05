@@ -70,6 +70,8 @@ export function RescheduleDialog({
         completedCanonicalLessonKeys: [...(completion?.completed ?? [])],
         manuallyIncluded: settings.manuallyIncluded,
         manuallyExcluded: settings.manuallyExcluded,
+        knownOccurrenceIds: settings.knownOccurrenceIds,
+        capstoneSelection: settings.capstoneSelection,
       });
       const analysis = analyzeCapacity({
         requiredMinutes: generated.plan.summary.totalMinutes,

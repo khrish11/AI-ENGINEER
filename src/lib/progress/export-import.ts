@@ -316,7 +316,7 @@ export function previewImportFromObject(raw: unknown): ImportPreview {
       app: "",
       exportedAt: null,
       counts: emptyCounts(),
-      errors: parsed.error.errors.map((e) => `${e.path.join(".")}: ${e.message}`),
+      errors: parsed.error.issues.map((e) => `${e.path.join(".")}: ${e.message}`),
     };
   }
   if (!SUPPORTED_SCHEMA_VERSIONS.includes(parsed.data.schemaVersion)) {

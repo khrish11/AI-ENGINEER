@@ -17,6 +17,7 @@ import { CalendarView } from "@/components/roadmap/calendar-view";
 import { CurriculumOverlay } from "@/components/roadmap/curriculum-overlay";
 import { CurrentWeekCard } from "@/components/roadmap/current-week-card";
 import { ItemExplainer } from "@/components/roadmap/item-explainer";
+import { KnownTopicsPanel } from "@/components/roadmap/known-topics-panel";
 import { BacklogPanel } from "@/components/roadmap/backlog-panel";
 import { RescheduleDialog } from "@/components/roadmap/reschedule-dialog";
 import { RoadmapSettingsDialog } from "@/components/roadmap/roadmap-settings-dialog";
@@ -88,6 +89,18 @@ export function RoadmapPageClient() {
       false
     );
     await actions.reschedule({ droppedOccurrenceIds: [occurrenceId] });
+  };
+
+  const useKnownExclusion = async (occurrenceId: string) => {
+    if (!settings) return;
+    await actions.updateSettings(
+      {
+        manuallyIncluded: settings.manuallyIncluded.filter((id) => id !== occurrenceId),
+        manuallyExcluded: settings.manuallyExcluded.filter((id) => id !== occurrenceId),
+      },
+      false
+    );
+    await actions.reschedule({});
   };
 
   const togglePhase = async (phaseSlug: string, occurrenceIds: string[]) => {
@@ -280,6 +293,14 @@ export function RoadmapPageClient() {
         </div>
 
         <div className="space-y-6">
+          <KnownTopicsPanel
+            plan={plan}
+            settings={settings}
+            working={working}
+            onAddBack={include}
+            onUseKnownExclusion={useKnownExclusion}
+          />
+
           <BacklogPanel
             plan={plan}
             completion={completion}

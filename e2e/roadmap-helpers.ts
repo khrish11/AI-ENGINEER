@@ -9,7 +9,7 @@ export function isoDateInDays(days: number): string {
 }
 
 /**
- * Walks the 7-step onboarding wizard with deterministic inputs and generates a
+ * Walks the 8-step onboarding wizard with deterministic inputs and generates a
  * roadmap. Returns the track name that was selected.
  */
 export async function generateRoadmapViaOnboarding(
@@ -43,7 +43,10 @@ export async function generateRoadmapViaOnboarding(
   await page.getByLabel("Target completion date", { exact: false }).fill(isoDateInDays(120));
   await page.getByRole("button", { name: "Continue" }).click();
 
-  // Step 7 — Experience: skip placement, generate directly.
+  // Step 7 — Experience: skip placement.
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  // Step 8 — Capstone plan: keep the required four-project baseline.
   // The generate button transitions through a loading/working state after the
   // prior Continue. Under full-suite CPU contention a single immediate click can
   // land mid-re-render and be lost, stranding the page before /roadmap. Retry the

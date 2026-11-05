@@ -8,7 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { useRoadmap } from "@/hooks/useRoadmap";
-import { tracks, skillsByGroup } from "@/lib/roadmap/config";
+import { tracks, skillsByGroup, skillsById, formatMinutes } from "@/lib/roadmap/config";
+import {
+  CAPSTONE_TRACKS,
+  CAPSTONE_OVERLAP_NOTICES,
+  OPTIONAL_CAPSTONE_PRODUCTS,
+  REQUIRED_CAPSTONES,
+} from "@/lib/roadmap/capstones";
+import { calculateCapstonePreview } from "@/lib/roadmap/capstone-preview";
 import { todayIso, formatLongDate } from "@/lib/roadmap/dates";
 import { recommendPlacement, phaseTitle } from "@/lib/roadmap/placement";
 import { trackStats } from "@/lib/roadmap/tracks";
@@ -37,6 +44,7 @@ const STEP_TITLES = [
   "Goal",
   "Schedule",
   "Experience",
+  "Capstone plan",
 ] as const;
 
 const BACKGROUND_LABELS: Record<(typeof BACKGROUNDS)[number], string> = {
@@ -172,6 +180,8 @@ export function OnboardingWizard() {
     React.useState<BufferPreference>("monthly");
   const [includeOptional, setIncludeOptional] = React.useState(false);
   const [knownTopics, setKnownTopics] = React.useState<string[]>([]);
+  const [selectedProductIds, setSelectedProductIds] = React.useState<string[]>([]);
+  const [selectedTrackIds, setSelectedTrackIds] = React.useState<string[]>([]);
 
   const [questions, setQuestions] = React.useState<PlacementQuestion[]>([]);
   const [answers, setAnswers] = React.useState<Record<string, number>>({});
@@ -205,8 +215,28 @@ export function OnboardingWizard() {
       manuallyExcluded: [],
       manualWeekAssignments: {},
       knownOccurrenceIds: [],
+      capstoneSelection: { version: 1, selectedProductIds, selectedTrackIds },
     }),
-    [trackId, hoursPerWeek, startDate, targetDate, studyDays, bufferPreference, includeOptional]
+    [
+      trackId,
+      hoursPerWeek,
+      startDate,
+      targetDate,
+      studyDays,
+      bufferPreference,
+      includeOptional,
+      selectedProductIds,
+      selectedTrackIds,
+    ]
+  );
+
+  const preview = React.useMemo(
+    () =>
+      calculateCapstonePreview({
+        ...settings,
+        knownOccurrenceIds: placement?.skimOccurrenceIds ?? [],
+      }),
+    [settings, placement]
   );
 
   const canContinue = React.useCallback(() => {
@@ -289,6 +319,15 @@ export function OnboardingWizard() {
       current.includes(skillId)
         ? current.filter((value) => value !== skillId)
         : [...current, skillId]
+    );
+  };
+
+  const toggleSelection = (
+    id: string,
+    setter: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    setter((current) =>
+      current.includes(id) ? current.filter((value) => value !== id) : [...current, id].sort()
     );
   };
 
@@ -635,6 +674,122 @@ export function OnboardingWizard() {
                 {placement && (
                   <p className="text-muted-foreground">
                     Placement: starts at {phaseTitle(placement.recommendedStartPhaseSlug)}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {step === 7 && (
+            <div className="space-y-6" data-testid="capstone-selection-step">
+              <div className="rounded-xl border border-accent-cyan/30 bg-accent-cyan/5 p-4">
+                <h3 className="text-sm font-semibold text-foreground">Required portfolio baseline</h3>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  These four projects stay in every new personalized roadmap.
+                </p>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {REQUIRED_CAPSTONES.map((item) => (
+                    <div key={item.occurrenceId} className="rounded-lg border border-border bg-card p-3">
+                      <p className="text-xs font-medium text-foreground">{item.title}</p>
+                      <p className="mt-1 text-[11px] text-muted-foreground">
+                        {formatMinutes(item.estimatedMinutes ?? 0)} · required
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <fieldset className="space-y-3">
+                <legend className="text-sm font-semibold text-foreground">Optional standalone products</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {OPTIONAL_CAPSTONE_PRODUCTS.map((item) => {
+                    const skills = item.skillTags
+                      .map((id) => skillsById.get(id)?.name)
+                      .filter((name): name is string => Boolean(name));
+                    return (
+                      <div key={item.occurrenceId} className="rounded-lg border border-border bg-surface p-3 text-xs">
+                        <label className="flex cursor-pointer gap-3">
+                          <input
+                            type="checkbox"
+                            className="mt-0.5 accent-cyan-500"
+                            checked={selectedProductIds.includes(item.occurrenceId)}
+                            onChange={() => toggleSelection(item.occurrenceId, setSelectedProductIds)}
+                          />
+                          <span>
+                            <span className="block font-medium text-foreground">{item.title}</span>
+                            <span className="text-muted-foreground">{formatMinutes(item.estimatedMinutes ?? 0)} · optional</span>
+                          </span>
+                        </label>
+                        <details className="mt-2 text-muted-foreground">
+                          <summary className="cursor-pointer font-medium text-foreground">Project details</summary>
+                          <p className="mt-1">Curriculum description is not available in roadmap metadata.</p>
+                          <p className="mt-1">Skills: {skills.length > 0 ? skills.join(", ") : "No specific skill mapping available."}</p>
+                          <p className="mt-1">
+                            Prerequisites: {item.prerequisites.length > 0 ? `${item.prerequisites.length} encoded capstone requirement(s)` : "Phase guidance only; no capstone prerequisite is encoded."}
+                          </p>
+                          {CAPSTONE_OVERLAP_NOTICES[item.occurrenceId] && (
+                            <p className="mt-1">Related practice: {CAPSTONE_OVERLAP_NOTICES[item.occurrenceId]}</p>
+                          )}
+                        </details>
+                      </div>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
+              <fieldset className="space-y-3">
+                <legend className="text-sm font-semibold text-foreground">Deep-build tracks</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {CAPSTONE_TRACKS.map((track) => (
+                    <div key={track.id} className="rounded-lg border border-border bg-surface p-3 text-xs">
+                      <label className="flex cursor-pointer gap-3">
+                        <input
+                          type="checkbox"
+                          className="mt-0.5 accent-cyan-500"
+                          checked={selectedTrackIds.includes(track.id)}
+                          onChange={() => toggleSelection(track.id, setSelectedTrackIds)}
+                        />
+                        <span>
+                          <span className="block font-medium text-foreground">{track.name}</span>
+                          <span className="text-muted-foreground">
+                            {track.occurrenceIds.length} lessons · {formatMinutes(track.minutes)} · optional
+                          </span>
+                        </span>
+                      </label>
+                      <details className="mt-2 text-muted-foreground">
+                        <summary className="cursor-pointer font-medium text-foreground">Track details</summary>
+                        <p className="mt-1">Builds: {track.occurrenceIds.length} linked curriculum projects.</p>
+                        <p className="mt-1">
+                          Skills: {track.skillTags.map((id) => skillsById.get(id)?.name ?? id).join(", ")}
+                        </p>
+                        <p className="mt-1">Prerequisites are calculated from the verified curriculum graph and appear in the preview.</p>
+                        {CAPSTONE_OVERLAP_NOTICES[track.id] && (
+                          <p className="mt-1">Related practice: {CAPSTONE_OVERLAP_NOTICES[track.id]}</p>
+                        )}
+                      </details>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div className="rounded-xl border border-border bg-card p-4 text-sm" data-testid="capstone-workload-preview" aria-live="polite">
+                <p className="font-semibold text-foreground">Your roadmap preview</p>
+                <p className="mt-1 text-xs text-muted-foreground">Preliminary estimate from the current scheduler; nothing is saved until you generate the roadmap.</p>
+                <dl className="mt-3 grid gap-x-5 gap-y-2 sm:grid-cols-2">
+                  <div><dt className="text-muted-foreground">Capstones explicitly selected</dt><dd data-testid="preview-direct-count" className="font-medium">{preview.directSelectedCapstones}</dd></div>
+                  <div><dt className="text-muted-foreground">Required core projects</dt><dd data-testid="preview-core-count" className="font-medium">{preview.requiredCoreSelected}</dd></div>
+                  <div><dt className="text-muted-foreground">Optional capstones selected</dt><dd data-testid="preview-optional-count" className="font-medium">{preview.optionalSelected} of {preview.availableOptionalCapstones}</dd></div>
+                  <div><dt className="text-muted-foreground">Selections</dt><dd data-testid="preview-selection-counts" className="font-medium">{preview.selectedStandaloneProducts} standalone · {preview.selectedDeepBuildTracks} tracks</dd></div>
+                  <div><dt className="text-muted-foreground">Core-capstone workload</dt><dd className="font-medium">{formatMinutes(preview.requiredCoreMinutes)}</dd></div>
+                  <div><dt className="text-muted-foreground">Selected optional workload</dt><dd className="font-medium">{formatMinutes(preview.selectedOptionalMinutes)}</dd></div>
+                  <div><dt className="text-muted-foreground">Capstones ultimately scheduled</dt><dd data-testid="preview-scheduled-capstones" className="font-medium">{preview.scheduledCapstones} · {formatMinutes(preview.scheduledCapstoneMinutes)}</dd></div>
+                  <div><dt className="text-muted-foreground">Additional prerequisites</dt><dd data-testid="preview-prerequisite-delta" className="font-medium">{preview.additionalPrerequisites} · {formatMinutes(preview.additionalPrerequisiteMinutes)}</dd></div>
+                  <div><dt className="text-muted-foreground">Complete roadmap workload</dt><dd data-testid="preview-total-workload" className="font-medium">{preview.totalRoadmapOccurrences} lessons · {formatMinutes(preview.totalRoadmapMinutes)}</dd></div>
+                  <div><dt className="text-muted-foreground">Estimated completion</dt><dd data-testid="preview-weeks" className="font-medium">{preview.estimatedWeeks} weeks at {hoursPerWeek}h/week</dd></div>
+                </dl>
+                {(preview.knownCapstonesExcluded > 0 || preview.manuallyRestoredCapstones > 0) && (
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Knowledge adjustments: {preview.knownCapstonesExcluded} excluded · {preview.manuallyRestoredCapstones} manually restored.
                   </p>
                 )}
               </div>

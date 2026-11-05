@@ -5,6 +5,8 @@ import type { LearnerProfile, SchedulerInput } from "@/lib/roadmap/types";
 
 const KNOWN_TOPIC_SKILL_IDS = ["transformers", "attention"];
 const LATER_PHASE_OCCURRENCE = "07-transformers-deep-dive/01-why-transformers";
+const KNOWN_OCCURRENCE_WITH_PREREQUISITE =
+  "07-transformers-deep-dive/02-self-attention-from-scratch";
 const ADVANCED_UNKNOWN_OCCURRENCE =
   "07-transformers-deep-dive/12-kv-cache-flash-attention";
 const ADVANCED_DEPENDENT_OCCURRENCE = "07-transformers-deep-dive/13-scaling-laws";
@@ -127,12 +129,68 @@ describe("declared-known topics beyond the recommended start phase", () => {
     const second = recommendPlacement(profile);
     expect(second.skimOccurrenceIds).toEqual(first.skimOccurrenceIds);
 
-    const manuallyIncluded = scheduledIds({
+    const excluded = generateRoadmap({
+      ...INPUT,
+      knownOccurrenceIds: first.skimOccurrenceIds,
+    });
+    const restored = generateRoadmap({
       ...INPUT,
       knownOccurrenceIds: first.skimOccurrenceIds,
       manuallyIncluded: [LATER_PHASE_OCCURRENCE],
     });
+    const manuallyIncluded = new Set(
+      restored.plan.weeks.flatMap((week) => week.items.map((item) => item.occurrenceId))
+    );
     expect(manuallyIncluded.has(LATER_PHASE_OCCURRENCE)).toBe(true);
+    expect([...manuallyIncluded].filter((id) => id === LATER_PHASE_OCCURRENCE)).toHaveLength(1);
+    expect(restored.plan.summary.totalMinutes - excluded.plan.summary.totalMinutes).toBe(45);
+    expect(restored.plan.skipped).not.toContainEqual(
+      expect.objectContaining({ occurrenceId: LATER_PHASE_OCCURRENCE })
+    );
+
+    const regenerated = generateRoadmap({
+      ...INPUT,
+      knownOccurrenceIds: first.skimOccurrenceIds,
+      manuallyIncluded: [LATER_PHASE_OCCURRENCE],
+    });
+    expect(regenerated.plan).toEqual(restored.plan);
+
+    const reversed = scheduledIds({
+      ...INPUT,
+      knownOccurrenceIds: first.skimOccurrenceIds,
+      manuallyIncluded: [],
+    });
+    expect(reversed.has(LATER_PHASE_OCCURRENCE)).toBe(false);
+  });
+
+  it("re-includes one exact occurrence while a known prerequisite remains satisfied", () => {
+    const placement = recommendPlacement(beginnerWhoKnowsTransformers());
+    const result = generateRoadmap({
+      ...INPUT,
+      knownOccurrenceIds: placement.skimOccurrenceIds,
+      manuallyIncluded: [KNOWN_OCCURRENCE_WITH_PREREQUISITE],
+    });
+    const scheduled = new Set(
+      result.plan.weeks.flatMap((week) => week.items.map((item) => item.occurrenceId))
+    );
+
+    expect(scheduled.has(KNOWN_OCCURRENCE_WITH_PREREQUISITE)).toBe(true);
+    expect(scheduled.has(LATER_PHASE_OCCURRENCE)).toBe(false);
+    expect(
+      result.plan.weeks
+        .flatMap((week) => week.items)
+        .filter((item) => item.occurrenceId === KNOWN_OCCURRENCE_WITH_PREREQUISITE)
+        .reduce((sum, item) => sum + item.allocatedMinutes, 0)
+    ).toBe(90);
+  });
+
+  it("keeps a now-redundant exact override harmless when knowledge selections change", () => {
+    const scheduled = scheduledIds({
+      ...INPUT,
+      knownOccurrenceIds: [],
+      manuallyIncluded: [LATER_PHASE_OCCURRENCE],
+    });
+    expect([...scheduled].filter((id) => id === LATER_PHASE_OCCURRENCE)).toHaveLength(1);
   });
 
   it("partial knowledge (only transformers, not attention) keeps the occurrence in the plan", () => {

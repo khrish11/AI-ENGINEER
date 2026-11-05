@@ -76,6 +76,7 @@ export const GraphConfigSchema = z.object({
   projectKeywords: z.array(z.string().min(1)).default([]),
   phaseSkills: z.record(z.string(), z.array(z.string())).default({}),
   phasePrerequisites: z.record(z.string(), z.array(z.string())).default({}),
+  phasesWithoutImplicitSequence: z.array(z.string()).default([]),
   extraEdges: z.record(z.string(), z.array(z.string())).default({}),
   occurrenceOverrides: z
     .record(
@@ -192,6 +193,22 @@ export const PlacementResultSchema = z.object({
 
 export type PlacementResult = z.infer<typeof PlacementResultSchema>;
 
+export const CapstoneSelectionSchema = z.object({
+  version: z.literal(1),
+  selectedProductIds: z.array(z.string()).default([]),
+  selectedTrackIds: z.array(z.string()).default([]),
+});
+
+export const UnsupportedCapstoneSelectionSchema = z
+  .object({
+    version: z.number().int().refine((version) => version !== 1),
+  })
+  .passthrough();
+
+export type CapstoneSelection = z.infer<typeof CapstoneSelectionSchema>;
+export type UnsupportedCapstoneSelection = z.infer<typeof UnsupportedCapstoneSelectionSchema>;
+export type AnyCapstoneSelection = CapstoneSelection | UnsupportedCapstoneSelection;
+
 // ---------------------------------------------------------------------------
 // Generation settings and plan
 // ---------------------------------------------------------------------------
@@ -211,6 +228,10 @@ export const RoadmapSettingsSchema = z.object({
   // Canonical occurrence ids the learner declared as already known during
   // onboarding placement. These are kept out of the mandatory plan.
   knownOccurrenceIds: z.array(z.string()).default([]),
+  // Missing means a legacy roadmap: retain the V1 all-important behavior.
+  capstoneSelection: z
+    .union([CapstoneSelectionSchema, UnsupportedCapstoneSelectionSchema])
+    .optional(),
 });
 
 export type RoadmapSettings = z.infer<typeof RoadmapSettingsSchema>;
@@ -342,6 +363,7 @@ export interface SchedulerInput {
   manuallyExcluded?: string[];
   manualWeekAssignments?: Record<string, number>;
   knownOccurrenceIds?: string[];
+  capstoneSelection?: AnyCapstoneSelection;
   maxWeeks?: number;
 }
 

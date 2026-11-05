@@ -8,52 +8,7 @@ export const MCP_ADAPTER_VERSION = 1;
 export const defaultContext: McpToolContext = { policy: "LOCAL_PRIVATE" };
 
 function toolSchema(tool: (typeof tools)[number]) {
-  const shape = (tool.inputSchema as { shape?: Record<string, unknown> }).shape ?? {};
-  const zodSchema = tool.inputSchema as z.ZodObject<Record<string, z.ZodTypeAny>>;
-  return {
-    type: "object",
-    properties: Object.fromEntries(
-      Object.keys(shape).map((key) => {
-        const inputField = zodSchema.shape[key];
-        let zodField = inputField;
-        while (zodField instanceof z.ZodOptional || zodField instanceof z.ZodDefault) {
-          zodField = zodField._def.innerType;
-        }
-        let jsonSchema: Record<string, unknown> = {};
-
-        if (zodField instanceof z.ZodString) {
-          jsonSchema = { type: "string" };
-          const checks = zodField._def.checks;
-          if (checks) {
-            for (const check of checks) {
-              if (check.kind === "min") jsonSchema.minLength = check.value;
-              if (check.kind === "max") jsonSchema.maxLength = check.value;
-            }
-          }
-        } else if (zodField instanceof z.ZodNumber) {
-          jsonSchema = { type: "number" };
-          const checks = zodField._def.checks;
-          if (checks) {
-            for (const check of checks) {
-              if (check.kind === "min") jsonSchema.minimum = check.value;
-              if (check.kind === "max") jsonSchema.maximum = check.value;
-              if (check.kind === "int") jsonSchema.type = "integer";
-            }
-          }
-        } else if (zodField instanceof z.ZodBoolean) {
-          jsonSchema = { type: "boolean" };
-        } else {
-          jsonSchema = { type: "string" };
-        }
-
-        return [key, jsonSchema];
-      })
-    ),
-    required: Object.keys(shape).filter((key) => {
-      return !zodSchema.shape[key].isOptional();
-    }),
-    additionalProperties: false,
-  };
+  return z.toJSONSchema(tool.inputSchema);
 }
 
 export async function handleMcpRequest(request: Record<string, unknown>, context: McpToolContext = defaultContext) {

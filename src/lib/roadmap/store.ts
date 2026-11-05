@@ -97,6 +97,7 @@ export function generateForSettings(
     manuallyExcluded: settings.manuallyExcluded,
     manualWeekAssignments: settings.manualWeekAssignments,
     knownOccurrenceIds: settings.knownOccurrenceIds,
+    capstoneSelection: settings.capstoneSelection,
   });
 }
 
