@@ -54,6 +54,21 @@ describe("sync protocol schema", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("rejects an oversized mutation batch before validating every item", () => {
+    const result = SyncRequestSchema.safeParse({
+      clientBatchId: BATCH,
+      deviceId: DEVICE,
+      mutations: Array.from({ length: 501 }, () => null),
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues).toEqual([
+        expect.objectContaining({ code: "too_big", path: ["mutations"] }),
+      ]);
+    }
+  });
 });
 
 describe("sync engine idempotency", () => {

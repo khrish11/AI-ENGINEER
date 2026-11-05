@@ -53,7 +53,7 @@ function main() {
     }
     const result = ProjectDefinitionSchema.safeParse(raw);
     if (!result.success) {
-      const details = result.error.errors
+      const details = result.error.issues
         .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
         .join("; ");
       schemaFailures.push(`${relative}: ${details}`);

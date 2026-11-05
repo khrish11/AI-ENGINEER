@@ -11,13 +11,13 @@ export const EnvironmentSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url(),
   AUTH_SECRET: z.string().min(32).optional().or(z.literal("")),
   AUTH_URL: z.string().url().optional().or(z.literal("")),
-  AUTH_TRUST_HOST: booleanFromEnv.default("false"),
+  AUTH_TRUST_HOST: booleanFromEnv.default(false),
   AUTH_GITHUB_ID: z.string().optional().or(z.literal("")),
   AUTH_GITHUB_SECRET: z.string().optional().or(z.literal("")),
   AUTH_GOOGLE_ID: z.string().optional().or(z.literal("")),
   AUTH_GOOGLE_SECRET: z.string().optional().or(z.literal("")),
-  NEXT_PUBLIC_ENABLE_GUEST_MODE: booleanFromEnv.default("true"),
-  NEXT_PUBLIC_ENABLE_COMMUNITY_CURATION: booleanFromEnv.default("true"),
+  NEXT_PUBLIC_ENABLE_GUEST_MODE: booleanFromEnv.default(true),
+  NEXT_PUBLIC_ENABLE_COMMUNITY_CURATION: booleanFromEnv.default(true),
 });
 
 export type Environment = z.infer<typeof EnvironmentSchema>;

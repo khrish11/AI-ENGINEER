@@ -48,7 +48,7 @@ function main() {
     }
     const parse = AssessmentSchema.safeParse(raw);
     if (!parse.success) {
-      const details = parse.error.errors
+      const details = parse.error.issues
         .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
         .join("; ");
       schemaFailures.push(`${relative}: ${details}`);
