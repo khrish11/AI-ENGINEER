@@ -186,6 +186,24 @@ describe("versioned capstone planning", () => {
     });
   });
 
+  it("calculates the exact production core-only plan after the manual Add back", () => {
+    const restored = preview(
+      { version: 1, selectedProductIds: [], selectedTrackIds: [] },
+      { manuallyIncluded: [KNOWN[0]] }
+    );
+
+    expect(restored).toMatchObject({
+      totalRoadmapOccurrences: 351,
+      totalRoadmapMinutes: 32_640,
+      estimatedWeeks: 55,
+      requiredCoreSelected: 4,
+      optionalSelected: 0,
+      scheduledCapstones: 4,
+      additionalPrerequisites: 0,
+      additionalPrerequisiteMinutes: 0,
+    });
+  });
+
   it("deduplicates repeated selections and shared prerequisite closure", () => {
     const result = preview({
       version: 1,
