@@ -186,7 +186,10 @@ export function OnboardingWizard() {
   const [questions, setQuestions] = React.useState<PlacementQuestion[]>([]);
   const [answers, setAnswers] = React.useState<Record<string, number>>({});
   const [quizLoading, setQuizLoading] = React.useState(false);
-  const [placement, setPlacement] = React.useState<PlacementResult | null>(null);
+  const [placementSnapshot, setPlacementSnapshot] = React.useState<{
+    profileKey: string;
+    result: PlacementResult;
+  } | null>(null);
 
   const profile: LearnerProfile = React.useMemo(
     () => ({
@@ -199,6 +202,17 @@ export function OnboardingWizard() {
       updatedAt: new Date().toISOString(),
     }),
     [background, programming, math, ai, knownTopics, trackId]
+  );
+  const profileKey = React.useMemo(
+    () => JSON.stringify({ background, programming, math, ai, knownTopics, trackId }),
+    [background, programming, math, ai, knownTopics, trackId]
+  );
+  const placement = placementSnapshot?.profileKey === profileKey
+    ? placementSnapshot.result
+    : null;
+  const effectivePlacement = React.useMemo(
+    () => placement ?? recommendPlacement(profile),
+    [placement, profile]
   );
 
   const settings: RoadmapSettings = React.useMemo(
@@ -234,9 +248,9 @@ export function OnboardingWizard() {
     () =>
       calculateCapstonePreview({
         ...settings,
-        knownOccurrenceIds: placement?.skimOccurrenceIds ?? [],
+        knownOccurrenceIds: effectivePlacement.skimOccurrenceIds,
       }),
-    [settings, placement]
+    [settings, effectivePlacement]
   );
 
   const canContinue = React.useCallback(() => {
@@ -287,16 +301,16 @@ export function OnboardingWizard() {
       } else {
         result = recommendPlacement(profile);
       }
-      setPlacement(result);
+      setPlacementSnapshot({ profileKey, result });
     } catch {
-      setPlacement(recommendPlacement(profile));
+      setPlacementSnapshot({ profileKey, result: recommendPlacement(profile) });
     }
   };
 
   const generate = async () => {
     setError(null);
     try {
-      const finalPlacement = placement ?? recommendPlacement(profile);
+      const finalPlacement = effectivePlacement;
       await actions.saveProfile(profile);
       await actions.savePlacement(finalPlacement);
       await actions.generate({ ...settings, knownOccurrenceIds: finalPlacement.skimOccurrenceIds });
