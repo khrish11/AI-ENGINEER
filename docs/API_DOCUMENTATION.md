@@ -33,16 +33,28 @@ AI Engineer OS provides multiple ways to access curriculum data for chatbots and
 
 ### API Key Authentication
 
-**⚠️ IMPORTANT**: API key management endpoints are currently **DISABLED** pending implementation of proper admin authentication. API keys can only be created by administrators through a secure interface that has not yet been implemented.
+**⚠️ CRITICAL**: API key management endpoints (`/api/admin/api-keys`) are **DISABLED** until proper admin authentication is implemented. The project's authentication system (NextAuth) does not currently have role-based access control (RBAC) or admin roles defined.
 
-**Status**: `/api/admin/api-keys` endpoints return 403 with `ADMIN_AUTH_REQUIRED` code.
+**Status**: Returns 403 with `ADMIN_AUTH_REQUIRED` code for all operations (POST, GET, DELETE).
+
+**Required Implementation**:
+1. Add `role` field to `users` table (schema migration)
+2. Implement admin role assignment (seed or UI)
+3. Add admin check to NextAuth session
+4. Update `checkAdminAuth()` in `src/app/api/admin/api-keys/route.ts` to verify admin role
 
 ### Rate Limiting
 
-**⚠️ IMPORTANT**: Current rate limiting uses in-memory storage and is **NOT RELIABLE** in Vercel's serverless environment. Rate limits reset on server restart/deployment. For production, implement Redis-based rate limiting.
+**⚠️ IMPORTANT**: Current rate limiting uses in-memory storage and is **NOT RELIABLE** in Vercel's serverless environment. Rate limits reset on server restart/deployment.
 
-- **Without API Key**: 60 requests/minute (IP-based, enforced by MCP endpoint)
-- **With API Key**: 1000 requests/hour (key-based, in-memory, NOT RECOMMENDED for production)
+**Current Implementation**:
+- Without API Key: 60 requests/minute (IP-based, enforced by MCP endpoint)
+- With API Key: 1000 requests/hour (key-based, in-memory Map)
+
+**Recommended for Production**:
+- Implement Redis-based rate limiting (Upstash Redis on Vercel)
+- Add distributed rate limiting across serverless instances
+- Consider using Vercel's built-in rate limiting or Upstash Ratelimit
 
 ---
 
@@ -564,6 +576,27 @@ Webhooks send POST requests with the following headers:
 ```
 
 **Security Note**: Webhook signature includes nonce and timestamp for replay attack protection. Consumers should verify both are recent and unique.
+
+### Webhook Security
+
+**✅ Hardened for Production Security**:
+
+Webhook registration and delivery includes comprehensive security protections:
+
+- **SSRF Protection**: Blocks private/internal IPs (10.x, 172.16-31.x, 192.168.x, 127.x, 169.254.x)
+- **IPv6 Protection**: Blocks IPv6 internal addresses (fe80:, fc00:, fd, ::)
+- **Metadata Protection**: Blocks cloud metadata endpoints (metadata.google.internal, 169.254.169.254)
+- **DNS Rebinding Protection**: Blocks `.internal`, `.local`, `.corp` domains
+- **Replay Attack Protection**: Nonce-based HMAC signatures with timestamps
+- **Redirect Protection**: `redirect: manual` in fetch to prevent SSRF via redirects
+- **Timeout Protection**: 10-second timeout on webhook delivery
+- **Protocol Enforcement**: Only HTTPS URLs allowed (localhost allowed for development)
+
+**Consumer Requirements**:
+- Update signature verification to include nonce and timestamp
+- Reject replayed nonces and old timestamps (>5 minutes)
+- Use HTTPS for webhook endpoints
+- Verify webhook URL on first delivery (optional)
 
 ### List Webhooks
 
