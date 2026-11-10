@@ -34,8 +34,8 @@ export async function GET(
     };
 
     if (includeContent) {
-      (response as any).markdownContent = lesson.markdownContent;
-      (response as any).codeFiles = lesson.codeFiles;
+      (response as typeof response & { markdownContent: string; codeFiles: unknown[] }).markdownContent = lesson.markdownContent;
+      (response as typeof response & { markdownContent: string; codeFiles: unknown[] }).codeFiles = lesson.codeFiles;
     }
 
     return NextResponse.json({ success: true, data: response });

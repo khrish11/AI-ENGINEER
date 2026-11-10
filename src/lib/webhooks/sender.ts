@@ -1,6 +1,7 @@
 import { getWebhooksForEvent } from "./store";
+import { createHmac } from "node:crypto";
 
-export async function triggerWebhook(event: string, data: any) {
+export async function triggerWebhook(event: string, data: Record<string, unknown>) {
   const webhooks = getWebhooksForEvent(event);
 
   for (const webhook of webhooks) {
@@ -62,8 +63,7 @@ function isValidWebhookUrl(url: string): boolean {
   }
 }
 
-function generateSignature(data: any, secret: string): string {
-  const crypto = require("crypto");
+function generateSignature(data: Record<string, unknown>, secret: string): string {
   const payload = JSON.stringify(data);
-  return crypto.createHmac("sha256", secret).update(payload).digest("hex");
+  return createHmac("sha256", secret).update(payload).digest("hex");
 }
