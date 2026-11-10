@@ -722,51 +722,103 @@ All endpoints return consistent error responses:
 
 ## Examples
 
-### Example 1: Get All Phases
+### cURL
 
 ```bash
+# Get all phases (public, no auth required)
 curl https://ai-engineer-os-inky.vercel.app/api/v1/phases
+
+# Get phase details with API key
+curl -H "X-API-Key: aios_abc123..." https://ai-engineer-os-inky.vercel.app/api/v1/phases/07-sequence-models-nlp
+
+# Stream lesson content
+curl https://ai-engineer-os-inky.vercel.app/api/v1/stream/07-sequence-models-nlp/01-transformers
 ```
 
-### Example 2: Search for Transformer Lessons
+### Python
 
-```bash
-curl "https://ai-engineer-os-inky.vercel.app/api/v1/lessons?query=transformer&limit=5"
+```python
+import requests
+
+# Public endpoint
+response = requests.get("https://ai-engineer-os-inky.vercel.app/api/v1/phases")
+print(response.json())
+
+# With API key
+headers = {"X-API-Key": "aios_abc123..."}
+response = requests.get("https://ai-engineer-os-inky.vercel.app/api/v1/phases", headers=headers)
+print(response.json())
+
+# Stream lesson content
+response = requests.get("https://ai-engineer-os-inky.vercel.app/api/v1/stream/07-sequence-models-nlp/01-transformers", stream=True)
+for line in response.iter_lines():
+    if line:
+        print(line.decode())
 ```
 
-### Example 3: Get Lesson with Content (Authenticated)
-
-```bash
-curl -H "X-API-Key: aios_abc123..." \
-  "https://ai-engineer-os-inky.vercel.app/api/v1/lessons/07-sequence-models-nlp/01-transformers?includeContent=true"
-```
-
-### Example 4: Stream Lesson Content
+### JavaScript/Node.js
 
 ```javascript
-const eventSource = new EventSource(
-  'https://ai-engineer-os-inky.vercel.app/api/v1/stream/07-sequence-models-nlp/01-transformers'
-);
+// Public endpoint
+const response = await fetch("https://ai-engineer-os-inky.vercel.app/api/v1/phases");
+const data = await response.json();
+console.log(data);
 
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log(data);
-};
+// With API key
+const response = await fetch("https://ai-engineer-os-inky.vercel.app/api/v1/phases", {
+  headers: {
+    "X-API-Key": "aios_abc123..."
+  }
+});
+const data = await response.json();
+console.log(data);
+
+// Stream lesson content
+const response = await fetch("https://ai-engineer-os-inky.vercel.app/api/v1/stream/07-sequence-models-nlp/01-transformers");
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  console.log(decoder.decode(value));
+}
 ```
 
-### Example 5: MCP Tool Call
+### MCP Configuration
 
-```bash
-curl -X POST https://ai-engineer-os-inky.vercel.app/api/mcp \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/call",
-    "params": {
-      "name": "search_curriculum",
-      "arguments": {
-        "query": "transformer",
+```json
+{
+  "mcpServers": {
+    "ai-engineer-os": {
+      "url": "https://ai-engineer-os-inky.vercel.app/api/mcp",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+### Webhook Signature Verification (Python)
+
+```python
+import hmac
+import hashlib
+import json
+import time
+
+def verify_webhook_signature(payload, signature, secret, nonce, timestamp):
+    # Verify timestamp is recent (within 5 minutes)
+    if abs(int(timestamp) - int(time.time())) > 300:
+        return False
+    
+    # Compute expected signature
+    hmac_obj = hmac.new(secret.encode(), nonce.encode(), hashlib.sha256)
+    hmac_obj.update(timestamp.encode())
+    hmac_obj.update(json.dumps(payload).encode())
+    expected_signature = hmac_obj.hexdigest()
+    
+    # Use constant-time comparison
+    return hmac.compare_digest(signature, expected_signature)
+```
         "limit": 5
       }
     }
