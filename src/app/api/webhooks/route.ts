@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { registerWebhook, listWebhooks, deleteWebhook } from "@/lib/webhooks/store";
 
 export const runtime = "nodejs";
@@ -8,20 +8,36 @@ function isValidWebhookUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
 
-    // Only allow HTTPS (or localhost for development)
+    // Only allow HTTPS (localhost allowed for development)
     if (parsed.protocol !== "https:" && parsed.hostname !== "localhost" && parsed.hostname !== "127.0.0.1") {
       return false;
     }
 
-    // Block private/internal IPs
     const hostname = parsed.hostname;
-    const privateIPs = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
-    if (privateIPs.test(hostname)) {
+
+    // Explicitly allow localhost for development
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return true;
+    }
+
+    // Block private/internal IPs (IPv4)
+    const privateIPv4 = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
+    if (privateIPv4.test(hostname)) {
+      return false;
+    }
+
+    // Block IPv6 internal addresses
+    if (hostname.includes("::") || hostname.startsWith("fe80:") || hostname.startsWith("fc00:") || hostname.startsWith("fd")) {
       return false;
     }
 
     // Block metadata endpoints
     if (hostname === "metadata.google.internal" || hostname === "169.254.169.254") {
+      return false;
+    }
+
+    // Block internal DNS resolution attempts
+    if (hostname.endsWith(".internal") || hostname.endsWith(".local") || hostname.endsWith(".corp")) {
       return false;
     }
 
@@ -47,7 +63,17 @@ export async function POST(request: Request) {
     // SSRF Protection: Validate webhook URL
     if (!isValidWebhookUrl(url)) {
       return NextResponse.json(
-        { success: false, error: "Invalid webhook URL. Only HTTPS URLs are allowed." },
+        { success: false, error: "Invalid webhook URL. Only HTTPS URLs are allowed. Private/internal IPs are blocked." },
+        { status: 400 }
+      );
+    }
+
+    // Validate events
+    const validEvents = ["lesson.updated", "resource.added", "resource.verified", "project.added"];
+    const invalidEvents = events.filter((e: string) => !validEvents.includes(e));
+    if (invalidEvents.length > 0) {
+      return NextResponse.json(
+        { success: false, error: `Invalid events: ${invalidEvents.join(", ")}. Valid events: ${validEvents.join(", ")}` },
         { status: 400 }
       );
     }

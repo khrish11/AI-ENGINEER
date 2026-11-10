@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { projectCatalog, getProjectBySlug } from "@/lib/projects/catalog";
+import { projectCatalog } from "@/lib/projects/catalog";
 import { withApiKeyAuth } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";

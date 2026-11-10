@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllPhases, getPhaseDetails } from "@/lib/curriculum/service";
+import { getAllPhases } from "@/lib/curriculum/service";
 import { withApiKeyAuth } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";

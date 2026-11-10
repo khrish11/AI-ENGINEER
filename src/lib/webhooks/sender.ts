@@ -1,5 +1,5 @@
 import { getWebhooksForEvent } from "./store";
-import { createHmac } from "node:crypto";
+import { createHmac, randomBytes } from "node:crypto";
 
 export async function triggerWebhook(event: string, data: Record<string, unknown>) {
   const webhooks = getWebhooksForEvent(event);
@@ -12,7 +12,10 @@ export async function triggerWebhook(event: string, data: Record<string, unknown
         continue;
       }
 
-      const signature = generateSignature(data, webhook.secret);
+      // Add nonce for replay attack protection
+      const nonce = randomBytes(16).toString("hex");
+      const timestamp = Date.now().toString();
+      const signature = generateSignature(data, webhook.secret, nonce, timestamp);
 
       const response = await fetch(webhook.url, {
         method: "POST",
@@ -20,11 +23,14 @@ export async function triggerWebhook(event: string, data: Record<string, unknown
           "Content-Type": "application/json",
           "X-Webhook-Event": event,
           "X-Webhook-Signature": signature,
-          "X-Webhook-Timestamp": Date.now().toString(),
+          "X-Webhook-Timestamp": timestamp,
+          "X-Webhook-Nonce": nonce,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, nonce, timestamp }),
         // Timeout to prevent hanging on malicious endpoints
         signal: AbortSignal.timeout(10000), // 10 second timeout
+        // Prevent following redirects
+        redirect: "manual",
       });
 
       if (!response.ok) {
@@ -36,24 +42,41 @@ export async function triggerWebhook(event: string, data: Record<string, unknown
   }
 }
 
-function isValidWebhookUrl(url: string): boolean {
+export function isValidWebhookUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
 
-    // Only allow HTTPS (or localhost for development)
+    // Only allow HTTPS (localhost allowed for development)
+    // In production, should add environment variable check to reject localhost
     if (parsed.protocol !== "https:" && parsed.hostname !== "localhost" && parsed.hostname !== "127.0.0.1") {
       return false;
     }
 
-    // Block private/internal IPs
     const hostname = parsed.hostname;
-    const privateIPs = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
-    if (privateIPs.test(hostname)) {
+
+    // Explicitly allow localhost for development
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return true;
+    }
+
+    // Block private/internal IPs (IPv4)
+    const privateIPv4 = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
+    if (privateIPv4.test(hostname)) {
+      return false;
+    }
+
+    // Block IPv6 internal addresses
+    if (hostname.includes("::") || hostname.startsWith("fe80:") || hostname.startsWith("fc00:") || hostname.startsWith("fd")) {
       return false;
     }
 
     // Block metadata endpoints
     if (hostname === "metadata.google.internal" || hostname === "169.254.169.254") {
+      return false;
+    }
+
+    // Block internal DNS resolution attempts
+    if (hostname.endsWith(".internal") || hostname.endsWith(".local") || hostname.endsWith(".corp")) {
       return false;
     }
 
@@ -63,7 +86,11 @@ function isValidWebhookUrl(url: string): boolean {
   }
 }
 
-function generateSignature(data: Record<string, unknown>, secret: string): string {
+function generateSignature(data: Record<string, unknown>, secret: string, nonce: string, timestamp: string): string {
   const payload = JSON.stringify(data);
-  return createHmac("sha256", secret).update(payload).digest("hex");
+  const hmac = createHmac("sha256", secret);
+  hmac.update(nonce);
+  hmac.update(timestamp);
+  hmac.update(payload);
+  return hmac.digest("hex");
 }

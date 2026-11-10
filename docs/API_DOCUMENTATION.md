@@ -33,43 +33,16 @@ AI Engineer OS provides multiple ways to access curriculum data for chatbots and
 
 ### API Key Authentication
 
-API keys are optional for public endpoints but required for higher rate limits and premium features.
+**⚠️ IMPORTANT**: API key management endpoints are currently **DISABLED** pending implementation of proper admin authentication. API keys can only be created by administrators through a secure interface that has not yet been implemented.
 
-#### Generate an API Key
+**Status**: `/api/admin/api-keys` endpoints return 403 with `ADMIN_AUTH_REQUIRED` code.
 
-```bash
-POST /api/admin/api-keys
-Content-Type: application/json
+### Rate Limiting
 
-{
-  "name": "My Chatbot"
-}
-```
+**⚠️ IMPORTANT**: Current rate limiting uses in-memory storage and is **NOT RELIABLE** in Vercel's serverless environment. Rate limits reset on server restart/deployment. For production, implement Redis-based rate limiting.
 
-**Response**:
-```json
-{
-  "success": true,
-  "data": {
-    "apiKey": "aios_abc123...",
-    "name": "My Chatbot",
-    "message": "Store this key securely. It will not be shown again."
-  }
-}
-```
-
-#### Use API Key
-
-Include the API key in the `X-API-Key` header:
-
-```bash
-curl -H "X-API-Key: aios_abc123..." https://ai-engineer-os-inky.vercel.app/api/v1/phases
-```
-
-#### Rate Limits
-
-- **Without API Key**: 60 requests/minute (IP-based)
-- **With API Key**: 1000 requests/hour (key-based)
+- **Without API Key**: 60 requests/minute (IP-based, enforced by MCP endpoint)
+- **With API Key**: 1000 requests/hour (key-based, in-memory, NOT RECOMMENDED for production)
 
 ---
 
@@ -572,14 +545,16 @@ Content-Type: application/json
 Webhooks send POST requests with the following headers:
 
 - `X-Webhook-Event`: The event type
-- `X-Webhook-Signature`: HMAC-SHA256 signature
+- `X-Webhook-Signature`: HMAC-SHA256 signature (includes nonce and timestamp)
 - `X-Webhook-Timestamp`: Unix timestamp
+- `X-Webhook-Nonce`: Random nonce for replay protection
 
 **Payload Example**:
 ```json
 {
   "event": "lesson.updated",
   "timestamp": 1699999999,
+  "nonce": "abc123...",
   "data": {
     "phaseSlug": "07-sequence-models-nlp",
     "lessonSlug": "01-transformers",
@@ -587,6 +562,8 @@ Webhooks send POST requests with the following headers:
   }
 }
 ```
+
+**Security Note**: Webhook signature includes nonce and timestamp for replay attack protection. Consumers should verify both are recent and unique.
 
 ### List Webhooks
 
