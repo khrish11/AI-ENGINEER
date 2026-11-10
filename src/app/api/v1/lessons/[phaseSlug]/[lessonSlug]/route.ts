@@ -24,7 +24,16 @@ export async function GET(
       return NextResponse.json({ success: false, error: "Lesson not found" }, { status: 404 });
     }
 
-    const response = {
+    const response: {
+      slug: string;
+      title: string;
+      tagline: string;
+      learningObjectives: string[];
+      estimatedMinutes: number;
+      upstreamAttribution: string;
+      markdownContent?: string;
+      codeFiles?: string[];
+    } = {
       slug: lesson.slug,
       title: lesson.title,
       tagline: lesson.tagline,
@@ -34,8 +43,8 @@ export async function GET(
     };
 
     if (includeContent) {
-      (response as any).markdownContent = lesson.markdownContent;
-      (response as any).codeFiles = lesson.codeFiles;
+      response.markdownContent = lesson.markdownContent;
+      response.codeFiles = lesson.codeFiles;
     }
 
     return NextResponse.json({ success: true, data: response });

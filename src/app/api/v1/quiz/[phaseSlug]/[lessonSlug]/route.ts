@@ -34,7 +34,7 @@ export async function GET(
   }
 }
 
-function generateQuizFromLesson(lesson: any) {
+function generateQuizFromLesson(lesson: { learningObjectives?: string[]; slug: string; title: string }) {
   const objectives = lesson.learningObjectives || [];
   const quizQuestions = objectives.slice(0, 5).map((objective: string, index: number) => ({
     id: `q${index + 1}`,

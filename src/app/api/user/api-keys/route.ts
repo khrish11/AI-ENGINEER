@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateApiKey, listApiKeys, revokeApiKey, rotateApiKey } from "@/lib/auth/api-keys-service";
+import { generateApiKey, listApiKeys, revokeApiKey } from "@/lib/auth/api-keys-service";
 import { auth } from "@/auth";
 
 export const runtime = "nodejs";
