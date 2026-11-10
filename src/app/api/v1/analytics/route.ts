@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   const apiKey = request.headers.get("x-api-key");
   if (apiKey) {
-    const auth = withApiKeyAuth(request);
+    const auth = await withApiKeyAuth(request);
     if (!auth.authorized) return auth.response;
   }
 

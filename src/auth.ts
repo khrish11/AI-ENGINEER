@@ -67,6 +67,7 @@ async function upsertAuthUser(params: {
         email,
         name: params.name,
         image: params.image,
+        role: "user", // Default role for new users
       })
       .returning({ id: users.id });
     const newId = inserted[0].id;

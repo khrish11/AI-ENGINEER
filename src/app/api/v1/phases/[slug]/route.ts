@@ -12,7 +12,7 @@ export async function GET(
   const apiKey = request.headers.get("x-api-key");
   if (apiKey) {
     const auth = withApiKeyAuth(request);
-    if (!auth.authorized) return auth.response;
+    if (!(await auth).authorized) return (await auth).response;
   }
 
   try {

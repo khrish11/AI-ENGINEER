@@ -1,15 +1,16 @@
-import { getWebhooksForEvent } from "./store";
+import { getWebhooksForEvent, recordWebhookTrigger, recordWebhookFailure } from "./webhook-service";
 import { createHmac, randomBytes } from "node:crypto";
 import { lookup } from "node:dns/promises";
 
 export async function triggerWebhook(event: string, data: Record<string, unknown>) {
-  const webhooks = getWebhooksForEvent(event);
+  const webhooks = await getWebhooksForEvent(event);
 
   for (const webhook of webhooks) {
     try {
       // SSRF Protection: Validate webhook URL (async for DNS resolution)
       if (!(await isValidWebhookUrl(webhook.url))) {
         console.error(`Invalid webhook URL for ${webhook.id}: ${webhook.url}`);
+        await recordWebhookFailure(webhook.id);
         continue;
       }
 
@@ -28,17 +29,19 @@ export async function triggerWebhook(event: string, data: Record<string, unknown
           "X-Webhook-Nonce": nonce,
         },
         body: JSON.stringify({ ...data, nonce, timestamp }),
-        // Timeout to prevent hanging on malicious endpoints
-        signal: AbortSignal.timeout(10000), // 10 second timeout
-        // Prevent following redirects
+        signal: AbortSignal.timeout(10000),
         redirect: "manual",
       });
 
       if (!response.ok) {
         console.error(`Webhook ${webhook.id} returned ${response.status}`);
+        await recordWebhookFailure(webhook.id);
+      } else {
+        await recordWebhookTrigger(webhook.id);
       }
     } catch (error) {
       console.error(`Failed to trigger webhook ${webhook.id}:`, error);
+      await recordWebhookFailure(webhook.id);
     }
   }
 }
@@ -47,44 +50,36 @@ export async function isValidWebhookUrl(url: string): Promise<boolean> {
   try {
     const parsed = new URL(url);
 
-    // Only allow HTTPS (localhost allowed for development)
     if (parsed.protocol !== "https:" && parsed.hostname !== "localhost" && parsed.hostname !== "127.0.0.1") {
       return false;
     }
 
     const hostname = parsed.hostname;
 
-    // Explicitly allow localhost for development
     if (hostname === "localhost" || hostname === "127.0.0.1") {
       return true;
     }
 
-    // Block private/internal IPs (IPv4)
     const privateIPv4 = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
     if (privateIPv4.test(hostname)) {
       return false;
     }
 
-    // Block IPv6 internal addresses
     if (hostname.includes("::") || hostname.startsWith("fe80:") || hostname.startsWith("fc00:") || hostname.startsWith("fd")) {
       return false;
     }
 
-    // Block metadata endpoints
     if (hostname === "metadata.google.internal" || hostname === "169.254.169.254") {
       return false;
     }
 
-    // Block internal DNS resolution attempts
     if (hostname.endsWith(".internal") || hostname.endsWith(".local") || hostname.endsWith(".corp")) {
       return false;
     }
 
-    // DNS rebinding protection: Resolve hostname and check resolved IPs
     try {
       const addresses = await lookup(hostname, { all: true });
       for (const address of addresses) {
-        // Check if resolved IP is private
         if (address.family === 4) {
           if (privateIPv4.test(address.address)) {
             return false;
@@ -96,8 +91,6 @@ export async function isValidWebhookUrl(url: string): Promise<boolean> {
         }
       }
     } catch (dnsError) {
-      // If DNS resolution fails, allow the URL (it might be valid but not resolvable in this environment)
-      // The actual webhook delivery will fail if the URL is invalid
       console.warn(`DNS resolution warning for ${hostname}:`, dnsError);
     }
 

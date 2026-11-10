@@ -31,37 +31,41 @@ AI Engineer OS provides multiple ways to access curriculum data for chatbots and
 
 ## Authentication
 
+### User Authentication
+
+**✅ IMPLEMENTED**: Users sign in with Google OAuth via Auth.js/NextAuth. Authenticated users can manage their own API keys and webhooks.
+
+**Status**: `/api/user/api-keys` and `/api/webhooks` require authentication via NextAuth session.
+
 ### API Key Authentication
 
-**⚠️ CRITICAL**: API key management endpoints (`/api/admin/api-keys`) are **DISABLED** until proper admin authentication is implemented. The project's authentication system (NextAuth) does not currently have role-based access control (RBAC) or admin roles defined.
+**✅ IMPLEMENTED**: API keys are stored securely in PostgreSQL with SHA-256 hashes. Keys are only shown once during creation.
 
-**Status**: Returns 403 with `ADMIN_AUTH_REQUIRED` code for all operations (POST, GET, DELETE).
+**User API Key Management**:
+- `/api/user/api-keys` (POST, GET, DELETE) - Manage your own API keys
+- Requires Google OAuth authentication
+- Keys are cryptographically secure and stored as hashes
+- Scopes: `read` (default), `write` (future), `admin` (platform admin only)
 
-**Current Limitations**:
-- API keys are stored in-memory and not persisted to database
-- Rate limiting is disabled due to serverless environment limitations
-- Admin role system does not exist in the current schema
-
-**Required Implementation**:
-1. Add `role` field to `users` table (schema migration)
-2. Implement admin role assignment (seed or UI)
-3. Add admin check to NextAuth session
-4. Add database storage for API keys (not in-memory)
-5. Implement Redis-based rate limiting (Upstash Redis on Vercel)
-6. Update `checkAdminAuth()` in `src/app/api/admin/api-keys/route.ts` to verify admin role
+**Admin API Key Management**:
+- `/api/admin/api-keys` (POST, GET, DELETE) - Manage any user's API keys
+- Requires admin role in database
+- For platform-wide operations only
 
 ### Rate Limiting
 
-**⚠️ IMPORTANT**: Rate limiting is currently **DISABLED**. In-memory rate limiting is not reliable in Vercel's serverless environment.
+**✅ IMPLEMENTED**: Distributed rate limiting using PostgreSQL database. Works reliably in Vercel serverless environment.
 
 **Current Implementation**:
-- Rate limiting code exists but is commented out in middleware
-- Without rate limiting, endpoints have no protection against abuse
+- Without API Key: 60 requests/minute (IP-based)
+- With API Key: 1000 requests/hour (key-based)
+- Stored in PostgreSQL `rate_limits` table
+- Automatic cleanup of expired windows
 
-**Recommended for Production**:
-- Implement Redis-based rate limiting (Upstash Redis on Vercel)
-- Add distributed rate limiting across serverless instances
-- Consider using Vercel's built-in rate limiting or Upstash Ratelimit
+**Rate Limit Headers**:
+- `X-RateLimit-Limit`: Maximum requests allowed
+- `X-RateLimit-Remaining`: Remaining requests in current window
+- `X-RateLimit-Reset`: ISO timestamp when window resets
 
 ---
 
@@ -524,23 +528,41 @@ The MCP endpoint provides a standardized interface for AI agents using JSON-RPC 
 
 ## Webhooks
 
-**⚠️ CRITICAL**: Webhook management endpoints (`/api/webhooks`) are **DISABLED** until proper authentication is implemented. Webhooks cannot be registered, listed, or deleted without user authentication.
+**✅ IMPLEMENTED**: Webhook management is now authenticated and uses PostgreSQL storage. Users can manage their own webhooks.
 
-**Status**: Returns 403 with `AUTH_REQUIRED` code for all operations (POST, GET, DELETE).
+**User Webhook Management**:
+- `/api/webhooks` (POST, GET, DELETE) - Manage your own webhooks
+- Requires Google OAuth authentication
+- Webhooks are stored in PostgreSQL with ownership verification
+- URL validation with SSRF, DNS rebinding, and replay protection
 
-**Current Limitations**:
-- Webhook registration is not authenticated
-- Webhook ownership cannot be verified
-- No rate limiting on webhook registration
+### Register a Webhook
 
-**Required Implementation**:
-1. Add user authentication via NextAuth
-2. Verify webhook ownership before listing/deletion
-3. Add rate limiting on webhook registration
+```bash
+POST /api/webhooks
+Content-Type: application/json
+Authorization: Bearer <session_token>
+
+{
+  "url": "https://your-server.com/webhook",
+  "events": ["lesson.updated", "resource.added"]
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "data": {
+    "webhookId": "wh_1234567890_abc123",
+    "url": "https://your-server.com/webhook",
+    "events": ["lesson.updated", "resource.added"],
+    "message": "Webhook registered successfully"
+  }
+}
+```
 
 ### Available Events
-
-Webhooks would support the following events when enabled:
 
 - `lesson.updated` - Lesson content updated
 - `resource.added` - New resource added
@@ -573,8 +595,6 @@ Webhooks send POST requests with the following headers when triggered:
 ### Webhook Security
 
 **✅ Hardened for Production Security**:
-
-Webhook delivery includes comprehensive security protections:
 
 - **SSRF Protection**: Blocks private/internal IPs (10.x, 172.16-31.x, 192.168.x, 127.x, 169.254.x)
 - **IPv6 Protection**: Blocks IPv6 internal addresses (fe80:, fc00:, fd, ::)

@@ -1,36 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateApiKey, listApiKeys, deleteApiKey } from "@/lib/auth/api-keys";
+import { generateApiKey, listApiKeys, revokeApiKey, rotateApiKey } from "@/lib/auth/api-keys-service";
+import { auth } from "@/auth";
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { users } from "@/db/schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// CRITICAL: Admin authentication required for API key management
-// DISABLED: Endpoint returns 403 until proper admin authentication is implemented
-// This is a security requirement - do not enable without:
-// 1. RBAC system with admin roles in database
-// 2. Secure database storage for API keys (not in-memory)
-// 3. Session-based admin verification via NextAuth
-const ADMIN_AUTH_DISABLED = true;
-
-function checkAdminAuth(request: NextRequest): boolean {
-  if (ADMIN_AUTH_DISABLED) return false;
-
-  // TODO: Implement proper admin authentication
-  // 1. Check for admin session via NextAuth
-  // 2. Verify admin role in database
-  // 3. Add rate limiting for admin operations
-  return false;
+async function isAdmin(userId: string): Promise<boolean> {
+  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  return user?.role === "admin";
 }
 
-// POST /api/admin/api-keys - Generate new API key
+// POST /api/admin/api-keys - Generate new API key (admin only)
 export async function POST(request: NextRequest) {
-  // Security check: Reject requests until admin auth is implemented
-  if (!checkAdminAuth(request)) {
+  const session = await auth();
+  if (!session?.user?.id) {
     return NextResponse.json(
       {
         success: false,
-        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
-        code: "ADMIN_AUTH_REQUIRED",
+        error: "Authentication required",
+        code: "AUTH_REQUIRED",
+      },
+      { status: 401 }
+    );
+  }
+
+  const isAdminUser = await isAdmin(session.user.id);
+  if (!isAdminUser) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin privileges required",
+        code: "FORBIDDEN",
       },
       { status: 403 }
     );
@@ -38,15 +41,26 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const name = body.name || "default";
+    const { userId, name, scopes, expiresAt } = body;
 
-    const apiKey = generateApiKey(name);
+    if (!userId || !name) {
+      return NextResponse.json(
+        { success: false, error: "userId and name are required" },
+        { status: 400 }
+      );
+    }
+
+    const apiKey = await generateApiKey(userId, name, scopes, expiresAt ? new Date(expiresAt) : undefined);
 
     return NextResponse.json({
       success: true,
       data: {
-        apiKey,
-        name,
+        id: apiKey.id,
+        keyPrefix: apiKey.keyPrefix,
+        name: apiKey.name,
+        scopes: apiKey.scopes,
+        expiresAt: apiKey.expiresAt,
+        secretKey: apiKey.secretKey,
         message: "Store this key securely. It will not be shown again.",
       },
     });
@@ -62,25 +76,57 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/admin/api-keys - List all API keys
+// GET /api/admin/api-keys - List all API keys (admin only)
 export async function GET(request: NextRequest) {
-  if (!checkAdminAuth(request)) {
+  const session = await auth();
+  if (!session?.user?.id) {
     return NextResponse.json(
       {
         success: false,
-        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
-        code: "ADMIN_AUTH_REQUIRED",
+        error: "Authentication required",
+        code: "AUTH_REQUIRED",
+      },
+      { status: 401 }
+    );
+  }
+
+  const isAdminUser = await isAdmin(session.user.id);
+  if (!isAdminUser) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin privileges required",
+        code: "FORBIDDEN",
       },
       { status: 403 }
     );
   }
 
   try {
-    const keys = listApiKeys();
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return NextResponse.json(
+        { success: false, error: "userId is required" },
+        { status: 400 }
+      );
+    }
+
+    const keys = await listApiKeys(userId);
 
     return NextResponse.json({
       success: true,
-      data: keys,
+      data: keys.map((k) => ({
+        id: k.id,
+        name: k.name,
+        keyPrefix: k.keyPrefix,
+        scopes: k.scopes,
+        expiresAt: k.expiresAt,
+        lastUsedAt: k.lastUsedAt,
+        isRevoked: k.isRevoked,
+        createdAt: k.createdAt,
+      })),
       total: keys.length,
     });
   } catch (error) {
@@ -95,14 +141,27 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// DELETE /api/admin/api-keys - Delete an API key
+// DELETE /api/admin/api-keys - Revoke an API key (admin only)
 export async function DELETE(request: NextRequest) {
-  if (!checkAdminAuth(request)) {
+  const session = await auth();
+  if (!session?.user?.id) {
     return NextResponse.json(
       {
         success: false,
-        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
-        code: "ADMIN_AUTH_REQUIRED",
+        error: "Authentication required",
+        code: "AUTH_REQUIRED",
+      },
+      { status: 401 }
+    );
+  }
+
+  const isAdminUser = await isAdmin(session.user.id);
+  if (!isAdminUser) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin privileges required",
+        code: "FORBIDDEN",
       },
       { status: 403 }
     );
@@ -110,42 +169,37 @@ export async function DELETE(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { key } = body;
+    const { userId, keyId } = body;
 
-    if (!key) {
+    if (!userId || !keyId) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "API key required",
-        },
+        { success: false, error: "userId and keyId are required" },
         { status: 400 }
       );
     }
 
-    const deleted = deleteApiKey(key);
+    const deleted = await revokeApiKey(userId, keyId);
 
     if (!deleted) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "API key not found",
-        },
+        { success: false, error: "API key not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "API key deleted successfully",
+      message: "API key revoked successfully",
     });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to delete API key",
+        error: "Failed to revoke API key",
         details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
   }
 }
+
