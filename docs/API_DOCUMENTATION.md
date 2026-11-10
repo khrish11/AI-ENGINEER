@@ -33,43 +33,35 @@ AI Engineer OS provides multiple ways to access curriculum data for chatbots and
 
 ### API Key Authentication
 
-API keys are optional for public endpoints but required for higher rate limits and premium features.
+**⚠️ CRITICAL**: API key management endpoints (`/api/admin/api-keys`) are **DISABLED** until proper admin authentication is implemented. The project's authentication system (NextAuth) does not currently have role-based access control (RBAC) or admin roles defined.
 
-#### Generate an API Key
+**Status**: Returns 403 with `ADMIN_AUTH_REQUIRED` code for all operations (POST, GET, DELETE).
 
-```bash
-POST /api/admin/api-keys
-Content-Type: application/json
+**Current Limitations**:
+- API keys are stored in-memory and not persisted to database
+- Rate limiting is disabled due to serverless environment limitations
+- Admin role system does not exist in the current schema
 
-{
-  "name": "My Chatbot"
-}
-```
+**Required Implementation**:
+1. Add `role` field to `users` table (schema migration)
+2. Implement admin role assignment (seed or UI)
+3. Add admin check to NextAuth session
+4. Add database storage for API keys (not in-memory)
+5. Implement Redis-based rate limiting (Upstash Redis on Vercel)
+6. Update `checkAdminAuth()` in `src/app/api/admin/api-keys/route.ts` to verify admin role
 
-**Response**:
-```json
-{
-  "success": true,
-  "data": {
-    "apiKey": "aios_abc123...",
-    "name": "My Chatbot",
-    "message": "Store this key securely. It will not be shown again."
-  }
-}
-```
+### Rate Limiting
 
-#### Use API Key
+**⚠️ IMPORTANT**: Rate limiting is currently **DISABLED**. In-memory rate limiting is not reliable in Vercel's serverless environment.
 
-Include the API key in the `X-API-Key` header:
+**Current Implementation**:
+- Rate limiting code exists but is commented out in middleware
+- Without rate limiting, endpoints have no protection against abuse
 
-```bash
-curl -H "X-API-Key: aios_abc123..." https://ai-engineer-os-inky.vercel.app/api/v1/phases
-```
-
-#### Rate Limits
-
-- **Without API Key**: 60 requests/minute (IP-based)
-- **With API Key**: 1000 requests/hour (key-based)
+**Recommended for Production**:
+- Implement Redis-based rate limiting (Upstash Redis on Vercel)
+- Add distributed rate limiting across serverless instances
+- Consider using Vercel's built-in rate limiting or Upstash Ratelimit
 
 ---
 
@@ -532,35 +524,23 @@ The MCP endpoint provides a standardized interface for AI agents using JSON-RPC 
 
 ## Webhooks
 
-Webhooks allow you to receive real-time notifications about curriculum updates.
+**⚠️ CRITICAL**: Webhook management endpoints (`/api/webhooks`) are **DISABLED** until proper authentication is implemented. Webhooks cannot be registered, listed, or deleted without user authentication.
 
-### Register a Webhook
+**Status**: Returns 403 with `AUTH_REQUIRED` code for all operations (POST, GET, DELETE).
 
-```bash
-POST /api/webhooks
-Content-Type: application/json
+**Current Limitations**:
+- Webhook registration is not authenticated
+- Webhook ownership cannot be verified
+- No rate limiting on webhook registration
 
-{
-  "url": "https://your-server.com/webhook",
-  "events": ["lesson.updated", "resource.added"],
-  "secret": "your-webhook-secret"
-}
-```
-
-**Response**:
-```json
-{
-  "success": true,
-  "data": {
-    "webhookId": "wh_1234567890_abc123",
-    "url": "https://your-server.com/webhook",
-    "events": ["lesson.updated", "resource.added"],
-    "message": "Webhook registered successfully"
-  }
-}
-```
+**Required Implementation**:
+1. Add user authentication via NextAuth
+2. Verify webhook ownership before listing/deletion
+3. Add rate limiting on webhook registration
 
 ### Available Events
+
+Webhooks would support the following events when enabled:
 
 - `lesson.updated` - Lesson content updated
 - `resource.added` - New resource added
@@ -569,17 +549,19 @@ Content-Type: application/json
 
 ### Webhook Payload
 
-Webhooks send POST requests with the following headers:
+Webhooks send POST requests with the following headers when triggered:
 
 - `X-Webhook-Event`: The event type
-- `X-Webhook-Signature`: HMAC-SHA256 signature
+- `X-Webhook-Signature`: HMAC-SHA256 signature (includes nonce and timestamp)
 - `X-Webhook-Timestamp`: Unix timestamp
+- `X-Webhook-Nonce`: Random nonce for replay protection
 
 **Payload Example**:
 ```json
 {
   "event": "lesson.updated",
   "timestamp": 1699999999,
+  "nonce": "abc123...",
   "data": {
     "phaseSlug": "07-sequence-models-nlp",
     "lessonSlug": "01-transformers",
@@ -588,22 +570,26 @@ Webhooks send POST requests with the following headers:
 }
 ```
 
-### List Webhooks
+### Webhook Security
 
-```bash
-GET /api/webhooks
-```
+**✅ Hardened for Production Security**:
 
-### Delete Webhook
+Webhook delivery includes comprehensive security protections:
 
-```bash
-DELETE /api/webhooks
-Content-Type: application/json
+- **SSRF Protection**: Blocks private/internal IPs (10.x, 172.16-31.x, 192.168.x, 127.x, 169.254.x)
+- **IPv6 Protection**: Blocks IPv6 internal addresses (fe80:, fc00:, fd, ::)
+- **Metadata Protection**: Blocks cloud metadata endpoints (metadata.google.internal, 169.254.169.254)
+- **DNS Rebinding Protection**: Resolves hostnames and checks resolved IPs against blocklist
+- **Replay Attack Protection**: Nonce-based HMAC signatures with timestamps
+- **Redirect Protection**: `redirect: manual` in fetch to prevent SSRF via redirects
+- **Timeout Protection**: 10-second timeout on webhook delivery
+- **Protocol Enforcement**: Only HTTPS URLs allowed (localhost allowed for development)
 
-{
-  "webhookId": "wh_1234567890_abc123"
-}
-```
+**Consumer Requirements**:
+- Update signature verification to include nonce and timestamp
+- Reject replayed nonces and old timestamps (>5 minutes)
+- Use HTTPS for webhook endpoints
+- Verify webhook URL on first delivery (optional)
 
 ---
 

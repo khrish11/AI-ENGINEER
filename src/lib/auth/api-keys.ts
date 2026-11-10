@@ -1,11 +1,11 @@
-import { crypto } from "node:crypto";
+import { randomBytes } from "node:crypto";
 
 // Simple in-memory API key storage (for production, use database)
 const API_KEYS = new Map<string, { name: string; createdAt: number; rateLimit: number }>();
 
 // Generate a secure API key
 export function generateApiKey(name: string): string {
-  const key = `aios_${crypto.randomBytes(32).toString('hex')}`;
+  const key = `aios_${randomBytes(32).toString('hex')}`;
   API_KEYS.set(key, {
     name,
     createdAt: Date.now(),

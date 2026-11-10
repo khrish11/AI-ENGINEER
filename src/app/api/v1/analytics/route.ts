@@ -37,13 +37,11 @@ export async function GET(request: NextRequest) {
       },
       resources: {
         total: resources.length,
-        byType: {
-          video: resources.filter(r => r.type === "video").length,
-          article: resources.filter(r => r.type === "article").length,
-          documentation: resources.filter(r => r.type === "documentation").length,
-          repository: resources.filter(r => r.type === "repository").length,
-        },
-        verified: resources.filter(r => r.verificationStatus === "VERIFIED").length,
+        byType: resources.reduce((acc, r) => {
+          acc[r.type] = (acc[r.type] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>),
+        verified: resources.filter(r => r.verificationStatus === "verified").length,
       },
     };
 

@@ -264,7 +264,7 @@ export const tools: McpToolDefinition[] = [
         totalProjects: projects,
         totalResources: resources.length,
         averageLessonsPerPhase: Math.round(totalLessons / phases.length),
-        verifiedResources: resources.filter(r => r.verificationStatus === "VERIFIED").length,
+        verifiedResources: resources.filter(r => r.verificationStatus === "verified").length,
       };
     },
   },
@@ -293,19 +293,19 @@ export const tools: McpToolDefinition[] = [
       // Goal-based filtering
       if (goalLower.includes("llm") || goalLower.includes("language model")) {
         recommendedPhases = phases.filter(p => p.phaseNumber >= 8 && p.phaseNumber <= 10);
-        recommendedProjects = projectCatalog.filter(p => p.skillTracks.includes("LLM"));
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("llm")));
       } else if (goalLower.includes("rag") || goalLower.includes("retrieval")) {
         recommendedPhases = phases.filter(p => p.phaseNumber >= 10 && p.phaseNumber <= 12);
-        recommendedProjects = projectCatalog.filter(p => p.skillTracks.includes("RAG"));
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("rag")));
       } else if (goalLower.includes("agent")) {
         recommendedPhases = phases.filter(p => p.phaseNumber >= 11 && p.phaseNumber <= 13);
-        recommendedProjects = projectCatalog.filter(p => p.skillTracks.includes("Agents"));
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("agent")));
       } else if (goalLower.includes("vision") || goalLower.includes("computer")) {
         recommendedPhases = phases.filter(p => p.phaseNumber >= 6 && p.phaseNumber <= 7);
-        recommendedProjects = projectCatalog.filter(p => p.skillTracks.includes("Computer Vision"));
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("vision")));
       } else if (goalLower.includes("nlp") || goalLower.includes("text")) {
         recommendedPhases = phases.filter(p => p.phaseNumber >= 7 && p.phaseNumber <= 9);
-        recommendedProjects = projectCatalog.filter(p => p.skillTracks.includes("NLP"));
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("nlp")));
       } else if (goalLower.includes("fundamental") || goalLower.includes("basic")) {
         recommendedPhases = phases.filter(p => p.phaseNumber <= 5);
       }

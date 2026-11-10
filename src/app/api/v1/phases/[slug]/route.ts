@@ -27,12 +27,10 @@ export async function GET(
         phaseNumber: details.phase.phaseNumber,
         slug: details.phase.slug,
         title: details.phase.title,
-        description: details.phase.description,
         lessons: details.lessons.map((lesson) => ({
           slug: lesson.slug,
           title: lesson.title,
           tagline: lesson.tagline,
-          learningObjectives: lesson.learningObjectives,
           estimatedMinutes: lesson.estimatedMinutes,
         })),
         lessonCount: details.lessons.length,

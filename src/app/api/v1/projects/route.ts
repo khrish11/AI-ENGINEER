@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { projectCatalog, getProjectBySlug } from "@/lib/projects/catalog";
+import { projectCatalog } from "@/lib/projects/catalog";
 import { withApiKeyAuth } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";
@@ -30,7 +30,6 @@ export async function GET(request: NextRequest) {
         title: project.title,
         description: project.description,
         level: project.level,
-        skillTracks: project.skillTracks,
         phaseSlugs: project.phaseSlugs,
         estimatedHours: project.estimatedHours,
       }));

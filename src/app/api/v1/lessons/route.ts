@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
           slug: lesson.slug,
           title: lesson.title,
           tagline: lesson.tagline,
-          learningObjectives: lesson.learningObjectives,
           estimatedMinutes: lesson.estimatedMinutes,
         });
 
