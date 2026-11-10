@@ -5,9 +5,11 @@
 **A structured learning platform for developing practical AI engineering skills**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Node Version](https://img.shields.io/badge/Node-%3E%3D20.9.0-green.svg)](https://nodejs.org)
+[![Node Version](https://img.shields.io/badge/Node-24.x-green.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org)
-[![Status: v0.1.0](https://img.shields.io/badge/Status-v0.1.0-success.svg)](https://ai-engineer-os-inky.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-16.4-black.svg)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://reactjs.org)
+[![Status: Production](https://img.shields.io/badge/Status-Production-success.svg)](https://ai-engineer-os-inky.vercel.app)
 
 [📖 Documentation](#-quick-navigation) · [🚀 Getting Started](#-getting-started) · [🔧 MCP Integration](#-mcp-integration) · [📚 Curriculum](#-interactive-learning-roadmap)
 
@@ -706,9 +708,9 @@ These tools return `NOT_AUTHORIZED` when called via the remote HTTP endpoint.
 
 ### Prerequisites
 
-- **Node.js**: >= 20.9.0
+- **Node.js**: 24.x
 - **PostgreSQL**: Local installation or cloud database (Neon recommended)
-- **Package Manager**: npm, yarn, or pnpm
+- **Package Manager**: npm
 - **Git**: For cloning the repository
 
 ### Installation
@@ -880,23 +882,9 @@ npm run build
 ### Quality Gates
 
 - **TypeScript**: 0 errors
-- **ESLint**: 0 errors (20 pre-existing warnings)
-- **Tests**: 355/355 passing
-- **Build**: Successful (47 static pages)
-
-### MCP Protocol Verification
-
-The MCP endpoint has been verified with the official MCP SDK:
-
-- **Initialization**: ✅ PASS
-- **Tools Discovery**: ✅ 9/9 public tools
-- **Tool Execution**: ✅ 9/9 verified
-- **Resources**: ✅ 4 resources accessible
-- **Prompts**: ✅ 1 prompt available
-- **Error Handling**: ✅ Invalid input rejected
-- **Response Limits**: ✅ 500KB enforced
-
-**Report**: [`FINAL_PRODUCTION_SIGNOFF_REPORT.md`](FINAL_PRODUCTION_SIGNOFF_REPORT.md)
+- **ESLint**: Pass
+- **Tests**: Vitest (unit) and Playwright (E2E)
+- **Build**: Successful production build
 
 ---
 
