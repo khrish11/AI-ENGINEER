@@ -11,7 +11,7 @@
 [![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://reactjs.org)
 [![Status: Production](https://img.shields.io/badge/Status-Production-success.svg)](https://ai-engineer-os-inky.vercel.app)
 
-[📖 Documentation](#-quick-navigation) · [🚀 Getting Started](#-getting-started) · [🔧 MCP Integration](#-mcp-integration) · [📚 Curriculum](#-interactive-learning-roadmap)
+[📖 Documentation](#-quick-navigation) · [🚀 Getting Started](#-getting-started) · [🔧 API Integration](#-api-integration) · [📚 Curriculum](#-interactive-learning-roadmap)
 
 </div>
 
@@ -31,6 +31,7 @@ It provides structured learning phases, project-based exercises, progress tracki
 - [Features](#-feature-exploration)
 - [Learning Roadmap](#-interactive-learning-roadmap)
 - [Architecture](#-architecture)
+- [API Integration](#-api-integration)
 - [MCP Integration](#-mcp-integration)
 - [Getting Started](#-getting-started)
 - [Environment Variables](#-environment-variables)
@@ -410,6 +411,71 @@ The curriculum consists of **20 phases** covering foundational math to advanced 
 - **Project**: Research reproduction
 
 </details>
+
+---
+
+## 🔌 API Integration
+
+AI Engineer OS provides a comprehensive API for chatbots and AI agents to access curriculum data.
+
+### Quick Start
+
+**Base URL**: `https://ai-engineer-os-inky.vercel.app`
+
+**API Documentation**: [`docs/API_DOCUMENTATION.md`](docs/API_DOCUMENTATION.md)
+
+### Available Integrations
+
+1. **REST API** - Simple HTTP endpoints for easy integration
+2. **MCP Protocol** - Standard Model Context Protocol for AI agent tooling
+3. **Webhooks** - Real-time notifications for curriculum updates
+4. **Streaming** - Server-Sent Events for long content delivery
+
+### REST API Examples
+
+```bash
+# Get all phases
+curl https://ai-engineer-os-inky.vercel.app/api/v1/phases
+
+# Search lessons
+curl "https://ai-engineer-os-inky.vercel.app/api/v1/lessons?query=transformer&limit=5"
+
+# Get lesson with content
+curl "https://ai-engineer-os-inky.vercel.app/api/v1/lessons/07-sequence-models-nlp/01-transformers?includeContent=true"
+```
+
+### Authentication
+
+API keys are optional for public endpoints but provide higher rate limits:
+
+```bash
+# Generate API key
+curl -X POST https://ai-engineer-os-inky.vercel.app/api/admin/api-keys \
+  -H "Content-Type: application/json" \
+  -d '{"name": "My Chatbot"}'
+
+# Use API key
+curl -H "X-API-Key: aios_abc123..." \
+  https://ai-engineer-os-inky.vercel.app/api/v1/phases
+```
+
+### Rate Limits
+
+- **Without API Key**: 60 requests/minute (IP-based)
+- **With API Key**: 1000 requests/hour (key-based)
+
+### Features
+
+- ✅ REST API for phases, lessons, resources, projects
+- ✅ Quiz engine for lesson assessments
+- ✅ Analytics endpoint for curriculum statistics
+- ✅ MCP protocol with 11 public tools
+- ✅ Webhook support for real-time updates
+- ✅ Streaming for long content delivery
+- ✅ API key authentication
+- ✅ Comprehensive error handling
+
+**Full Documentation**: See [`docs/API_DOCUMENTATION.md`](docs/API_DOCUMENTATION.md) for complete API reference, examples, and integration guides.
 
 ---
 
