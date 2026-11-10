@@ -4,6 +4,33 @@ import { registerWebhook, listWebhooks, deleteWebhook } from "@/lib/webhooks/sto
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function isValidWebhookUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+
+    // Only allow HTTPS (or localhost for development)
+    if (parsed.protocol !== "https:" && parsed.hostname !== "localhost" && parsed.hostname !== "127.0.0.1") {
+      return false;
+    }
+
+    // Block private/internal IPs
+    const hostname = parsed.hostname;
+    const privateIPs = /^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|127\.|0\.|169\.254\.)/;
+    if (privateIPs.test(hostname)) {
+      return false;
+    }
+
+    // Block metadata endpoints
+    if (hostname === "metadata.google.internal" || hostname === "169.254.169.254") {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // POST /api/webhooks - Register a new webhook
 export async function POST(request: Request) {
   try {
@@ -13,6 +40,14 @@ export async function POST(request: Request) {
     if (!url || !events || !Array.isArray(events)) {
       return NextResponse.json(
         { success: false, error: "url and events array are required" },
+        { status: 400 }
+      );
+    }
+
+    // SSRF Protection: Validate webhook URL
+    if (!isValidWebhookUrl(url)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid webhook URL. Only HTTPS URLs are allowed." },
         { status: 400 }
       );
     }

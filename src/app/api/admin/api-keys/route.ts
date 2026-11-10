@@ -4,11 +4,34 @@ import { generateApiKey, listApiKeys, deleteApiKey } from "@/lib/auth/api-keys";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// NOTE: In production, add admin authentication here
-// For now, this is a simple endpoint for demonstration
+// CRITICAL: Admin authentication required for API key management
+// TEMPORARILY DISABLED FOR PRODUCTION: Remove this guard after implementing proper admin auth
+const ADMIN_AUTH_DISABLED = true;
+
+function checkAdminAuth(request: NextRequest): boolean {
+  if (ADMIN_AUTH_DISABLED) return false; // Reject all requests in production
+
+  // TODO: Implement proper admin authentication
+  // 1. Check for admin session/token
+  // 2. Verify admin permissions
+  // 3. Add rate limiting for admin operations
+  return false;
+}
 
 // POST /api/admin/api-keys - Generate new API key
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // Security check: Reject requests in production until admin auth is implemented
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
+        code: "ADMIN_AUTH_REQUIRED",
+      },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await request.json();
     const name = body.name || "default";
@@ -36,7 +59,18 @@ export async function POST(request: Request) {
 }
 
 // GET /api/admin/api-keys - List all API keys
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
+        code: "ADMIN_AUTH_REQUIRED",
+      },
+      { status: 403 }
+    );
+  }
+
   try {
     const keys = listApiKeys();
 
@@ -58,7 +92,18 @@ export async function GET() {
 }
 
 // DELETE /api/admin/api-keys - Delete an API key
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Admin authentication required. This endpoint is disabled until proper authorization is implemented.",
+        code: "ADMIN_AUTH_REQUIRED",
+      },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { key } = body;
