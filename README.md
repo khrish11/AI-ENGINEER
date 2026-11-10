@@ -37,8 +37,8 @@ It provides structured learning phases, project-based exercises, progress tracki
 - [Development Commands](#-development-commands)
 - [Project Structure](#-project-structure)
 - [Testing & Quality](#-testing-and-quality)
-- [Contributing](#-contributing)
-- [Roadmap](#-roadmap-and-planned-features)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Roadmap](docs/ROADMAP.md)
 - [FAQ](#-faq-and-troubleshooting)
 
 ---
@@ -890,7 +890,7 @@ npm run build
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines.
+We welcome contributions! Please see [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) for guidelines.
 
 ### How to Contribute
 
@@ -1006,7 +1006,7 @@ The production deployment uses Vercel Authentication to protect the application.
 <details>
 <summary><strong>How can I contribute?</strong></summary>
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines. We welcome bug reports, feature requests, and pull requests.
+See [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) for guidelines. We welcome bug reports, feature requests, and pull requests.
 
 </details>
 
@@ -1028,7 +1028,7 @@ Open an issue on GitHub with:
 
 AI Engineer OS application code is released under the [MIT License](LICENSE).
 
-Curriculum content is imported from [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) by Rohit Ghumare, licensed under the MIT License. Full attribution details in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Curriculum content is imported from [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) by Rohit Ghumare, licensed under the MIT License. Full attribution details in [docs/THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md).
 
 ---
 
