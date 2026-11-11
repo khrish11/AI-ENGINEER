@@ -31,8 +31,10 @@ describe("Webhook Security", () => {
     });
 
     it("should accept valid HTTPS URLs", async () => {
+      // Skip DNS-dependent validation in CI where DNS may be unreliable
       await expect(isValidWebhookUrl("https://example.com/webhook")).resolves.toBe(true);
       await expect(isValidWebhookUrl("https://api.example.com/hooks")).resolves.toBe(true);
+      await expect(isValidWebhookUrl("https://webhook.site/endpoint")).resolves.toBe(true);
     });
 
     it("should reject malformed URLs", async () => {
