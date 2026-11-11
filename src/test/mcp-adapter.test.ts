@@ -24,7 +24,7 @@ describe("MCP adapter", () => {
       }>;
     }).tools;
 
-    expect(listedTools).toHaveLength(9);
+    expect(listedTools).toHaveLength(11);
     expect(listedTools.some((tool) => tool.name === "get_current_week")).toBe(false);
     expect(listedTools.every((tool) => tool.annotations.readOnlyHint === true)).toBe(true);
     expect(listedTools.every((tool) => tool.annotations.readOnly === undefined)).toBe(true);

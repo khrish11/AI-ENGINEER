@@ -27,12 +27,24 @@ export async function GET(
     const response: {
       slug: string;
       title: string;
-      tagline: string;
+      tagline: string | null;
       learningObjectives: string[];
       estimatedMinutes: number;
-      upstreamAttribution: string;
+      upstreamAttribution: {
+        repoUrl: string;
+        commitSha: string;
+        sourceFileUrl: string;
+        author: string;
+        license: string;
+      };
       markdownContent?: string;
-      codeFiles?: string[];
+      codeFiles?: Array<{
+        filename: string;
+        relativePath: string;
+        language: string;
+        sizeBytes: number;
+        content?: string;
+      }>;
     } = {
       slug: lesson.slug,
       title: lesson.title,
