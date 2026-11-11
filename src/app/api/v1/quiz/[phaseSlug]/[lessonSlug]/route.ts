@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 // GET /api/v1/quiz/[phaseSlug]/[lessonSlug] - Get quiz for a lesson
 export async function GET(
   request: NextRequest,
-  { params }: { params: { phaseSlug: string; lessonSlug: string } }
+  { params }: { params: Promise<{ phaseSlug: string; lessonSlug: string }> }
 ) {
   const apiKey = request.headers.get("x-api-key");
   if (apiKey) {
@@ -17,7 +17,8 @@ export async function GET(
   }
 
   try {
-    const lesson = await getLessonDetails(params.phaseSlug, params.lessonSlug);
+    const { phaseSlug, lessonSlug } = await params;
+    const lesson = await getLessonDetails(phaseSlug, lessonSlug);
     if (!lesson) {
       return NextResponse.json({ success: false, error: "Lesson not found" }, { status: 404 });
     }

@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const apiKey = request.headers.get("x-api-key");
   if (apiKey) {
@@ -16,7 +16,8 @@ export async function GET(
   }
 
   try {
-    const details = await getPhaseDetails(params.slug);
+    const { slug } = await params;
+    const details = await getPhaseDetails(slug);
     if (!details) {
       return NextResponse.json({ success: false, error: "Phase not found" }, { status: 404 });
     }
