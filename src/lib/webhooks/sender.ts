@@ -77,11 +77,6 @@ export async function isValidWebhookUrl(url: string): Promise<boolean> {
       return false;
     }
 
-    // Skip DNS resolution in CI where it may be unreliable
-    if (process.env.CI === "true") {
-      return true;
-    }
-
     try {
       const addresses = await lookup(hostname, { all: true });
       for (const address of addresses) {

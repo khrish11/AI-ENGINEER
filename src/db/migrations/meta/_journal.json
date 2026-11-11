@@ -57,6 +57,13 @@
       "when": 1792500000000,
       "tag": "0007_split_lesson_identity",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794363815355,
+      "tag": "0008_outgoing_colleen_wing",
+      "breakpoints": true
     }
   ]
 }
