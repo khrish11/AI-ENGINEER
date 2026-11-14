@@ -17,6 +17,7 @@ export type SyncStatusUI =
   | "syncing"
   | "pending"
   | "synced"
+  | "never_synced"
   | "conflict"
   | "sync_error";
 
@@ -76,7 +77,11 @@ export function useSyncStatus() {
       setStatus("pending");
       return;
     }
-    setStatus("synced");
+    // "synced" requires an actual acknowledged sync. An authenticated account
+    // with an empty queue but no recorded successful sync is "never_synced" —
+    // otherwise the badge claims Synced while "Last successful sync" shows Never.
+    const hasSynced = Boolean(metadata?.lastSuccessfulSync ?? profile?.lastSyncAt);
+    setStatus(hasSynced ? "synced" : "never_synced");
   }, [offline]);
 
   useEffect(() => {

@@ -33,6 +33,7 @@ import { ensureProfileReconciled } from "@/lib/progress/sync/coordinator";
 import { fetchAuthStatus, type ClientAuthStatus } from "@/lib/auth/client-status";
 import type { MergeSummary } from "@/lib/progress/merge";
 import { useSyncStatus } from "@/hooks/useSyncStatus";
+import { ApiKeysSection } from "@/components/settings/api-keys-section";
 import { useConflicts } from "@/hooks/useConflicts";
 import {
   Moon,
@@ -262,10 +263,10 @@ export default function SettingsPage() {
   const syncBadgeVariant =
     status === "synced"
       ? "success"
-      : status === "conflict" || status === "sync_error"
-        ? "warning"
-        : status === "offline"
-          ? "secondary"
+      : status === "never_synced" || status === "offline"
+        ? "secondary"
+        : status === "conflict" || status === "sync_error"
+          ? "warning"
           : "default";
 
   return (
@@ -585,6 +586,9 @@ export default function SettingsPage() {
               )}
             </CardContent>
           </Card>
+
+          {/* Developer / API Keys — authenticated users only */}
+          {profileAuthenticated && <ApiKeysSection />}
 
           {/* Data */}
           <Card>
