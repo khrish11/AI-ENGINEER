@@ -15,7 +15,9 @@
     "suggest_learning_path",
     "get_current_week",
     "get_review_queue",
-    "get_analytics_overview"
+    "get_analytics_overview",
+    "get_curriculum_analytics",
+    "get_learning_recommendations"
   ],
   "resources": [
     "ai-engineer://curriculum/phases",

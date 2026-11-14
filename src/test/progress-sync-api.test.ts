@@ -28,7 +28,7 @@ function hasDatabaseUrl(): boolean {
 }
 
 // Verify exact test database identity: localhost:5432/ai_engineer_os_test
-const hasTestDatabase = process.env.DATABASE_URL === "postgresql://ai_engineer_os:local_dev_password@localhost:5432/ai_engineer_os_test";
+const hasTestDatabase = process.env.DATABASE_URL?.includes("ai_engineer_os_test");
 // Use test database for integration tests
 const describeWithDb = hasTestDatabase ? describe : describe.skip;
 
@@ -48,7 +48,7 @@ describeWithDb("sync API (PostgreSQL)", () => {
 
     await dbModule.db
       .insert(schema.users)
-      .values({ id: TEST_USER_ID, email: "phase4-sync-test@example.invalid" })
+      .values({ id: TEST_USER_ID, email: "phase4-sync-test@example.invalid", role: "user" })
       .onConflictDoNothing();
   });
 

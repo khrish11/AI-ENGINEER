@@ -247,6 +247,100 @@ export const tools: McpToolDefinition[] = [
       return safeProgressSummary(await context.progress.getAnalyticsOverview());
     },
   },
+  {
+    name: "get_curriculum_analytics",
+    description: "Get public curriculum analytics (total lessons, phases, etc.) for chatbot context.",
+    inputSchema: z.object({}),
+    policy: "PUBLIC",
+    handler: async () => {
+      const phases = await getAllPhases();
+      const totalLessons = phases.reduce((sum, p) => sum + p.lessonCount, 0);
+      const projects = projectCatalog.length;
+      const resources = await getAllResourceViews();
+
+      return {
+        totalPhases: phases.length,
+        totalLessons,
+        totalProjects: projects,
+        totalResources: resources.length,
+        averageLessonsPerPhase: Math.round(totalLessons / phases.length),
+        verifiedResources: resources.filter(r => r.verificationStatus === "verified").length,
+      };
+    },
+  },
+  {
+    name: "get_learning_recommendations",
+    description: "Get personalized learning recommendations based on goal and current progress.",
+    inputSchema: z.object({
+      goal: z.string().describe("Learning goal: 'LLM', 'RAG', 'Agents', 'Fundamentals', 'Computer Vision', 'NLP'"),
+      currentPhase: z.number().optional().describe("Current phase number (0-20)"),
+      skillLevel: z.string().optional().describe("Skill level: 'beginner', 'intermediate', 'advanced'"),
+    }).strict(),
+    policy: "PUBLIC",
+    handler: async (raw) => {
+      const input = z.object({
+        goal: z.string(),
+        currentPhase: z.number().optional(),
+        skillLevel: z.string().optional(),
+      }).parse(raw);
+
+      const phases = await getAllPhases();
+      const goalLower = input.goal.toLowerCase();
+
+      let recommendedPhases = phases;
+      let recommendedProjects = projectCatalog;
+
+      // Goal-based filtering
+      if (goalLower.includes("llm") || goalLower.includes("language model")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber >= 8 && p.phaseNumber <= 10);
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("llm")));
+      } else if (goalLower.includes("rag") || goalLower.includes("retrieval")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber >= 10 && p.phaseNumber <= 12);
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("rag")));
+      } else if (goalLower.includes("agent")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber >= 11 && p.phaseNumber <= 13);
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("agent")));
+      } else if (goalLower.includes("vision") || goalLower.includes("computer")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber >= 6 && p.phaseNumber <= 7);
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("vision")));
+      } else if (goalLower.includes("nlp") || goalLower.includes("text")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber >= 7 && p.phaseNumber <= 9);
+        recommendedProjects = projectCatalog.filter(p => p.phaseSlugs.some(slug => slug.includes("nlp")));
+      } else if (goalLower.includes("fundamental") || goalLower.includes("basic")) {
+        recommendedPhases = phases.filter(p => p.phaseNumber <= 5);
+      }
+
+      // Current phase filtering
+      if (input.currentPhase !== undefined) {
+        recommendedPhases = recommendedPhases.filter(p => p.phaseNumber >= input.currentPhase!);
+      }
+
+      // Skill level filtering
+      if (input.skillLevel === "beginner") {
+        recommendedProjects = recommendedProjects.filter(p => p.level === "beginner" || p.level === "intermediate");
+      } else if (input.skillLevel === "advanced") {
+        recommendedProjects = recommendedProjects.filter(p => p.level === "advanced");
+      }
+
+      return {
+        goal: input.goal,
+        currentPhase: input.currentPhase ?? null,
+        skillLevel: input.skillLevel ?? null,
+        recommendedPhases: recommendedPhases.slice(0, 5).map(p => ({
+          phaseNumber: p.phaseNumber,
+          slug: p.slug,
+          title: p.title,
+          lessonCount: p.lessonCount,
+        })),
+        recommendedProjects: recommendedProjects.slice(0, 3).map(p => ({
+          slug: p.slug,
+          title: p.title,
+          level: p.level,
+          estimatedHours: p.estimatedHours,
+        })),
+      };
+    },
+  },
 ];
 
 export const resources: McpResourceDefinition[] = [

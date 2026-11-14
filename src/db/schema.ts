@@ -387,6 +387,7 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   emailVerified: timestamp("email_verified", { withTimezone: true }),
   image: varchar("image", { length: 500 }),
+  role: varchar("role", { length: 20 }).notNull().default("user"), // 'user' or 'admin'
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -427,7 +428,79 @@ export const sessions = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [index("idx_sessions_user").on(table.userId)]
+  (table) => [index("idx_sessions_token").on(table.sessionToken)]
+);
+
+// --- API Keys ---------------------------------------------------------
+
+export const apiKeys = pgTable(
+  "api_keys",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: varchar("name", { length: 100 }).notNull(),
+    keyHash: varchar("key_hash", { length: 64 }).notNull().unique(),
+    keyPrefix: varchar("key_prefix", { length: 16 }).notNull(),
+    scopes: varchar("scopes", { length: 255 }).notNull().default("read"),
+    expiresAt: timestamp("expires_at", { withTimezone: true }),
+    lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
+    isRevoked: boolean("is_revoked").notNull().default(false),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_api_keys_user").on(table.userId),
+    index("idx_api_keys_hash").on(table.keyHash),
+    index("idx_api_keys_active").on(table.isRevoked),
+  ]
+);
+
+// --- Webhooks ---------------------------------------------------------
+
+export const webhooks = pgTable(
+  "webhooks",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    url: varchar("url", { length: 500 }).notNull(),
+    events: varchar("events", { length: 255 }).notNull(),
+    secret: varchar("secret", { length: 64 }).notNull(),
+    isActive: boolean("is_active").notNull().default(true),
+    lastTriggeredAt: timestamp("last_triggered_at", { withTimezone: true }),
+    failureCount: integer("failure_count").notNull().default(0),
+    lastFailureAt: timestamp("last_failure_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_webhooks_user").on(table.userId),
+    index("idx_webhooks_active").on(table.isActive),
+  ]
+);
+
+// --- Rate Limiting ----------------------------------------------------
+
+export const rateLimits = pgTable(
+  "rate_limits",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    identifier: varchar("identifier", { length: 255 }).notNull(),
+    endpoint: varchar("endpoint", { length: 100 }).notNull(),
+    count: integer("count").notNull().default(0),
+    windowStart: timestamp("window_start", { withTimezone: true }).notNull(),
+    windowEnd: timestamp("window_end", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    unique("uq_rate_limit_window").on(table.identifier, table.endpoint, table.windowStart),
+    index("idx_rate_limits_identifier").on(table.identifier),
+    index("idx_rate_limits_window").on(table.windowEnd),
+  ]
 );
 
 export const verificationTokens = pgTable(
