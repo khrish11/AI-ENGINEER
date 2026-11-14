@@ -24,6 +24,7 @@ import type {
   ReviewHistory,
 } from "@/lib/progress/db";
 import type { RoadmapPlan } from "@/lib/roadmap/types";
+import { parseStoredRoadmapPlan } from "@/lib/analytics/sources";
 import { PERIODS, type Period } from "@/lib/analytics/types";
 import type { AnalyticsOverview } from "@/lib/analytics/overview";
 import type { StudyTimeStats } from "@/lib/analytics/study-time";
@@ -84,10 +85,7 @@ async function loadSources(): Promise<AnalyticsBundle> {
       reviewHistoryRepo.getAll(),
     ]);
   const roadmapRecord = await roadmapStateRepo.get();
-  const roadmapPlan =
-    roadmapRecord && typeof roadmapRecord.state === "object" && roadmapRecord.state !== null
-      ? (roadmapRecord.state as RoadmapPlan)
-      : null;
+  const roadmapPlan = parseStoredRoadmapPlan(roadmapRecord?.state);
   return {
     sources: {
       lessons,
