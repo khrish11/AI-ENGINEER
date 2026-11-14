@@ -80,3 +80,14 @@ secrets/
 credentials/
 .git-filter-replacements.txt
 
+
+# Local test env (contains credentials)
+.env.test
+
+# Agent/tooling artifacts
+.playwright-mcp/
+reports/
+
+# Ad-hoc scripts and dumps
+scripts/tmp-*
+*.dump
