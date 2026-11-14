@@ -1,65 +1,141 @@
-# AI Engineer OS
+<div align="center">
 
-**A structured, open-source learning platform for building practical AI engineering skills** — curriculum, projects, progress sync, and a public API designed for humans and AI agents alike.
+<p align="center"><img src="docs/assets/logo.svg" alt="AI Engineer OS" width="480"></p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg)](https://www.typescriptlang.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1.svg)](https://postgresql.org)
-[![CI](https://github.com/khrish11/AI-ENGINEER/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/khrish11/AI-ENGINEER/actions)
+**A structured, open-source learning platform for building practical AI engineering skills** — curriculum, projects, synced progress, and a public API built for humans and AI agents alike.
 
-**Live**: [ai-engineer-os-inky.vercel.app](https://ai-engineer-os-inky.vercel.app)
+<p align="center">
+  <a href="https://ai-engineer-os-inky.vercel.app"><img alt="Live App" src="https://img.shields.io/badge/Live%20App-ai--engineer--os-inky.vercel.app-3FB950?style=flat-square"></a>&nbsp;
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue?style=flat-square"></a>&nbsp;
+  <a href="https://github.com/khrish11/AI-ENGINEER/actions/workflows/pr-validation.yml"><img alt="CI" src="https://github.com/khrish11/AI-ENGINEER/actions/workflows/pr-validation.yml/badge.svg?style=flat-square"></a>&nbsp;
+  <a href="https://github.com/khrish11/AI-ENGINEER/pulls"><img alt="PRs" src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="#-key-features">Features</a> ·
+  <a href="#-get-started">Get Started</a> ·
+  <a href="#-product-tour">Tour</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-rest-api--api-keys">API</a> ·
+  <a href="#-mcp-integration">MCP</a> ·
+  <a href="#-documentation">Docs</a>
+</p>
+
+</div>
 
 ---
 
-## Overview
+AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) curriculum into a production-grade learning workspace: **20 phases, 500+ lessons**, project studios with rubric-based assessment, local-first progress with cloud sync, and a documented REST + MCP surface so chatbots and coding agents can consume the same curriculum programmatically.
 
-AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineer-from-scratch) curriculum into an interactive learning workspace: 20 phases, 500+ lessons, project studios, spaced review, and cloud-synced progress — plus a documented REST API and MCP server so chatbots and agents can consume the same curriculum programmatically.
+<div align="center">
+<img src="docs/assets/home.png" alt="AI Engineer OS home page" width="900">
+</div>
 
-## Features
+## ✦ Key Features
 
-- **Structured curriculum** — 20 phases from math foundations to autonomous agents, with lessons, quizzes, code files, and notebooks
-- **Project studio** — milestone-based builds with rubrics, evidence tracking, and self-assessment
-- **Progress & sync** — guest mode with local-first storage (IndexedDB) and authenticated cloud sync via PostgreSQL, with conflict resolution
-- **Accounts** — Google and GitHub OAuth (Auth.js), per-user data isolation
-- **Public REST API** — `/api/v1/*` for phases, lessons, resources, projects, quiz, analytics, and streaming lesson content
-- **API keys** — self-serve key management in Settings (Bearer or `x-api-key`), scopes, expiration, revocation, per-key rate limits
-- **Webhooks** — HMAC-signed event delivery with SSRF and DNS-rebinding protections
-- **MCP server** — JSON-RPC endpoint (`/api/mcp`) exposing curriculum tools to AI agents
-- **Portfolio** — public, shareable learning portfolios with privacy controls
+<details open>
+<summary><b>📚 Structured curriculum & lessons</b></summary>
 
-<details>
-<summary><b>Screenshot — Developer / API Keys in Settings</b></summary>
-
-![Settings API Keys](docs/assets/settings-api-keys.png)
-
+- 20 progressive phases from linear algebra and Python tooling to LLMs, agents, RAG, and autonomous swarms
+- 542 canonical lessons, each with reading content, quizzes backed by stored correct answers, and downloadable code files/notebooks
+- Phase and lesson detail views with resource curation (YouTube, GitHub, official docs)
+- Search across lessons by keyword and phase
 </details>
 
-## Architecture
+<details>
+<summary><b>🛠 Project studio & assessment</b></summary>
+
+- Milestone-based project builds with rubrics, evidence tracking, and self-assessment
+- Portfolio profiles with shareable public pages and privacy controls
+- Review history and spaced-repetition surfacing of weak areas
+</details>
+
+<details>
+<summary><b>🔄 Progress, sync & accounts</b></summary>
+
+- Guest mode with local-first storage (IndexedDB via Dexie) — learn before signing up
+- Google & GitHub OAuth via Auth.js; cloud sync to PostgreSQL with deterministic conflict resolution
+- Cross-device restore: sign in on a second device and pick up exactly where you left off
+- Account isolation guaranteed — one account never sees another's progress
+</details>
+
+<details>
+<summary><b>🔑 Developer API & API keys</b></summary>
+
+- Public REST API (`/api/v1/*`) for phases, lessons, quiz, resources, projects, analytics, and SSE lesson streaming
+- Self-serve API keys in **Settings → Developer**: named keys, scopes, expiration, one-time secret display, revocation
+- `Authorization: Bearer` and `x-api-key` both supported; per-key rate limits (1000 req/hr) vs anonymous IP limits (60 req/min)
+- Invalid, expired, or revoked keys return `401`; only explicitly public routes allow anonymous access
+</details>
+
+<details>
+<summary><b>🪝 Webhooks</b></summary>
+
+- Register endpoints for curriculum/progress events; HMAC-SHA256 signed payloads
+- SSRF protections: URL validation at registration, private-IP blocking, DNS-rebinding checks
+- Owner-scoped management — users can only touch their own webhooks
+</details>
+
+<details>
+<summary><b>🤖 MCP server for AI agents</b></summary>
+
+- JSON-RPC 2.0 endpoint at `/api/mcp` (`tools/list`, `tools/call`)
+- Tools for curriculum lookup, lesson content, quizzes, projects, analytics, and learning recommendations
+- Manifest-driven registry kept in sync by CI validation
+</details>
+
+## 🖥 Product Tour
+
+<div align="center">
+<img src="docs/assets/settings-api-keys.png" alt="Settings → Developer API Keys" width="900">
+</div>
+
+*Settings → Developer: create scoped API keys, copy one-time secrets, manage revocation, and grab ready-made `curl` examples for Bearer and `x-api-key` auth.*
+
+<details>
+<summary><b>Tour notes — what each surface does</b></summary>
+
+- **Dashboard** — resume learning, continue where you left off, review streaks and weak areas
+- **Roadmap** — personalized phase ordering and milestone tracking across the 20-phase curriculum
+- **Curriculum** — phase browser with lesson lists, progress indicators, and resource links
+- **Lesson view** — reading pane, embedded code, quiz block, notes, bookmarks, and study timer
+- **Projects** — milestone checklist, rubric self-assessment, evidence attachments
+- **Analytics** — time-on-task, completion rates, and per-phase mastery views
+- **Settings** — account linking, theme, sync status, portfolio privacy, and API keys
+</details>
+
+## 🏗 Architecture
 
 ```
-Next.js 16 (App Router) · React 19 · TypeScript 5.7 · Tailwind CSS
-├── Auth.js (Google / GitHub OAuth, JWT sessions)
-├── REST API        /api/v1/*        (API-key or public access)
-├── MCP endpoint    /api/mcp         (JSON-RPC tools)
-├── Sync API        /api/sync/v1     (session-authenticated)
-├── Webhooks        /api/webhooks    (session-authenticated)
-└── PostgreSQL 17 + Drizzle ORM      (users, progress, api_keys, webhooks, rate_limits)
+┌─────────────────────────────────────────────────────────────┐
+│                     Next.js 16 · React 19                    │
+│              App Router · TypeScript 5.7 · Tailwind          │
+├─────────────────────────────────────────────────────────────┤
+│  Auth.js (Google/GitHub OAuth, JWT)   Dexie/IndexedDB       │
+│  REST /api/v1/*   Sync /api/sync/v1   MCP /api/mcp           │
+│  Webhooks /api/webhooks   Admin /api/admin/*   User keys     │
+├─────────────────────────────────────────────────────────────┤
+│              PostgreSQL 17 · Drizzle ORM                     │
+│  users · progress · sync · api_keys · webhooks · rate_limits │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-Migrations live in `src/db/migrations/` and run via `npm run db:migrate` (Drizzle-tracked, advisory-locked). The app never migrates automatically on deploy.
+- **Local-first**: all learning state lives in IndexedDB; mutations queue and flush to `/api/sync/v1`
+- **API auth**: SHA-256-hashed keys (secrets never stored), atomic PostgreSQL rate-limit upserts
+- **Migrations**: Drizzle-tracked SQL in `src/db/migrations/`, applied manually via `npm run db:migrate` — deploys never migrate
 
-## Getting Started
+## 🚀 Get Started
 
 ```bash
 git clone https://github.com/khrish11/AI-ENGINEER.git
 cd AI-ENGINEER
 npm install
-cp .env.example .env.local   # fill in values below
-npm run dev                  # http://localhost:3000
+cp .env.example .env.local
+npm run db:migrate   # apply schema to your DATABASE_URL
+npm run dev          # http://localhost:3000
 ```
 
-### Environment variables
+### Environment
 
 | Variable | Purpose |
 |---|---|
@@ -69,50 +145,33 @@ npm run dev                  # http://localhost:3000
 | `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` | GitHub OAuth (optional) |
 | `NEXT_PUBLIC_APP_URL` | Canonical app URL |
 
-Apply the schema once against your database:
+## 🔑 REST API & API Keys
 
-```bash
-npm run db:migrate
-```
-
-## Authentication & API keys
-
-1. Sign in with Google or GitHub on **Settings → Account**.
-2. Open **Settings → Developer / API Keys**, name a key, pick scopes and optional expiry.
-3. The secret is shown **once** — store it securely.
-
-Authenticate API requests with either header:
+1. Sign in (Google/GitHub) → **Settings → Developer / API Keys**
+2. Create a key — the secret is shown **once**
+3. Call the API:
 
 ```bash
 curl -H "Authorization: Bearer aios_YOUR_KEY" \
   https://ai-engineer-os-inky.vercel.app/api/v1/phases
 
+# or
 curl -H "x-api-key: aios_YOUR_KEY" \
   https://ai-engineer-os-inky.vercel.app/api/v1/phases
 ```
 
-Invalid, expired, or revoked keys return `401`. Requests without credentials get public read access only; account-scoped endpoints (`/api/user/*`, `/api/webhooks`, `/api/admin/*`, `/api/sync/*`) always require a session.
-
-## REST API & MCP
-
-Base URL: `https://ai-engineer-os-inky.vercel.app`
-
 | Endpoint | Description |
 |---|---|
-| `GET /api/v1/phases` | List all phases |
-| `GET /api/v1/phases/{slug}` | Phase detail with lessons |
-| `GET /api/v1/lessons` | Search lessons (`?q=`, `?phase=`) |
-| `GET /api/v1/lessons/{phase}/{lesson}` | Full lesson content |
+| `GET /api/v1/phases` `/{slug}` | Phase catalog & detail |
+| `GET /api/v1/lessons` `/{phase}/{lesson}` | Lesson search & full content |
 | `GET /api/v1/quiz/{phase}/{lesson}` | Stored quiz questions |
-| `GET /api/v1/resources` | Curated resources |
-| `GET /api/v1/projects` | Project catalog |
+| `GET /api/v1/resources` `/api/v1/projects` | Curation & project catalog |
 | `GET /api/v1/analytics` | Curriculum statistics |
 | `GET /api/v1/stream/{phase}/{lesson}` | SSE lesson stream |
-| `POST /api/mcp` | MCP JSON-RPC (`tools/list`, `tools/call`) |
 
 Full reference: [docs/API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md)
 
-MCP example:
+## 🤖 MCP Integration
 
 ```bash
 curl -X POST https://ai-engineer-os-inky.vercel.app/api/mcp \
@@ -120,55 +179,51 @@ curl -X POST https://ai-engineer-os-inky.vercel.app/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-## Development commands
+Tools cover curriculum search, lesson content, quizzes, projects, analytics, and recommendations. Registry/manifest drift is enforced by `npm run mcp:validate` in CI. See [docs/MCP_GUIDE.md](docs/MCP_GUIDE.md).
+
+## 🧪 Development
 
 ```bash
 npm run dev          # dev server
 npm run build        # production build
 npm run typecheck    # tsc --noEmit
 npm run lint         # ESLint
-npm run test         # Vitest unit + integration suite
-npm run test:e2e     # Playwright E2E
-npm run validate     # full local validation
-npm run db:migrate   # apply pending Drizzle migrations
-npm run mcp:validate # MCP manifest/registry drift check
+npm run test         # Vitest (unit + PostgreSQL integration)
+npm run test:e2e     # Playwright
+npm run validate     # full local gate
+npm run db:migrate   # apply migrations
 ```
 
-Integration tests need a PostgreSQL database; set `DATABASE_URL` in `.env.test` (see `.env.example`).
+Integration tests run against a disposable `ai_engineer_os_test` database (see `.env.example`).
 
-## Project structure
+## 📁 Project Structure
 
 ```
 src/
-  app/            Next.js routes (pages + API)
-  components/     UI components (settings, curriculum, roadmap…)
-  db/             Drizzle schema, client, migrations, migrate runner
-  lib/            auth, curriculum service, progress sync, webhooks, MCP
-  test/           Vitest suites (unit + PostgreSQL integration)
-  mcp/            MCP tool registry
-docs/             architecture, API, migration, and ops documentation
-config/           drizzle/playwright configuration
-scripts/          migration and audit helpers
+  app/          pages + API routes
+  components/   UI (settings, curriculum, roadmap, studio…)
+  db/           Drizzle schema, client, migrations
+  lib/          auth, curriculum, sync, webhooks, MCP
+  test/         Vitest suites
+docs/           architecture, API, ops docs
+config/         drizzle & playwright config
 ```
 
-## Documentation
+## 📜 Releases
 
-- [API reference](docs/API_DOCUMENTATION.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Database design](docs/DATABASE_DESIGN.md)
-- [Progress sync](docs/PROGRESS_SYNC.md)
-- [MCP guide](docs/MCP_GUIDE.md)
-- [Deployment](docs/DEPLOYMENT.md)
-- [Testing](docs/TESTING.md)
+<details>
+<summary><b>Recent merged work</b></summary>
 
-## Deployment
+- **API security & auth platform** — PostgreSQL-backed API keys, webhooks, atomic rate limiting, Bearer + `x-api-key` support, SSRF/DNS-rebinding protections
+- **Settings → API Keys** — self-serve key management UI with one-time secrets and curl examples
+- **Sync correctness** — cloud-pull timestamps, conflict handling, account isolation
+- **Migration runner hardening** — journal/SQL verification, advisory locks, schema checks
+</details>
 
-Deployed on Vercel with automatic production deploys from `main`. The build does **not** run migrations — apply `npm run db:migrate` manually against the target database.
+## 📚 Documentation
 
-## Contributing
-
-See [docs/CONTRIBUTOR_GUIDE.md](docs/CONTRIBUTOR_GUIDE.md). Please run `npm run validate` before opening a PR.
+[API](docs/API_DOCUMENTATION.md) · [Architecture](docs/ARCHITECTURE.md) · [Database](docs/DATABASE_DESIGN.md) · [Sync](docs/PROGRESS_SYNC.md) · [MCP](docs/MCP_GUIDE.md) · [Deployment](docs/DEPLOYMENT.md) · [Testing](docs/TESTING.md) · [Contributing](docs/CONTRIBUTOR_GUIDE.md)
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Curriculum content derives from [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) (MIT, © Rohit Ghumare).
+MIT — curriculum derives from [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) (MIT, © Rohit Ghumare).
