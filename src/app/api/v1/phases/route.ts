@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllPhases, getPhaseDetails } from "@/lib/curriculum/service";
-import { withApiKeyAuth } from "@/lib/auth/middleware";
+import { withApiKeyAuth, extractApiKey } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 // GET /api/v1/phases - Get all phases
 export async function GET(request: NextRequest) {
   // Optional API key auth - if provided, must be valid
-  const apiKey = request.headers.get("x-api-key");
+  const apiKey = extractApiKey(request);
   if (apiKey) {
     const auth = withApiKeyAuth(request);
     if (!(await auth).authorized) return (await auth).response;

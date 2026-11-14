@@ -3,13 +3,16 @@ import { validateApiKey } from "./api-keys-service";
 import { checkRateLimitByApiKey, checkRateLimitByIp } from "./rate-limit";
 import { headers } from "next/headers";
 
-export async function withApiKeyAuth(request: NextRequest) {
-  // Support both `Authorization: Bearer <key>` and `x-api-key: <key>` headers
+export function extractApiKey(request: NextRequest): string | null {
   const authHeader = request.headers.get("authorization");
   const bearerKey = authHeader?.startsWith("Bearer ")
     ? authHeader.slice(7).trim()
     : null;
-  const apiKey = bearerKey || request.headers.get("x-api-key");
+  return bearerKey || request.headers.get("x-api-key");
+}
+
+export async function withApiKeyAuth(request: NextRequest) {
+  const apiKey = extractApiKey(request);
 
   if (!apiKey) {
     // Fall back to IP-based rate limiting

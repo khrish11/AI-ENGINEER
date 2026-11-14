@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAllPhases } from "@/lib/curriculum/service";
 import { getAllResourceViews } from "@/lib/resources/service";
 import { projectCatalog } from "@/lib/projects/catalog";
-import { withApiKeyAuth } from "@/lib/auth/middleware";
+import { withApiKeyAuth, extractApiKey } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  const apiKey = request.headers.get("x-api-key");
+  const apiKey = extractApiKey(request);
   if (apiKey) {
     const auth = await withApiKeyAuth(request);
     if (!auth.authorized) return auth.response;

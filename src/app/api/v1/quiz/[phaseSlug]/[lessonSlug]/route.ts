@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLessonDetails } from "@/lib/curriculum/service";
-import { withApiKeyAuth } from "@/lib/auth/middleware";
+import { withApiKeyAuth, extractApiKey } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,7 +10,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ phaseSlug: string; lessonSlug: string }> }
 ) {
-  const apiKey = request.headers.get("x-api-key");
+  const apiKey = extractApiKey(request);
   if (apiKey) {
     const auth = withApiKeyAuth(request);
     if (!(await auth).authorized) return (await auth).response;
@@ -23,8 +23,33 @@ export async function GET(
       return NextResponse.json({ success: false, error: "Lesson not found" }, { status: 404 });
     }
 
-    // Generate quiz questions based on lesson content
-    const quiz = generateQuizFromLesson(lesson);
+    const storedQuizzes = lesson.quizzes || [];
+    if (storedQuizzes.length === 0) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          lessonSlug: lesson.slug,
+          lessonTitle: lesson.title,
+          totalQuestions: 0,
+          questions: [],
+          message: "No quiz questions available for this lesson",
+        },
+      });
+    }
+
+    const quiz = {
+      lessonSlug: lesson.slug,
+      lessonTitle: lesson.title,
+      totalQuestions: storedQuizzes.length,
+      questions: storedQuizzes.map((q) => ({
+        id: q.id,
+        question: q.questionText,
+        options: q.options,
+        correctAnswer: String.fromCharCode(65 + q.correctAnswer), // 0->A, 1->B...
+        explanation: q.explanation || "",
+      })),
+      estimatedTime: storedQuizzes.length * 2,
+    };
 
     return NextResponse.json({ success: true, data: quiz });
   } catch (error) {
@@ -33,34 +58,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
-
-function generateQuizFromLesson(lesson: { learningObjectives?: string[]; slug: string; title: string }) {
-  const objectives = lesson.learningObjectives || [];
-  const quizQuestions = objectives.slice(0, 5).map((objective: string, index: number) => ({
-    id: `q${index + 1}`,
-    question: `Based on this learning objective: "${objective}", which concept is most relevant?`,
-    options: [
-      generateOption(objective, "A"),
-      generateOption(objective, "B"),
-      generateOption(objective, "C"),
-      generateOption(objective, "D"),
-    ],
-    correctAnswer: "A", // In production, this would be intelligently generated
-    explanation: `This question tests understanding of: ${objective}`,
-  }));
-
-  return {
-    lessonSlug: lesson.slug,
-    lessonTitle: lesson.title,
-    totalQuestions: quizQuestions.length,
-    questions: quizQuestions,
-    estimatedTime: quizQuestions.length * 2, // 2 minutes per question
-  };
-}
-
-function generateOption(objective: string, letter: string): string {
-  const keywords = objective.split(" ").filter((w: string) => w.length > 4);
-  const keyword = keywords[Math.floor(Math.random() * keywords.length)] || "concept";
-  return `Option ${letter}: ${keyword} based understanding`;
 }
