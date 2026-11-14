@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { rateLimits } from "@/db/schema";
-import { eq, and, gt, lt } from "drizzle-orm";
+import { lt } from "drizzle-orm";
+import { getDbClient } from "@/db";
 
 export interface RateLimitConfig {
   maxRequests: number;
@@ -17,67 +18,53 @@ const PUBLIC_CONFIG: RateLimitConfig = {
   windowMs: 60000, // 1 minute
 };
 
+/**
+ * Atomically check and increment a rate limit using a fixed-window counter.
+ *
+ * Windows are aligned to fixed boundaries (floor(now / windowMs) * windowMs)
+ * so all requests in the same window share one row, making the
+ * (identifier, endpoint, window_start) unique constraint effective.
+ *
+ * The INSERT ... ON CONFLICT DO UPDATE is a single atomic statement:
+ * concurrent requests serialize on the row lock, so counts cannot be
+ * lost or bypassed across serverless instances.
+ */
 export async function checkRateLimit(
   identifier: string,
   endpoint: string,
   config: RateLimitConfig = DEFAULT_CONFIG
 ): Promise<{ allowed: boolean; remaining: number; resetAt: Date }> {
-  const now = new Date();
-  const windowStart = new Date(now.getTime() - config.windowMs);
-  const windowEnd = new Date(now.getTime() + config.windowMs);
+  const sql = getDbClient();
+  const now = Date.now();
+  const windowStartMs = Math.floor(now / config.windowMs) * config.windowMs;
+  const windowStart = new Date(windowStartMs);
+  const windowEnd = new Date(windowStartMs + config.windowMs);
 
-  // Clean up old entries
-  await db
-    .delete(rateLimits)
-    .where(lt(rateLimits.windowEnd, now));
+  // Opportunistic cleanup of expired windows (cheap, indexed on window_end)
+  await db.delete(rateLimits).where(lt(rateLimits.windowEnd, new Date(now)));
 
-  // Get or create rate limit record
-  const [existing] = await db
-    .select()
-    .from(rateLimits)
-    .where(
-      and(
-        eq(rateLimits.identifier, identifier),
-        eq(rateLimits.endpoint, endpoint),
-        gt(rateLimits.windowEnd, now)
-      )
-    )
-    .limit(1);
+  // Atomic upsert: insert count=1 for a new window, or increment existing.
+  // RETURNING gives the post-increment count in the same statement.
+  const rows = await sql`
+    INSERT INTO rate_limits (identifier, endpoint, count, window_start, window_end)
+    VALUES (${identifier}, ${endpoint}, 1, ${windowStart}, ${windowEnd})
+    ON CONFLICT (identifier, endpoint, window_start)
+    DO UPDATE SET count = rate_limits.count + 1
+    RETURNING count, window_end
+  `;
 
-  if (!existing) {
-    await db.insert(rateLimits).values({
-      identifier,
-      endpoint,
-      count: 1,
-      windowStart: now,
-      windowEnd,
-    });
+  const row = rows[0] as { count: number; window_end: Date };
+  const count = row.count;
+  const resetAt = new Date(row.window_end);
 
-    return {
-      allowed: true,
-      remaining: config.maxRequests - 1,
-      resetAt: windowEnd,
-    };
+  if (count > config.maxRequests) {
+    return { allowed: false, remaining: 0, resetAt };
   }
-
-  if (existing.count >= config.maxRequests) {
-    return {
-      allowed: false,
-      remaining: 0,
-      resetAt: existing.windowEnd,
-    };
-  }
-
-  // Increment count
-  await db
-    .update(rateLimits)
-    .set({ count: existing.count + 1 })
-    .where(eq(rateLimits.id, existing.id));
 
   return {
     allowed: true,
-    remaining: config.maxRequests - existing.count - 1,
-    resetAt: existing.windowEnd,
+    remaining: config.maxRequests - count,
+    resetAt,
   };
 }
 

@@ -4,7 +4,12 @@ import { checkRateLimitByApiKey, checkRateLimitByIp } from "./rate-limit";
 import { headers } from "next/headers";
 
 export async function withApiKeyAuth(request: NextRequest) {
-  const apiKey = request.headers.get("x-api-key");
+  // Support both `Authorization: Bearer <key>` and `x-api-key: <key>` headers
+  const authHeader = request.headers.get("authorization");
+  const bearerKey = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice(7).trim()
+    : null;
+  const apiKey = bearerKey || request.headers.get("x-api-key");
 
   if (!apiKey) {
     // Fall back to IP-based rate limiting
