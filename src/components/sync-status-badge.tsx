@@ -8,6 +8,7 @@ const LABELS: Record<string, string> = {
   syncing: "Syncing",
   pending: "Pending sync",
   synced: "Synced",
+  never_synced: "Never synced",
   conflict: "Conflict",
   sync_error: "Sync error",
 };

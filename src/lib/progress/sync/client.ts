@@ -678,6 +678,23 @@ export async function mergeOnSignIn(): Promise<MergeSummary | { skipped: string 
   const snapshot = (await response.json()) as CloudSnapshotLike;
   const summary = await performGuestAccountMerge(snapshot);
 
+  // A successful cloud pull is a successful sync even when the local queue
+  // is empty (fresh-device restore never reaches the POST flush path, which
+  // early-returns without recording lastSuccessfulSync).
+  const pullMetadata = await db.syncMetadata.get("sync_meta");
+  await db.syncMetadata.put({
+    id: "sync_meta",
+    createdAt: pullMetadata?.createdAt ?? nowIso(),
+    updatedAt: nowIso(),
+    localRevision: (pullMetadata?.localRevision ?? 0) + 1,
+    syncStatus: pullMetadata?.syncStatus ?? "synced",
+    lastSyncCursor: pullMetadata?.lastSyncCursor ?? null,
+    lastSuccessfulSync: nowIso(),
+    pendingCount: await syncQueue.getPendingCount(),
+    deviceId: await getOrCreateDeviceId(),
+  });
+  await updateLastSync();
+
   try {
     await flushSyncQueue();
   } catch {
