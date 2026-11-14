@@ -13,9 +13,9 @@
 
 <p align="center">
   <a href="#-key-features">Features</a> ·
-  <a href="#-get-started">Get Started</a> ·
   <a href="#-product-tour">Tour</a> ·
   <a href="#-architecture">Architecture</a> ·
+  <a href="#-get-started">Get Started</a> ·
   <a href="#-rest-api--api-keys">API</a> ·
   <a href="#-mcp-integration">MCP</a> ·
   <a href="#-documentation">Docs</a>
@@ -25,7 +25,7 @@
 
 ---
 
-AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) curriculum into a production-grade learning workspace: **20 phases, 500+ lessons**, project studios with rubric-based assessment, local-first progress with cloud sync, and a documented REST + MCP surface so chatbots and coding agents can consume the same curriculum programmatically.
+AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) curriculum into a production-grade learning workspace: **20 phases, 542 lessons**, project studios with rubric-based assessment, local-first progress with cloud sync, and a documented REST + MCP surface so chatbots and coding agents can consume the same curriculum programmatically.
 
 <div align="center">
 <img src="docs/assets/home.png" alt="AI Engineer OS home page" width="900">
@@ -87,37 +87,82 @@ AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg
 ## 🖥 Product Tour
 
 <div align="center">
-<img src="docs/assets/settings-api-keys.png" alt="Settings → Developer API Keys" width="900">
+<img src="docs/assets/shot-dashboard.png" alt="Dashboard" width="900">
+</div>
+
+*Dashboard — roadmap progress, overdue tasks, projected finish, and activity-based streak tracking.*
+
+<div align="center">
+<img src="docs/assets/shot-curriculum.png" alt="Curriculum Explorer" width="900">
+</div>
+
+*Curriculum Explorer — 20 phases, 542 lessons, progress indicators, and phase-level navigation.*
+
+<div align="center">
+<img src="docs/assets/shot-projects.png" alt="Project Studio" width="900">
+</div>
+
+*Project Studio — milestone-based builds with rubrics, evidence tracking, and difficulty-level filtering.*
+
+<div align="center">
+<img src="docs/assets/shot-roadmap.png" alt="Roadmap" width="900">
+</div>
+
+*Roadmap — personalized phase ordering, capacity planning, deadline tracking, and backlog management.*
+
+<div align="center">
+<img src="docs/assets/shot-api-keys.png" alt="Developer API Keys" width="900">
 </div>
 
 *Settings → Developer: create scoped API keys, copy one-time secrets, manage revocation, and grab ready-made `curl` examples for Bearer and `x-api-key` auth.*
 
 <details>
-<summary><b>Tour notes — what each surface does</b></summary>
+<summary><b>Screenshots still needed</b></summary>
 
-- **Dashboard** — resume learning, continue where you left off, review streaks and weak areas
-- **Roadmap** — personalized phase ordering and milestone tracking across the 20-phase curriculum
-- **Curriculum** — phase browser with lesson lists, progress indicators, and resource links
-- **Lesson view** — reading pane, embedded code, quiz block, notes, bookmarks, and study timer
-- **Projects** — milestone checklist, rubric self-assessment, evidence attachments
-- **Analytics** — time-on-task, completion rates, and per-phase mastery views
-- **Settings** — account linking, theme, sync status, portfolio privacy, and API keys
+- Lesson view (reading pane, quiz, notes, bookmarks)
+- Analytics (time-on-task, completion rates, per-phase mastery)
 </details>
 
 ## 🏗 Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Next.js 16 · React 19                    │
-│              App Router · TypeScript 5.7 · Tailwind          │
-├─────────────────────────────────────────────────────────────┤
-│  Auth.js (Google/GitHub OAuth, JWT)   Dexie/IndexedDB       │
-│  REST /api/v1/*   Sync /api/sync/v1   MCP /api/mcp           │
-│  Webhooks /api/webhooks   Admin /api/admin/*   User keys     │
-├─────────────────────────────────────────────────────────────┤
-│              PostgreSQL 17 · Drizzle ORM                     │
-│  users · progress · sync · api_keys · webhooks · rate_limits │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Client["Next.js 16 · React 19 · TypeScript 5.7"]
+        A[App Router]
+        B[Auth.js - Google/GitHub OAuth]
+        C[Dexie/IndexedDB - Local Progress]
+    end
+
+    subgraph API["REST + MCP APIs"]
+        D[/api/v1/* - Public API]
+        E[/api/sync/v1 - Cloud Sync]
+        F[/api/mcp - MCP Server]
+        G[/api/webhooks - Event Hooks]
+        H[/api/user/api-keys - Key Mgmt]
+    end
+
+    subgraph DB["PostgreSQL 17 · Drizzle ORM"]
+        I[users]
+        J[progress tables]
+        K[api_keys]
+        L[webhooks]
+        M[rate_limits]
+    end
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    B --> I
+    C --> J
+    E --> J
+    F --> J
+    G --> J
+    H --> K
+    D --> J
+    D --> M
+    E --> K
+    G --> L
 ```
 
 - **Local-first**: all learning state lives in IndexedDB; mutations queue and flush to `/api/sync/v1`
