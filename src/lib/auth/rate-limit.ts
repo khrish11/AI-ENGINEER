@@ -45,9 +45,11 @@ export async function checkRateLimit(
 
   // Atomic upsert: insert count=1 for a new window, or increment existing.
   // RETURNING gives the post-increment count in the same statement.
+  // ISO strings are used because postgres.js rejects Date instances as
+  // raw sql-template parameters (ERR_INVALID_ARG_TYPE).
   const rows = await sql`
     INSERT INTO rate_limits (identifier, endpoint, count, window_start, window_end)
-    VALUES (${identifier}, ${endpoint}, 1, ${windowStart}, ${windowEnd})
+    VALUES (${identifier}, ${endpoint}, 1, ${windowStart.toISOString()}, ${windowEnd.toISOString()})
     ON CONFLICT (identifier, endpoint, window_start)
     DO UPDATE SET count = rate_limits.count + 1
     RETURNING count, window_end

@@ -63,12 +63,13 @@ export async function validateApiKey(key: string): Promise<{ valid: boolean; api
   }
 
   // Update last used
+  const lastUsedAt = new Date();
   await db
     .update(apiKeys)
-    .set({ lastUsedAt: new Date(), updatedAt: new Date() })
+    .set({ lastUsedAt, updatedAt: lastUsedAt })
     .where(eq(apiKeys.id, apiKey.id));
 
-  return { valid: true, apiKey };
+  return { valid: true, apiKey: { ...apiKey, lastUsedAt, updatedAt: lastUsedAt } };
 }
 
 export async function listApiKeys(userId: string): Promise<ApiKey[]> {
@@ -80,6 +81,8 @@ export async function listApiKeys(userId: string): Promise<ApiKey[]> {
 }
 
 export async function revokeApiKey(userId: string, keyId: string): Promise<boolean> {
+  // .returning() is required: without it postgres-js resolves to an empty
+  // RowList, so result.length is always 0 and revocation looked like a miss.
   const result = await db
     .update(apiKeys)
     .set({
@@ -87,7 +90,8 @@ export async function revokeApiKey(userId: string, keyId: string): Promise<boole
       revokedAt: new Date(),
       updatedAt: new Date(),
     })
-    .where(and(eq(apiKeys.id, keyId), eq(apiKeys.userId, userId)));
+    .where(and(eq(apiKeys.id, keyId), eq(apiKeys.userId, userId)))
+    .returning({ id: apiKeys.id });
 
   return result.length > 0;
 }
