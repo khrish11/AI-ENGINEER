@@ -111,17 +111,16 @@ AI Engineer OS turns the [AI Engineering from Scratch](https://github.com/rohitg
 *Roadmap — personalized phase ordering, capacity planning, deadline tracking, and backlog management.*
 
 <div align="center">
-<img src="docs/assets/shot-api-keys.png" alt="Developer API Keys" width="900">
+<img src="docs/assets/shot-analytics.png" alt="Analytics" width="900">
 </div>
 
-*Settings → Developer: create scoped API keys, copy one-time secrets, manage revocation, and grab ready-made `curl` examples for Bearer and `x-api-key` auth.*
+*Analytics — time-on-task, completion rates, per-phase mastery, streaks, and skill bands derived from real activity.*
 
-<details>
-<summary><b>Screenshots still needed</b></summary>
+<div align="center">
+<img src="docs/assets/shot-lesson.png" alt="Lesson view" width="900">
+</div>
 
-- Lesson view (reading pane, quiz, notes, bookmarks)
-- Analytics (time-on-task, completion rates, per-phase mastery)
-</details>
+*Lesson view — reading pane, embedded code, quiz block, notes, bookmarks, and study timer.*
 
 ## 🏗 Architecture
 
@@ -263,6 +262,7 @@ config/         drizzle & playwright config
 - **Settings → API Keys** — self-serve key management UI with one-time secrets and curl examples
 - **Sync correctness** — cloud-pull timestamps, conflict handling, account isolation
 - **Migration runner hardening** — journal/SQL verification, advisory locks, schema checks
+- **Analytics crash fix** — RoadmapStore parsing validation, graceful degradation for malformed roadmap state
 </details>
 
 ## 📚 Documentation
