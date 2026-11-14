@@ -18,6 +18,7 @@ export default auth((req) => {
     pathname.startsWith("/api/health") ||
     pathname.startsWith("/api/version") ||
     pathname.startsWith("/api/mcp") ||
+    pathname.startsWith("/api/v1") ||
     pathname.startsWith("/portfolio") ||
     pathname.startsWith("/api/portfolio/public");
 
