@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllPhases, getPhaseDetails } from "@/lib/curriculum/service";
-import { withApiKeyAuth } from "@/lib/auth/middleware";
+import { withApiKeyAuth, extractApiKey } from "@/lib/auth/middleware";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  const apiKey = request.headers.get("x-api-key");
+  const apiKey = extractApiKey(request);
   if (apiKey) {
     const auth = withApiKeyAuth(request);
     if (!(await auth).authorized) return (await auth).response;
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         results.push({
           phaseSlug: phaseData.slug,
           phaseNumber: phaseData.phaseNumber,
-          slug: lesson.slug,
+          slug: lesson.lessonSlug ?? lesson.slug,
           title: lesson.title,
           tagline: lesson.tagline,
           estimatedMinutes: lesson.estimatedMinutes,
