@@ -114,6 +114,19 @@ async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promis
 }
 
 async function verifyMigrationHistory(sql: ReturnType<typeof getDbClient>): Promise<void> {
+  // Check if drizzle migrations table exists before querying it
+  const migrationsTableExists = await sql`
+    SELECT EXISTS (
+      SELECT FROM information_schema.tables 
+      WHERE table_schema = 'drizzle' AND table_name = '__drizzle_migrations'
+    ) AS exists
+  `;
+
+  if (!(migrationsTableExists[0] as { exists: boolean }).exists) {
+    console.log("Drizzle migrations table does not exist (fresh install). Skipping migration history verification.");
+    return;
+  }
+
   const journal = JSON.parse(fs.readFileSync(JOURNAL_PATH, "utf-8"));
   const journalEntries = journal.entries.map((e: any) => e.tag);
 
