@@ -133,11 +133,11 @@ graph TB
     end
 
     subgraph API["REST + MCP APIs"]
-        D[/api/v1/* - Public API]
-        E[/api/sync/v1 - Cloud Sync]
-        F[/api/mcp - MCP Server]
-        G[/api/webhooks - Event Hooks]
-        H[/api/user/api-keys - Key Mgmt]
+        D["/api/v1/* - Public API"]
+        E["/api/sync/v1 - Cloud Sync"]
+        F["/api/mcp - MCP Server"]
+        G["/api/webhooks - Event Hooks"]
+        H["/api/user/api-keys - Key Mgmt"]
     end
 
     subgraph DB["PostgreSQL 17 · Drizzle ORM"]
