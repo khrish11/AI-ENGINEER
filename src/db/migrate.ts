@@ -113,6 +113,44 @@ async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promis
   console.log(`Database schema verified: users table exists, ${count} prior migrations applied`);
 }
 
+const APP_NAME = "ai-engineer-os";
+
+async function ensureAppMetadataMarker(sql: ReturnType<typeof getDbClient>): Promise<void> {
+  const tableExists = await sql`
+    SELECT to_regclass('public.app_metadata') AS reg
+  `;
+  const exists = (tableExists[0] as { reg: string | null }).reg !== null;
+
+  if (!exists) {
+    await sql`
+      CREATE TABLE IF NOT EXISTS app_metadata (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+    await sql`
+      INSERT INTO app_metadata (key, value)
+      VALUES ('app_name', ${APP_NAME})
+      ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()
+    `;
+    console.log(`App ownership marker created: app_name = ${APP_NAME}`);
+    return;
+  }
+
+  const row = await sql`
+    SELECT value FROM app_metadata WHERE key = 'app_name'
+  `;
+  const currentApp = (row[0] as { value: string } | undefined)?.value;
+
+  if (currentApp !== APP_NAME) {
+    throw new Error(
+      `Database ownership mismatch: app_metadata.app_name is "${currentApp ?? "<missing>"}", ` +
+      `expected "${APP_NAME}". Refusing to mark an unrelated database.`
+    );
+  }
+}
+
 async function verifyMigrationHistory(sql: ReturnType<typeof getDbClient>): Promise<void> {
   // Check if drizzle migrations table exists before querying it
   const migrationsTableExists = await sql`
@@ -221,6 +259,9 @@ export async function runMigrations() {
       await migrate(db, { migrationsFolder });
 
       console.log("Migrations applied successfully.");
+
+      // Ensure the app ownership marker exists (required by curriculum importer).
+      await ensureAppMetadataMarker(sql);
 
       // Step 6: Verify post-migration state
       await verifyDatabaseSchema(sql);
