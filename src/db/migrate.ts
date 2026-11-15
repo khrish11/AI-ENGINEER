@@ -49,6 +49,21 @@ async function verifyMigrationConfig(): Promise<void> {
 }
 
 async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promise<void> {
+  // Check if database is completely empty (fresh install)
+  const tableCount = await sql`
+    SELECT COUNT(*)::int AS count
+    FROM information_schema.tables
+    WHERE table_schema = 'public'
+  `;
+
+  const publicTableCount = (tableCount[0] as { count: number }).count;
+
+  if (publicTableCount === 0) {
+    console.log("Database is empty (fresh install). Skipping schema verification.");
+    return;
+  }
+
+  // Database has tables - verify it's a valid AI Engineer OS database
   // Verify users table exists (core schema requirement)
   const usersExists = await sql`
     SELECT EXISTS (
@@ -60,7 +75,8 @@ async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promis
   if (!(usersExists[0] as { exists: boolean }).exists) {
     throw new Error(
       "Database schema verification failed: users table does not exist. " +
-      "This does not appear to be the AI Engineer OS production database."
+      "This does not appear to be the AI Engineer OS production database. " +
+      "Database has " + publicTableCount + " tables but is missing core schema."
     );
   }
 
@@ -75,7 +91,8 @@ async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promis
   if (!(migrationsTableExists[0] as { exists: boolean }).exists) {
     throw new Error(
       "Database schema verification failed: drizzle.__drizzle_migrations table does not exist. " +
-      "This database has not been migrated with Drizzle."
+      "This database has users table but has not been migrated with Drizzle. " +
+      "This may indicate a partially initialized or inconsistent schema."
     );
   }
 
@@ -88,7 +105,8 @@ async function verifyDatabaseSchema(sql: ReturnType<typeof getDbClient>): Promis
   if (count === 0) {
     throw new Error(
       "Database schema verification failed: no prior migrations found in drizzle.__drizzle_migrations. " +
-      "This database has not been migrated with Drizzle."
+      "This database has users table but no migration history. " +
+      "This may indicate a partially initialized or inconsistent schema."
     );
   }
 
