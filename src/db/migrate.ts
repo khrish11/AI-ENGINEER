@@ -10,6 +10,22 @@ dotenv.config();
 const MIGRATIONS_FOLDER = path.resolve(process.cwd(), "src/db/migrations");
 const JOURNAL_PATH = path.resolve(MIGRATIONS_FOLDER, "meta/_journal.json");
 
+interface JournalEntry {
+  tag: string;
+  when: number;
+  breakpoints: boolean;
+}
+
+function readJournalEntries(): JournalEntry[] {
+  const journal = JSON.parse(fs.readFileSync(JOURNAL_PATH, "utf-8")) as {
+    entries?: JournalEntry[];
+  };
+  if (!journal.entries || !Array.isArray(journal.entries)) {
+    throw new Error("Invalid migration journal: entries array not found");
+  }
+  return journal.entries;
+}
+
 async function verifyMigrationConfig(): Promise<void> {
   // Verify migration folder exists and has SQL files
   if (!fs.existsSync(MIGRATIONS_FOLDER)) {
@@ -38,7 +54,7 @@ async function verifyMigrationConfig(): Promise<void> {
 
   // Verify no orphan SQL files without journal entries
   const sqlFiles = fs.readdirSync(MIGRATIONS_FOLDER).filter(f => f.endsWith(".sql"));
-  const journalTags = new Set(journal.entries.map((e: any) => e.tag));
+  const journalTags = new Set(readJournalEntries().map((e) => e.tag));
   const orphanFiles = sqlFiles.filter(f => !journalTags.has(f.replace(".sql", "")));
 
   if (orphanFiles.length > 0) {
@@ -165,8 +181,7 @@ async function verifyMigrationHistory(sql: ReturnType<typeof getDbClient>): Prom
     return;
   }
 
-  const journal = JSON.parse(fs.readFileSync(JOURNAL_PATH, "utf-8"));
-  const journalEntries = journal.entries.map((e: any) => e.tag);
+  const journalEntries = readJournalEntries().map((e) => e.tag);
 
   const appliedMigrations = await sql`
     SELECT hash FROM drizzle.__drizzle_migrations
